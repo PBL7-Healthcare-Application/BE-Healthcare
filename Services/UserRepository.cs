@@ -1,6 +1,7 @@
 ﻿using API_Login.Models;
 using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
+using BE_Healthcare.Extensions;
 using BE_Healthcare.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,12 +28,30 @@ namespace BE_Healthcare.Services
         {
             try
             {
+                if (!Extension.ValidEmail(model.Email))     //Validate Email
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = "200",
+                        Message = "The format of the email address isn't correct",
+                    };
+                }
+                if (!Extension.IsValidPassword(model.Password))
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = "200",
+                        Message = "Password must have at least 8 characters and 1 uppercase letter and 1 special character.",
+                    };
+                }
+
                 var user = _context.Users.SingleOrDefault(p => p.Email == model.Email && p.Password == model.Password);
                 if (user == null)
                 {
                     return new ApiResponse
                     {
-                        Success = false,
+                        //Success = false,
+                        StatusCode = "200",
                         Message = "Invalid Username/Password"
                     };
                 }
@@ -42,7 +61,7 @@ namespace BE_Healthcare.Services
 
                 return new ApiResponse
                 {
-                    Success = true,
+                    StatusCode = "200",
                     Message = "Authenticate success",
                     Data = token
                 };
@@ -52,9 +71,8 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
                 return new ApiResponse
                 {
-                    Success = true,
-                    Message = "Error",
-                    Data = null
+                    StatusCode = "500",
+                    Message = "Internal Server Error",
                 };
             }
         }
@@ -168,7 +186,7 @@ namespace BE_Healthcare.Services
                     {
                         return new ApiResponse
                         {
-                            Success = false,
+                            StatusCode = "200",
                             Message = "Invalid Token"
                         };
                     }
@@ -183,7 +201,7 @@ namespace BE_Healthcare.Services
                 {
                     return new ApiResponse
                     {
-                        Success = false,
+                        StatusCode = "200",
                         Message = "Access token has not yet expired"
                     };
                 }
@@ -194,7 +212,7 @@ namespace BE_Healthcare.Services
                 {
                     return new ApiResponse
                     {
-                        Success = false,
+                        StatusCode = "200",
                         Message = "Refresh token does not exist"
                     };
                 }
@@ -204,7 +222,7 @@ namespace BE_Healthcare.Services
                 {
                     return new ApiResponse
                     {
-                        Success = false,
+                        StatusCode = "200",
                         Message = "Refresh token has been used"
                     };
                 }
@@ -213,7 +231,7 @@ namespace BE_Healthcare.Services
                 {
                     return new ApiResponse
                     {
-                        Success = false,
+                        StatusCode = "200",
                         Message = "Refresh token has been revoked"
                     };
                 }
@@ -225,7 +243,7 @@ namespace BE_Healthcare.Services
                 {
                     return new ApiResponse
                     {
-                        Success = false,
+                        StatusCode = "200",
                         Message = "Token doesn't match"
                     };
                 }
@@ -242,7 +260,7 @@ namespace BE_Healthcare.Services
 
                 return new ApiResponse
                 {
-                    Success = true,
+                    StatusCode = "200",
                     Message = "Renew token success",
                     Data = token
                 };
@@ -254,8 +272,8 @@ namespace BE_Healthcare.Services
             {
                 return new ApiResponse
                 {
-                    Success = false,
-                    Message = "Something went wrong"
+                    StatusCode = "500",
+                    Message = "Internal Server Error"
                 };
             }
         }

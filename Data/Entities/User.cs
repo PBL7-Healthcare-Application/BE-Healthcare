@@ -11,6 +11,7 @@ namespace BE_Healthcare.Data.Entities
 
         [Required]
         [MaxLength(250)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
