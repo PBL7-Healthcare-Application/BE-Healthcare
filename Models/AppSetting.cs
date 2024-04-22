@@ -1,8 +1,8 @@
-﻿namespace API_Login.Models
+﻿namespace BE_Healthcare.Models
 {
     public class AppSetting
     {
-        public string SecretKey { get; set; }
+        public string SecretKey { get; set; } = null!;
 
     }
 }

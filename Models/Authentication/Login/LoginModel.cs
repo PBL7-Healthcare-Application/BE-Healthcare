@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API_Login.Models
+namespace BE_Healthcare.Models.Authentication.Login
 {
     public class LoginModel
     {
         [Required]
         [MaxLength(250)]
-        public string Email { get; set; }
+        public string Email { get; set; } = null!;
 
         [Required]
         [MaxLength(250)]
-        public string Password { get; set; }
+        public string Password { get; set; } = null!;
     }
 }

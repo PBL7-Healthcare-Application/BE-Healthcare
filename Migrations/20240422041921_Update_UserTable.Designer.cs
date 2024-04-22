@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_Healthcare.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240416071029_Add_RefreshTokenTableToDB")]
-    partial class Add_RefreshTokenTableToDB
+    [Migration("20240422041921_Update_UserTable")]
+    partial class Update_UserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,80 @@ namespace BE_Healthcare.Migrations
                 .HasAnnotation("ProductVersion", "7.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("API_Login.Models.RefreshToken", b =>
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.Role", b =>
+                {
+                    b.Property<int>("Id_Role")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id_Role");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id_User")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("DOB")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<bool?>("Gender")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<DateTime?>("OTPCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("OTPVerification")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("longblob");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("longblob");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("VerifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("id_Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_User");
+
+                    b.HasIndex("id_Role");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Models.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,79 +131,6 @@ namespace BE_Healthcare.Migrations
                     b.ToTable("RefreshToken");
                 });
 
-            modelBuilder.Entity("BE_Healthcare.Data.Entities.Role", b =>
-                {
-                    b.Property<int>("Id_Role")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id_Role");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("BE_Healthcare.Data.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id_User")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Avatar")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<bool>("Gender")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("id_Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id_User");
-
-                    b.HasIndex("id_Role");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("API_Login.Models.RefreshToken", b =>
-                {
-                    b.HasOne("BE_Healthcare.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("BE_Healthcare.Data.Entities.User", b =>
                 {
                     b.HasOne("BE_Healthcare.Data.Entities.Role", "Role")
@@ -140,6 +140,17 @@ namespace BE_Healthcare.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Models.RefreshToken", b =>
+                {
+                    b.HasOne("BE_Healthcare.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BE_Healthcare.Data.Entities.Role", b =>
