@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API_Login.Models
+namespace BE_Healthcare.Models
 {
     [Table("RefreshToken")]
     public class RefreshToken
@@ -12,10 +12,10 @@ namespace API_Login.Models
         public Guid UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public User User { get; set; }
+        public User User { get; set; } = null!;
 
-        public string Token { get; set; }
-        public string JwtId { get; set; }
+        public string Token { get; set; } = null!;
+        public string JwtId { get; set; } = null!;
 
         public bool IsUsed { get; set; }
         public bool IsRevoked { get; set; }

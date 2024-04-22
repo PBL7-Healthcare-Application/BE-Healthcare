@@ -1,13 +1,16 @@
-using API_Login.Models;
+using BE_Healthcare.Models;
 using BE_Healthcare.Data;
 using BE_Healthcare.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BE_Healthcare.Models.EmailModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+var configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -16,7 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-var connectionString = builder.Configuration.GetConnectionString("Default");
+var connectionString = configuration.GetConnectionString("Default");
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 34));
 builder.Services.AddDbContext<MyDbContext>(option => option
     .UseMySql(connectionString, serverVersion)
@@ -25,11 +28,15 @@ builder.Services.AddDbContext<MyDbContext>(option => option
     .EnableDetailedErrors()
 );
 
+//Add Email Configs
+var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
 
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.Configure<AppSetting>(builder.Configuration.GetSection("AppSettings"));
+builder.Services.Configure<AppSetting>(configuration.GetSection("AppSettings"));
 
-var secretKey = builder.Configuration["AppSettings:SecretKey"];
+var secretKey = configuration["AppSettings:SecretKey"];
 var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
 
 builder.Services.AddAuthentication
