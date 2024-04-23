@@ -17,6 +17,7 @@ using System.Net;
 using BE_Healthcare.Models.Authentication.Login;
 using BE_Healthcare.Models.Authentication.SignUp;
 using BE_Healthcare.Models.EmailModel;
+using Org.BouncyCastle.Crypto;
 
 namespace BE_Healthcare.Services
 {
@@ -53,7 +54,7 @@ namespace BE_Healthcare.Services
                 }
 
                 var currentUser = getUserByEmail(model.Email);
-                if (currentUser == null)
+                if (currentUser == null) //Not Found User
                 {
                     return new ApiResponse
                     {
@@ -61,6 +62,21 @@ namespace BE_Healthcare.Services
                         Message = AppString.MESSAGE_NOTFOUND_USER,
                     };
                 }
+                if ((bool)!currentUser.IsVerified)
+                {
+                    if ((bool)!currentUser.IsVerified)
+                    {
+                        //xoa record trong DB
+                        DeleteUserByEmail(currentUser.Email);
+                    }
+
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_USER,
+                    };
+                }
+
 
                 if (!CheckPassword(currentUser, model.Password))   //Check Password
                 {
@@ -259,7 +275,7 @@ namespace BE_Healthcare.Services
                     return new ApiResponse
                     {
                         StatusCode = StatusCode.FAILED,
-                        Message = "Token doesn't match"
+                        Message = AppString.MESSAGE_ACCESSTOKEN_NOT_MATCHED
                     };
                 }
 
@@ -303,8 +319,12 @@ namespace BE_Healthcare.Services
 
         public User getUserByEmail(string email)
         {
-
             return _context.Users.SingleOrDefault(x => x.Email == email);
+        }
+        public void DeleteUserByEmail(string email)
+        {
+            _context.Users.Remove(getUserByEmail(email));
+            _context.SaveChanges();
         }
 
         public bool CheckPassword(User currentUser, string password)
@@ -352,17 +372,16 @@ namespace BE_Healthcare.Services
 
                 var token = GenerateOTP();  // Generate and send OTP to the user's email
 
-                //CreateUser(model, token);
+                CreateUser(model, token);
 
+                SendOTPToEmail(model.Email, token);
 
-                //var message = new MessageModel(new string[] { model.Email! }, AppString.MESSAGE_EMAIL_SUBJECT, token + AppString.MESSAGE_EMAIL_CONTENT);
-                //_emailService.SendEmail(message);
 
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
-                    Message = "An OTP has been sent to your email. Please enter the OTP to complete registration.",
-                    Data = new {email =  model.Email}
+                    Message = AppString.MESSAGE_OTP_SENT_SUCCESSFUL,
+                    Data = new MailModel { email =  model.Email}
                 };
 
             }
@@ -375,6 +394,11 @@ namespace BE_Healthcare.Services
                     Message = AppString.MESSAGE_SERVER_ERROR,
                 };
             }
+        }
+        private void SendOTPToEmail(string email, string token)
+        {
+            var message = new MessageModel(new string[] { email! }, AppString.MESSAGE_EMAIL_SUBJECT, token + AppString.MESSAGE_EMAIL_CONTENT);
+            _emailService.SendEmail(message);
         }
 
         public void CreateUser(SignUpModel user, string token)
@@ -393,7 +417,8 @@ namespace BE_Healthcare.Services
                     Name = user.Name,
                     PhoneNumber = user.PhoneNumber,
                     OTPVerification = token,
-                    OTPCreatedAt= DateTime.UtcNow,
+                    OTPCreatedAt= GenerateTimeNowAtVN(),
+                    IsVerified = false,
                     id_Role = 1,
 
                 };
@@ -407,13 +432,10 @@ namespace BE_Healthcare.Services
 
         }
 
-        // Method to generate OTP
-        private string GenerateOTP()
+        private string GenerateOTP()    // Method to generate OTP
         {
-            // Số ký tự của mã OTP
             int otpLength = 6;
 
-            // Tạo một chuỗi ngẫu nhiên cho OTP, bằng cách chọn các ký tự từ 0 đến 9
             Random random = new Random();
             string otp = "";
             for (int i = 0; i < otpLength; i++)
@@ -424,9 +446,112 @@ namespace BE_Healthcare.Services
             return otp;
         }
 
-        //public ApiResponse ConfirmEmail(string otp, string email)
-        //{
+        private DateTime GenerateTimeNowAtVN() 
+        {
+            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+        }
+        public ApiResponse ConfirmEmail(ConfirmMailModel model)
+        {
+            try
+            {
+                var currentUser = getUserByEmail(model.email);
+                if (currentUser != null)
+                {
+                    if (model.otp != currentUser.OTPVerification) //OTP Code doesn't match
+                    {
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_OTP_NOTMATCH,
+                        };
 
-        //}
+                    }
+
+                    
+                    if (currentUser.OTPCreatedAt.HasValue)  // Check if OTP creation time is not null
+                    {
+                        var otpExpiryTime = currentUser.OTPCreatedAt.Value.AddMinutes(2);
+
+                        if (otpExpiryTime < GenerateTimeNowAtVN())  // Check if the OTP code is expired
+                        {
+                            return new ApiResponse
+                            {
+                                StatusCode = StatusCode.FAILED,
+                                Message = AppString.MESSAGE_OTP_EXPIRED,
+                            };
+                        }
+                    }
+                    else
+                    {
+
+                        return new ApiResponse  // Handle case where OTP creation time is null (optional)
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message =AppString.MESSAGE_OTP_CREATIONTIME_NULL,
+                        };
+                    }
+
+                    //Success -> Update Field 
+                    currentUser.IsVerified = true;
+                    _context.SaveChanges();
+
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_EMAIL_VERIFIED,
+                    };
+                }
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_USER,
+                };
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+        public ApiResponse ResendOTP(string email)
+        {
+            try
+            {
+                var currentUser = getUserByEmail(email);
+                if (currentUser != null)
+                {
+                    //Success -> Update Field 
+                    currentUser.OTPVerification = GenerateOTP();
+                    currentUser.OTPCreatedAt = GenerateTimeNowAtVN();
+                    _context.SaveChanges();
+                    SendOTPToEmail(email, currentUser.OTPVerification);
+
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_OTP_RESEND,
+                        Data = new MailModel{ email = email }
+                    };
+                }
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_USER,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
     }
 }

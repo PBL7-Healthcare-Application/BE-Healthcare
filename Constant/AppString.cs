@@ -21,6 +21,8 @@
         public static string MESSAGE_EMAIL_VERIFIED = "Email Verified Successfully";
         public static string MESSAGE_OTP_EXPIRED = "OTP code is expired";
         public static string MESSAGE_OTP_NOTMATCH = "OTP Code doesn't match";
+        public static string MESSAGE_OTP_SENT_SUCCESSFUL= "An OTP has been sent to your email. Please enter the OTP to complete registration.";
+        public static string MESSAGE_OTP_RESEND = "OTP is resent successful, please check your email.";
 
 
 

@@ -13,8 +13,15 @@ namespace BE_Healthcare.Services
         ApiResponse RenewToken(TokenModel model);
 
         User getUserByEmail(string email);
+        void DeleteUserByEmail(string email);
+
 
         ApiResponse SignUp(SignUpModel model);
         void CreateUser(SignUpModel user, string token);
+
+        ApiResponse ConfirmEmail(ConfirmMailModel model);
+        ApiResponse ResendOTP(string email);
+
+
     }
 }
