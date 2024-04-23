@@ -61,10 +61,32 @@ namespace BE_Healthcare.Controllers
             }
         }
 
-        //[HttpPost("ConfirmEmail")]
-        //public IActionResult ConfirmEmail(string otp, string email)
-        //{
+        [HttpPost("ConfirmEmail")]
+        public IActionResult ConfirmEmail(ConfirmMailModel model)
+        {
+            try
+            {
+                var res = _userRepository.ConfirmEmail(model);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-        //}
+        [HttpPost("ResendOTP")]
+        public IActionResult ResendOTP(MailModel model)
+        {
+            try
+            {
+                var res = _userRepository.ResendOTP(model.email);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
