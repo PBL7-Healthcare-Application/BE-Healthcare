@@ -12,7 +12,8 @@ namespace BE_Healthcare.Data
         public DbSet<User> Users{ get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-
+        public DbSet<MedicalSpecialty> MedicalSpecialties { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
 
         #endregion
 

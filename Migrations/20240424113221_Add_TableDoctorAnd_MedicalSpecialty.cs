@@ -7,12 +7,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BE_Healthcare.Migrations
 {
     /// <inheritdoc />
-    public partial class Update_UserTable : Migration
+    public partial class Add_TableDoctorAnd_MedicalSpecialty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "MedicalSpecialties",
+                columns: table => new
+                {
+                    Id_Specialty = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MedicalSpecialties", x => x.Id_Specialty);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
@@ -53,7 +68,7 @@ namespace BE_Healthcare.Migrations
                     OTPVerification = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     OTPCreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    VerifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    IsVerified = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,6 +78,40 @@ namespace BE_Healthcare.Migrations
                         column: x => x.id_Role,
                         principalTable: "Roles",
                         principalColumn: "Id_Role",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Doctors",
+                columns: table => new
+                {
+                    Id_Doctor = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Certificate = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    WorkingProcess = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TrainingProcess = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Experience = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Price = table.Column<double>(type: "double", nullable: true),
+                    Id_Specialty = table.Column<int>(type: "int", nullable: true),
+                    Id_User = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Doctors", x => x.Id_Doctor);
+                    table.ForeignKey(
+                        name: "FK_Doctors_MedicalSpecialties_Id_Specialty",
+                        column: x => x.Id_Specialty,
+                        principalTable: "MedicalSpecialties",
+                        principalColumn: "Id_Specialty");
+                    table.ForeignKey(
+                        name: "FK_Doctors_User_Id_User",
+                        column: x => x.Id_User,
+                        principalTable: "User",
+                        principalColumn: "Id_User",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -95,6 +144,17 @@ namespace BE_Healthcare.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Doctors_Id_Specialty",
+                table: "Doctors",
+                column: "Id_Specialty");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Doctors_Id_User",
+                table: "Doctors",
+                column: "Id_User",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RefreshToken_UserId",
                 table: "RefreshToken",
                 column: "UserId");
@@ -109,7 +169,13 @@ namespace BE_Healthcare.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Doctors");
+
+            migrationBuilder.DropTable(
                 name: "RefreshToken");
+
+            migrationBuilder.DropTable(
+                name: "MedicalSpecialties");
 
             migrationBuilder.DropTable(
                 name: "User");
