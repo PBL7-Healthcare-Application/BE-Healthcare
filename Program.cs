@@ -34,6 +34,8 @@ builder.Services.AddSingleton(emailConfig);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+builder.Services.AddScoped<IMedicalSpecialtyRepository, MedicalSpecialtyRepository>();
 builder.Services.Configure<AppSetting>(configuration.GetSection("AppSettings"));
 
 var secretKey = configuration["AppSettings:SecretKey"];

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_Healthcare.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240422143608_Update_UserTable_ChangeAttribute_IsVerified")]
-    partial class Update_UserTable_ChangeAttribute_IsVerified
+    [Migration("20240424123209_Update_TableDoctor_v2")]
+    partial class Update_TableDoctor_v2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,62 @@ namespace BE_Healthcare.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.Doctor", b =>
+                {
+                    b.Property<Guid>("Id_Doctor")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Certificate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Experience")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("Id_Specialty")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Id_User")
+                        .HasColumnType("char(36)");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("double");
+
+                    b.Property<string>("TrainingProcess")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("WorkingProcess")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id_Doctor");
+
+                    b.HasIndex("Id_Specialty");
+
+                    b.HasIndex("Id_User")
+                        .IsUnique();
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.MedicalSpecialty", b =>
+                {
+                    b.Property<int>("Id_Specialty")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id_Specialty");
+
+                    b.ToTable("MedicalSpecialties");
+                });
 
             modelBuilder.Entity("BE_Healthcare.Data.Entities.Role", b =>
                 {
@@ -131,6 +187,23 @@ namespace BE_Healthcare.Migrations
                     b.ToTable("RefreshToken");
                 });
 
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.Doctor", b =>
+                {
+                    b.HasOne("BE_Healthcare.Data.Entities.MedicalSpecialty", "MedicalSpecialty")
+                        .WithMany()
+                        .HasForeignKey("Id_Specialty");
+
+                    b.HasOne("BE_Healthcare.Data.Entities.User", "User")
+                        .WithOne("Doctor")
+                        .HasForeignKey("BE_Healthcare.Data.Entities.Doctor", "Id_User")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MedicalSpecialty");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BE_Healthcare.Data.Entities.User", b =>
                 {
                     b.HasOne("BE_Healthcare.Data.Entities.Role", "Role")
@@ -156,6 +229,12 @@ namespace BE_Healthcare.Migrations
             modelBuilder.Entity("BE_Healthcare.Data.Entities.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.User", b =>
+                {
+                    b.Navigation("Doctor")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

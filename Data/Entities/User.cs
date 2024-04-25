@@ -42,6 +42,7 @@ namespace BE_Healthcare.Data.Entities
 
         public bool? IsVerified { get; set; }
 
+        public Doctor Doctor{ get; set; } = null!;
 
 
     }

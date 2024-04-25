@@ -1,0 +1,16 @@
+﻿using BE_Healthcare.Data.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BE_Healthcare.Models
+{
+    public class DoctorModel
+    {
+        public Guid Id_Doctor { get; set; }
+        public string Name { get; set; } = null!;
+        public string MedicalSpecialty { get; set; } = null!;
+        public double? Price { get; set; }
+        public string Address { get; set; } = null!;
+        public int? YearExperience { get; set; }
+
+    }
+}

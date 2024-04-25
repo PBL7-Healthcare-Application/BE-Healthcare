@@ -3,6 +3,7 @@ using System;
 using BE_Healthcare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_Healthcare.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424113221_Add_TableDoctorAnd_MedicalSpecialty")]
+    partial class Add_TableDoctorAnd_MedicalSpecialty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +29,10 @@ namespace BE_Healthcare.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Certificate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Experience")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -45,9 +52,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<string>("WorkingProcess")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<int?>("YearExperience")
-                        .HasColumnType("int");
 
                     b.HasKey("Id_Doctor");
 
@@ -186,7 +190,7 @@ namespace BE_Healthcare.Migrations
             modelBuilder.Entity("BE_Healthcare.Data.Entities.Doctor", b =>
                 {
                     b.HasOne("BE_Healthcare.Data.Entities.MedicalSpecialty", "MedicalSpecialty")
-                        .WithMany()
+                        .WithMany("Doctors")
                         .HasForeignKey("Id_Specialty");
 
                     b.HasOne("BE_Healthcare.Data.Entities.User", "User")
@@ -220,6 +224,11 @@ namespace BE_Healthcare.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.MedicalSpecialty", b =>
+                {
+                    b.Navigation("Doctors");
                 });
 
             modelBuilder.Entity("BE_Healthcare.Data.Entities.Role", b =>

@@ -23,6 +23,8 @@
         public static string MESSAGE_OTP_NOTMATCH = "OTP Code doesn't match";
         public static string MESSAGE_OTP_SENT_SUCCESSFUL= "An OTP has been sent to your email. Please enter the OTP to complete registration.";
         public static string MESSAGE_OTP_RESEND = "OTP is resent successful, please check your email.";
+        public static string MESSAGE_OTP_CREATIONTIME_NULL = "OTP creation time is null.";
+        public static string MESSAGE_GETDATA_SUCCESS = "Get data success";
 
 
 
