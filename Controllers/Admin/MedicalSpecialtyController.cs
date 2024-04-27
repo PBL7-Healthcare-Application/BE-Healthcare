@@ -21,7 +21,7 @@ namespace BE_Healthcare.Controllers.Admin
             {
                 return Ok(_medicalSpecialtyRepository.GetAllMedicalSpecialty());
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

@@ -5,7 +5,7 @@ namespace BE_Healthcare.Models
 {
     public class DoctorModel
     {
-        public Guid Id_Doctor { get; set; }
+        public Guid IdDoctor { get; set; }
         public string Name { get; set; } = null!;
         public string MedicalSpecialty { get; set; } = null!;
         public double? Price { get; set; }

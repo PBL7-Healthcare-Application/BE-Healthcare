@@ -1,6 +1,7 @@
 ﻿using BE_Healthcare.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace BE_Healthcare.Controllers.User
 {
@@ -21,11 +22,24 @@ namespace BE_Healthcare.Controllers.User
             {
                 return Ok(_doctorRepository.GetAllDoctor(search, exp, from, to, sortBy, id_specialty));
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
+        }
+
+        [HttpGet("GetDoctorById/{id}")]
+        public IActionResult GetDoctorById(Guid id)
+        {
+            try
+            {
+                return Ok(_doctorRepository.GetDoctorById(id));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

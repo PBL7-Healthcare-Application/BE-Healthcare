@@ -123,7 +123,7 @@ namespace BE_Healthcare.Services
 
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                    new Claim("Id_User", user.Id_User.ToString()),
+                    new Claim("IdUser", user.IdUser.ToString()),
                     new Claim(ClaimTypes.Name, user.Name),
 
                 }),
@@ -142,7 +142,7 @@ namespace BE_Healthcare.Services
                 {
                     Id = Guid.NewGuid(),
                     JwtId = token.Id,
-                    UserId = user.Id_User,
+                    UserId = user.IdUser,
                     Token = refreshToken,
                     IsUsed = false,
                     IsRevoked = false,
@@ -286,7 +286,15 @@ namespace BE_Healthcare.Services
                 _context.SaveChanges();
 
                 //Create new token
-                var user = _context.Users.FirstOrDefault(x => x.Id_User == storedToken.UserId);
+                var user = _context.Users.FirstOrDefault(x => x.IdUser == storedToken.UserId);
+                if(user == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_USER,
+                    };
+                }
                 var token = GenerateToken(user);
 
                 return new ApiResponse
@@ -410,7 +418,7 @@ namespace BE_Healthcare.Services
 
                 var _user = new User
                 {
-                    Id_User = Guid.NewGuid(),
+                    IdUser = Guid.NewGuid(),
                     Email = user.Email,
                     PasswordHash = hashFunc.ComputeHash(passwordBytes),
                     PasswordSalt = hashFunc.Key,
@@ -419,7 +427,7 @@ namespace BE_Healthcare.Services
                     OTPVerification = token,
                     OTPCreatedAt= GenerateTimeNowAtVN(),
                     IsVerified = false,
-                    id_Role = 1,
+                    idRole = 1,
 
                 };
                 _context.Users.Add(_user);

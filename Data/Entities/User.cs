@@ -7,7 +7,8 @@ namespace BE_Healthcare.Data.Entities
     public class User
     {
         [Key]
-        public Guid Id_User{ get; set; }
+        //[ForeignKey("Doctor")]
+        public Guid IdUser{ get; set; }
 
         [Required]
         [MaxLength(250)]
@@ -24,17 +25,17 @@ namespace BE_Healthcare.Data.Entities
         [DataType(DataType.Date)]
         public DateTime? DOB { get; set; }
 
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null!;
 
-        public string? Address { get; set; }
+        public string Address { get; set; } = null!;
 
-        public string? Avatar { get; set; }
+        public string Avatar { get; set; } = null!;
 
         public bool? Gender { get; set; }
 
-        public int id_Role { get; set; }
+        public int idRole { get; set; }
 
-        [ForeignKey(nameof(id_Role))]
+        [ForeignKey(nameof(idRole))]
         public Role Role { get; set; } = null!;
 
         public string OTPVerification { get; set; } = null!;

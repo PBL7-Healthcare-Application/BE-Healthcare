@@ -2,7 +2,7 @@
 {
     public class MedicalSpecialtyModel
     {
-        public int Id_Specialty { get; set; }
+        public int IdSpecialty { get; set; }
 
         public string Name { get; set; } = null!;
     }

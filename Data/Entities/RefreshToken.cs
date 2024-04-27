@@ -1,8 +1,7 @@
-﻿using BE_Healthcare.Data.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BE_Healthcare.Models
+namespace BE_Healthcare.Data.Entities
 {
     [Table("RefreshToken")]
     public class RefreshToken
