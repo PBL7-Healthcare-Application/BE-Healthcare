@@ -5,7 +5,7 @@ namespace BE_Healthcare.Data.Entities
     public class MedicalSpecialty
     {
         [Key]
-        public int Id_Specialty { get; set; }
+        public int IdSpecialty { get; set; }
 
         public string Name { get; set; } = null!;
 

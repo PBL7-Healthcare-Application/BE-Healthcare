@@ -25,6 +25,8 @@
         public static string MESSAGE_OTP_RESEND = "OTP is resent successful, please check your email.";
         public static string MESSAGE_OTP_CREATIONTIME_NULL = "OTP creation time is null.";
         public static string MESSAGE_GETDATA_SUCCESS = "Get data success";
+        public static string MESSAGE_NOTFOUND_DOCTOR = "Doctor is not found!";
+
 
 
 
