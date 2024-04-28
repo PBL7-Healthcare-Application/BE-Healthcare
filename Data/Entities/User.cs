@@ -24,12 +24,12 @@ namespace BE_Healthcare.Data.Entities
 
         [DataType(DataType.Date)]
         public DateTime? DOB { get; set; }
+            
+        public string? PhoneNumber { get; set; }
 
-        public string PhoneNumber { get; set; } = null!;
+        public string? Address { get; set; }
 
-        public string Address { get; set; } = null!;
-
-        public string Avatar { get; set; } = null!;
+        public string? Avatar { get; set; }
 
         public bool? Gender { get; set; }
 
@@ -41,7 +41,7 @@ namespace BE_Healthcare.Data.Entities
         public string OTPVerification { get; set; } = null!;
         public DateTime? OTPCreatedAt { get; set; }
 
-        public bool? IsVerified { get; set; }
+        public bool? IsVerified { get; set; } = false;
 
         public Doctor Doctor{ get; set; } = null!;
 

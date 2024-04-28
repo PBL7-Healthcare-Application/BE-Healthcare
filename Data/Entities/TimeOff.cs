@@ -17,7 +17,7 @@ namespace BE_Healthcare.Data.Entities
         [ForeignKey(nameof(IdDoctor))]
         public Doctor Doctor { get; set; } = null!;
         public int? Status { get; set; }
-        public string Reason { get; set; } = null!;
+        public string? Reason { get; set; } = null;
         
 
     }

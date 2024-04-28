@@ -93,7 +93,7 @@ namespace BE_Healthcare.Services
         public List<CertificateModel> GetCertificateByIdDoctor(Guid id)
         {
             var list_Certificate = _context.Certificates.Include(e => e.Doctor)
-                .AsQueryable().Where(e => e.Id_Doctor == id);
+                .AsQueryable().Where(e => e.IdDoctor == id);
             var result_certificate = list_Certificate.Select(c => new CertificateModel
             {
                 IdCertificate = c.IdCertificate,

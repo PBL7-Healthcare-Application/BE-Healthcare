@@ -9,7 +9,7 @@ namespace BE_Healthcare.Services
     {
         ApiResponse Validate(LoginModel model);
 
-        TokenModel GenerateToken(User user);
+        TokenModel GenerateToken(User user, string? role);
         ApiResponse RenewToken(TokenModel model);
 
         User getUserByEmail(string email);

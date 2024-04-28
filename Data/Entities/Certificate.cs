@@ -11,9 +11,9 @@ namespace BE_Healthcare.Data.Entities
         public int? Year { get; set; }
         public string Image{ get; set; } = null!;
 
-        public Guid? Id_Doctor { get; set; }
+        public Guid? IdDoctor { get; set; }
 
-        [ForeignKey(nameof(Id_Doctor))]
+        [ForeignKey(nameof(IdDoctor))]
         public Doctor Doctor { get; set; } = null!;
     }
 }

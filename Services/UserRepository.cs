@@ -87,7 +87,7 @@ namespace BE_Healthcare.Services
                     };
                 }
                 //Cap Token
-                var token = GenerateToken(currentUser);
+                var token = GenerateToken(currentUser, currentUser.Role.Name);
 
                 return new ApiResponse
                 {
@@ -107,7 +107,7 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public TokenModel GenerateToken(User user)
+        public TokenModel GenerateToken(User user, string? role)
         {
             try
             {
@@ -125,9 +125,11 @@ namespace BE_Healthcare.Services
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                     new Claim("IdUser", user.IdUser.ToString()),
                     new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Role, role),
 
                 }),
-                    Expires = DateTime.UtcNow.AddSeconds(60),
+                    IssuedAt = DateTime.UtcNow,
+                    Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey
                     (secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
                 };
@@ -157,6 +159,7 @@ namespace BE_Healthcare.Services
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
+                    Role = user.Role.Name
                 };
             }
             catch (Exception ex)
@@ -226,7 +229,9 @@ namespace BE_Healthcare.Services
                 var expClaim = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp);
                 if (expClaim != null && long.TryParse(expClaim.Value, out long utcExpireDate))
                 {
-                    var expireDate = ConvertUnixTimeToDateTime(utcExpireDate);
+                    var expireDateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(utcExpireDate);
+                    var expireDate = expireDateTimeOffset.UtcDateTime;  //Convert to DateTime 
+
                     if (expireDate > DateTime.UtcNow)
                     {
                         return new ApiResponse
@@ -286,7 +291,8 @@ namespace BE_Healthcare.Services
                 _context.SaveChanges();
 
                 //Create new token
-                var user = _context.Users.FirstOrDefault(x => x.IdUser == storedToken.UserId);
+                var user = getUserById(storedToken.UserId);
+                //_context.Users.FirstOrDefault(x => x.IdUser == storedToken.UserId);
                 if(user == null)
                 {
                     return new ApiResponse
@@ -295,7 +301,7 @@ namespace BE_Healthcare.Services
                         Message = AppString.MESSAGE_NOTFOUND_USER,
                     };
                 }
-                var token = GenerateToken(user);
+                var token = GenerateToken(user, user.Role.Name);
 
                 return new ApiResponse
                 {
@@ -317,17 +323,14 @@ namespace BE_Healthcare.Services
             }
         }
 
-        private DateTime ConvertUnixTimeToDateTime(long utcExpireDate)
-        {
-            var dateTimeInterval = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dateTimeInterval.AddSeconds(utcExpireDate).ToUniversalTime();
-
-            return dateTimeInterval;
-        }
-
         public User getUserByEmail(string email)
         {
-            return _context.Users.SingleOrDefault(x => x.Email == email);
+            return _context.Users.Include(p => p.Role).SingleOrDefault(x => x.Email == email);
+        }
+
+        public User getUserById(Guid id)
+        {
+            return _context.Users.Include(p => p.Role).SingleOrDefault(x => x.IdUser == id);
         }
         public void DeleteUserByEmail(string email)
         {
@@ -423,9 +426,8 @@ namespace BE_Healthcare.Services
                     PasswordHash = hashFunc.ComputeHash(passwordBytes),
                     PasswordSalt = hashFunc.Key,
                     Name = user.Name,
-                    PhoneNumber = user.PhoneNumber,
                     OTPVerification = token,
-                    OTPCreatedAt= GenerateTimeNowAtVN(),
+                    OTPCreatedAt= DateTime.UtcNow,
                     IsVerified = false,
                     idRole = 1,
 
@@ -472,7 +474,6 @@ namespace BE_Healthcare.Services
                             StatusCode = StatusCode.FAILED,
                             Message = AppString.MESSAGE_OTP_NOTMATCH,
                         };
-
                     }
 
                     
@@ -480,7 +481,7 @@ namespace BE_Healthcare.Services
                     {
                         var otpExpiryTime = currentUser.OTPCreatedAt.Value.AddMinutes(2);
 
-                        if (otpExpiryTime < GenerateTimeNowAtVN())  // Check if the OTP code is expired
+                        if (otpExpiryTime < DateTime.UtcNow)  // Check if the OTP code is expired
                         {
                             return new ApiResponse
                             {
@@ -503,10 +504,14 @@ namespace BE_Healthcare.Services
                     currentUser.IsVerified = true;
                     _context.SaveChanges();
 
+                    var token = GenerateToken(currentUser, currentUser.Role.Name);
+
+
                     return new ApiResponse
                     {
                         StatusCode = StatusCode.SUCCESS,
                         Message = AppString.MESSAGE_EMAIL_VERIFIED,
+                        Data = token
                     };
                 }
                 return new ApiResponse
@@ -533,7 +538,7 @@ namespace BE_Healthcare.Services
                 {
                     //Success -> Update Field 
                     currentUser.OTPVerification = GenerateOTP();
-                    currentUser.OTPCreatedAt = GenerateTimeNowAtVN();
+                    currentUser.OTPCreatedAt = DateTime.UtcNow;
                     _context.SaveChanges();
                     SendOTPToEmail(email, currentUser.OTPVerification);
 
