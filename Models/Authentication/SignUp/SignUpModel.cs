@@ -15,6 +15,5 @@ namespace BE_Healthcare.Models.Authentication.SignUp
         [MaxLength(250)]
         public string Name { get; set; } = null!;
 
-        public string PhoneNumber { get; set; } = null!;
     }
 }

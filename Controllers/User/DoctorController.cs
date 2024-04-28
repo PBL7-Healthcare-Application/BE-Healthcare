@@ -1,4 +1,5 @@
 ﻿using BE_Healthcare.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -7,6 +8,8 @@ namespace BE_Healthcare.Controllers.User
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "Doctor")]
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorRepository _doctorRepository;
