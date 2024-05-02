@@ -7,7 +7,7 @@ namespace BE_Healthcare.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin|Doctor")]
+    //[Authorize(Roles = "Doctor")]
 
     public class MedicalSpecialtyController : ControllerBase
     {

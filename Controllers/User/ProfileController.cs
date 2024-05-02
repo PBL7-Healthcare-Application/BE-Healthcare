@@ -24,7 +24,12 @@ namespace BE_Healthcare.Controllers.User
         {
             try
             {
+
                 var checkEmail = User.Claims.FirstOrDefault(u => u.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+                if (checkEmail == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
                 return Ok(_profileRepository.GetPersonalInfo(checkEmail));
             }
             catch

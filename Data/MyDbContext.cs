@@ -21,7 +21,7 @@ namespace BE_Healthcare.Data
         public DbSet<TimeOff> TimeOffs { get; set; }
         public DbSet<TrainingProcess> TrainingProcesses { get; set; }
         public DbSet<WorkingProcess> WorkingProcesses { get; set; }
-
+        public DbSet<Appointment> Appointments { get; set; }
 
         #endregion
 
@@ -155,7 +155,15 @@ namespace BE_Healthcare.Data
                     IdUser = Guid.Parse("6d2fc8cc-cbfa-401d-aef5-2d1588751d32"),
                     WorkingTimeStart = "08:00",
                     WorkingTimeEnd = "17:00",
-                    DurationPerAppointment = 1
+                    DurationPerAppointment = 1,
+                    Description = "Bác sĩ Chuyên khoa I Trần Thị Hoài Hương nguyên là Phó Trưởng khoa Lâm sàng" +
+                    " 1 tại Bệnh viện Da liễu TP.HCM.\r\n\r\nVề chuyên môn, bác sĩ chuyên thăm khám và điều trị các" +
+                    " vấn đề bệnh lý chuyên sâu về da, bệnh da ở trẻ cũng như các phương pháp thẩm mỹ da liễu." +
+                    "\r\n\r\n\r\nBác sĩ cũng là gương mặt quen thuộc trong những hội nghị hội thảo về Da liễu. " +
+                    "Với nền tảng chuyên môn hơn 20 năm, bác sĩ còn được biết đến với thái độ tận tình tận tâm, " +
+                    "luôn sẵn sàng tư vấn hỗ trợ bệnh nhân các vấn đề bệnh lý cũng như trao đổi về các liệu pháp " +
+                    "thẩm mỹ hiệu quả phù hợp.",
+                    TotalFreeSlot = 9
                 },
                 new Doctor
                 {
@@ -166,7 +174,19 @@ namespace BE_Healthcare.Data
                     IdUser = Guid.Parse("9f12c430-de83-4910-92ac-704bffefaab2"),
                     WorkingTimeStart = "07:00",
                     WorkingTimeEnd = "17:00",
-                    DurationPerAppointment = 1
+                    DurationPerAppointment = 1,
+                    Description = "Tiến sĩ - Bác sĩ Vũ Thái Hà có gần 20 năm kinh nghiệm trong việc tư vấn và điều trị" +
+                    " các vấn đề về da liễu như nám, mụn, lão hóa da,…\r\n\r\nVề quá trình đào tạo, bác sĩ tốt nghiệp " +
+                    "Bác sĩ nội trú Da liễu, tốt nghiệp bậc Thạc sĩ tại trường Đại học Y Hà Nội. Sau đó, bác sĩ có khoảng" +
+                    " thời gian thực tập tại Pháp về phương pháp điều trị các bệnh về da liễu, bệnh về tóc, bệnh về móng." +
+                    "\r\n\r\n\r\nBác sĩ hiện đang đảm nhận vai trò Trưởng khoa Nghiên cứu và Ứng dụng công nghệ tế bào gốc" +
+                    " tại Bệnh viện Da liễu Trung Ương. Bên cạnh đó, bác sĩ cũng là người phụ trách chuyên môn tại Phòng" +
+                    " khám Da liễu Thái Hà.\r\n\r\nVới nền tảng chuyên môn cực kỳ vững chắc, bác sĩ chuyên thăm khám và " +
+                    "điều trị các vấn đề bệnh lý liên quan đến da: viêm da cơ địa, viêm da tiếp xúc, viêm da dầu, thủy" +
+                    " đậu, nám da, nám da,...Bên cạnh đó, bác sĩ cũng nhận tư vấn các vấn đề về sẹo, vấn đề về mụn, tình" +
+                    " trạng lão hóa da, bớt sắc tố.",
+                    TotalFreeSlot = 10
+
                 },
                 new Doctor
                 {
@@ -177,7 +197,21 @@ namespace BE_Healthcare.Data
                     IdUser = Guid.Parse("efaaf180-4211-45d1-9b08-f085f19cb451"),
                     WorkingTimeStart = "08:00",
                     WorkingTimeEnd = "18:00",
-                    DurationPerAppointment = 1
+                    DurationPerAppointment = 1,
+                    Description = "Tiến sĩ - Bác sĩ Trần Thịnh có gần 40 năm kinh nghiệm thăm khám và điều trị các vấn đề Da liễu." +
+                    " Tiến sĩ nguyên là Trưởng khoa Da liễu - Bệnh viện Da liễu TP.HCM và hiện đang là người điều hành phòng khám" +
+                    " Chuyên khoa Da liễu Trần Thịnh.\r\n\r\nVề quá trình đào tạo, tiến sĩ tốt nghiệp chuyên ngành Da liễu tại " +
+                    "trường Đại học Y Dược TP. HCM. Sau khi tốt nghiệp, tiến sĩ được giữ lại trường và đảm nhiệm vai trò bác sĩ, " +
+                    "cán bộ phòng Khoa học kỹ thuật khoa Y. Đến năm 2009, dù đã là người dày dặn kinh nghiệm trong ngành, bác sĩ " +
+                    "tiếp tục dành thời gian học thêm chuyên ngành về Quản lý Y tế tại trường Đại học Y Dược.\r\n\r\n\r\nNgoài " +
+                    "cương vị bác sĩ, giai đoạn từ năm 1991 - 1999, tiến sĩ còn đảm đương nhiều vai trò quan trọng tại bệnh viện " +
+                    "Da liễu. Trong đó có việc tham gia phụ trách chương trình kiểm soát bệnh lây qua tình dục và AIDS tại TP.HCM" +
+                    " cũng như đóng góp vào quá trình đào tạo nguồn lực kế cận với vai trò giảng viên tại các trường đại học." +
+                    "\r\n\r\nNăm 2010, tiến sĩ Trần Thịnh đã nhận được bằng khen từ Bộ trưởng Bộ Y tế về những thành tựu có " +
+                    "được. Xuyên suốt quá trình sự nghiệp, tiến sĩ được biết đến là một trong những chuyên gia vững về trình độ" +
+                    " chuyên môn, tận tâm tận tình trong quá trình thăm khám.",
+                    TotalFreeSlot = 10
+
                 }
                 );
             #endregion
@@ -309,6 +343,73 @@ namespace BE_Healthcare.Data
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                 }
                 );
+            #endregion
+
+            #region Data Appointment
+
+            modelBuilder.Entity<Appointment>().HasData(
+                new Appointment
+                {
+                    IdAppointment = 5,
+                    StartTime = "10:00",
+                    EndTime = "11:00",
+                    Date = new DateTime(2024, 5, 4),
+                    Issue = "Tôi đang gặp phải vấn đề về da liễu, tôi cần bác sĩ kiểm tra và tư vấn giúp tôi.",
+                    Status = 1,
+                    Type = false,
+                    IdUser = Guid.Parse("9117c626-c3d0-4d14-b345-d70d85268623"),
+                    IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2")
+                },
+                new Appointment
+                {
+                    IdAppointment = 6,
+                    StartTime = "9:00",
+                    EndTime = "10:00",
+                    Date = new DateTime(2024, 5, 4),
+                    Issue = "Tôi đang gặp phải vấn đề về ruột thừa, tôi cần bác sĩ kiểm tra và tư vấn giúp tôi.",
+                    Status = 1,
+                    Type = false,
+                    IdUser = Guid.Parse("bfa4b5ec-1ad8-4676-8871-122749af64e4"),
+                    IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2")
+                },
+                new Appointment
+                {
+                    IdAppointment = 7,
+                    StartTime = "15:00",
+                    EndTime = "16:00",
+                    Date = new DateTime(2024, 5, 4),
+                    Issue = "Toi bi dau bung",
+                    Status = 1,
+                    Type = false,
+                    IdUser = Guid.Parse("9117c626-c3d0-4d14-b345-d70d85268623"),
+                    IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2")
+                },
+                new Appointment
+                {
+                    IdAppointment = 8,
+                    StartTime = "16:00",
+                    EndTime = "17:00",
+                    Date = new DateTime(2024, 5, 4),
+                    Issue = "Toi bi dau bung non",
+                    Status = 1,
+                    Type = false,
+                    IdUser = Guid.Parse("9117c626-c3d0-4d14-b345-d70d85268623"),
+                    IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2")
+                },
+                new Appointment
+                {
+                    IdAppointment = 9,
+                    StartTime = "8:00",
+                    EndTime = "9:00",
+                    Date = new DateTime(2024, 5, 4),
+                    Issue = "Toi bi dau bung non",
+                    Status = 1,
+                    Type = false,
+                    IdUser = Guid.Parse("9117c626-c3d0-4d14-b345-d70d85268623"),
+                    IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2")
+                }
+                );
+
             #endregion
         }
     }

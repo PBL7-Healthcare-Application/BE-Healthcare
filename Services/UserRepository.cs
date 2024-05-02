@@ -64,11 +64,8 @@ namespace BE_Healthcare.Services
                 }
                 if ((bool)!currentUser.IsVerified)
                 {
-                    if ((bool)!currentUser.IsVerified)
-                    {
-                        //xoa record trong DB
-                        DeleteUserByEmail(currentUser.Email);
-                    }
+                    //xoa record trong DB
+                    DeleteUserByEmail(currentUser.Email);
 
                     return new ApiResponse
                     {
@@ -76,7 +73,6 @@ namespace BE_Healthcare.Services
                         Message = AppString.MESSAGE_NOTFOUND_USER,
                     };
                 }
-
 
                 if (!CheckPassword(currentUser, model.Password))   //Check Password
                 {
@@ -323,19 +319,23 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public User getUserByEmail(string email)
+        public User? getUserByEmail(string email)
         {
             return _context.Users.Include(p => p.Role).SingleOrDefault(x => x.Email == email);
         }
 
-        public User getUserById(Guid id)
+        public User? getUserById(Guid id)
         {
             return _context.Users.Include(p => p.Role).SingleOrDefault(x => x.IdUser == id);
         }
         public void DeleteUserByEmail(string email)
         {
-            _context.Users.Remove(getUserByEmail(email));
-            _context.SaveChanges();
+            var user = getUserByEmail(email);
+            if(user != null) 
+            {
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+            }
         }
 
         public bool CheckPassword(User currentUser, string password)

@@ -68,6 +68,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IMedicalSpecialtyRepository, MedicalSpecialtyRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
 
 builder.Services.Configure<AppSetting>(configuration.GetSection("AppSettings"));
 

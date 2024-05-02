@@ -27,6 +27,11 @@
         public static string MESSAGE_GETDATA_SUCCESS = "Get data success";
         public static string MESSAGE_NOTFOUND_DOCTOR = "Doctor is not found!";
         public static string MESSAGE_EMAIL_NULL = "Email is null!";
+        public static string MESSAGE_BOOKAPPOINTMENT_ERROR = "You (Doctor) cannot make your own appointments";
+        public static string MESSAGE_OVERLAP_TIMEOFF = "Can't book this time because doctor is off at this time";
+        public static string MESSAGE_ERROR_TIMESLOT_ISSET = "This time slot has been booked in advance, please check again";
+        public static string MESSAGE_ERROR_INVALID_TIME = "Invalid time!";
+        public static string MESSAGE_SCHEDULED_SUCCESSFUL = "Successfully scheduled a medical examination!";
 
 
 

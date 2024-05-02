@@ -8,7 +8,7 @@ namespace BE_Healthcare.Controllers.User
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "User")]
     //[Authorize(Roles = "Doctor")]
     public class DoctorController : ControllerBase
     {
@@ -19,11 +19,11 @@ namespace BE_Healthcare.Controllers.User
         }
 
         [HttpGet("GetDoctor")]
-        public IActionResult GetDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null)
+        public IActionResult GetDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null)
         {
             try
             {
-                return Ok(_doctorRepository.GetAllDoctor(search, exp, from, to, sortBy, id_specialty));
+                return Ok(_doctorRepository.GetAllDoctor(search, exp, from, to, sortBy, id_specialty, filterAvailable));
             }
             catch
             {
@@ -32,12 +32,12 @@ namespace BE_Healthcare.Controllers.User
 
         }
 
-        [HttpGet("GetDoctorById/{id}")]
-        public IActionResult GetDoctorById(Guid id)
+        [HttpGet("GetDoctorDetail/{id}")]
+        public IActionResult GetDoctorDetail(Guid id)
         {
             try
             {
-                return Ok(_doctorRepository.GetDoctorById(id));
+                return Ok(_doctorRepository.GetDoctorDetail(id));
             }
             catch
             {

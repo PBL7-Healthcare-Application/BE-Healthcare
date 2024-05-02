@@ -4,5 +4,6 @@
     {
         public static int FAILED = 100;
         public static int SUCCESS = 200;
+
     }
 }

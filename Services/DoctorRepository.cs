@@ -4,6 +4,7 @@ using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Numerics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BE_Healthcare.Services
@@ -16,12 +17,22 @@ namespace BE_Healthcare.Services
         {
             _context = context;
         }
+        public IQueryable<Doctor> GetAll()
+        {
+            return _context.Doctors.Include(p=>p.User).Include(q => q.MedicalSpecialty).AsQueryable();
+        }
+        public int GetTotalAppointmentByIdDoctor(DateTime d, Guid idDoctor)
+        {
+            int a = _context.Appointments
+                    .Count(a => a.Date == d.Date && a.IdDoctor == idDoctor);
+            return a;
+        }
 
-        public ApiResponse GetAllDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null)
+        public ApiResponse GetAllDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null)
         {
             try
             {
-                var listDoctor = _context.Doctors.AsQueryable();
+                var listDoctor = GetAll();
 
                 #region Filtering
                 if (id_specialty.HasValue)
@@ -43,7 +54,40 @@ namespace BE_Healthcare.Services
                 if (to.HasValue)
                 {
                     listDoctor = listDoctor.Where(d => d.Price <= to);
+                }
 
+
+                var availableDoctors = listDoctor.ToList();
+
+
+                if (!string.IsNullOrEmpty(filterAvailable))
+                {
+                    DateTime t;
+                    if(filterAvailable == "TODAY")
+                    {
+                        t = DateTime.Now.Date;
+                        foreach (var doctor in listDoctor.ToList())
+                        {
+                            int availableTimeSlots = CalculateFreeSlot(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, doctor.DurationPerAppointment);
+                            if (availableTimeSlots <= 0)
+                            {
+                                availableDoctors.Remove(doctor);
+                            }
+                        }
+
+                    }
+                    if (filterAvailable == "TOMORROW")
+                    {
+                        t = DateTime.Now.AddDays(1).Date;
+                        foreach (var doctor in listDoctor.ToList())
+                        {
+                            int availableTimeSlots = CalculateFreeSlot(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, doctor.DurationPerAppointment);
+                            if (availableTimeSlots <= 0)
+                            {
+                                availableDoctors.Remove(doctor);
+                            }
+                        }
+                    }
                 }
                 #endregion
 
@@ -54,16 +98,15 @@ namespace BE_Healthcare.Services
                 {
                     switch (sortBy)
                     {
-
-                        case "exp_asc": listDoctor = listDoctor.OrderBy(d => d.YearExperience); break;  //YearExperience tang dan
-                        case "exp_desc": listDoctor = listDoctor.OrderBy(d => d.YearExperience); break; //YearExperience giam dan
-                        case "gia_asc": listDoctor = listDoctor.OrderBy(d => d.Price); break;
-                        case "gia_desc": listDoctor = listDoctor.OrderByDescending(d => d.Price); break;
+                        case "exp_asc": availableDoctors = availableDoctors.OrderBy(d => d.YearExperience).ToList(); break;
+                        case "exp_desc": availableDoctors = availableDoctors.OrderByDescending(d => d.YearExperience).ToList(); break;
+                        case "gia_asc": availableDoctors = availableDoctors.OrderBy(d => d.Price).ToList(); break;
+                        case "gia_desc": availableDoctors = availableDoctors.OrderByDescending(d => d.Price).ToList(); break;
                     }
                 }
                 #endregion
 
-                var result = listDoctor.Select(d => new DoctorModel
+                var result = availableDoctors.Select(d => new DoctorModel
                 {
                     IdDoctor = d.IdDoctor,
                     Name = d.User.Name,
@@ -79,6 +122,7 @@ namespace BE_Healthcare.Services
                     Message = AppString.MESSAGE_GETDATA_SUCCESS,
                     Data = result
                 };
+
             }
             catch (Exception ex)
             {
@@ -146,10 +190,17 @@ namespace BE_Healthcare.Services
             }).ToList();
             return result_timeOff;
         }
-
-        public ApiResponse GetDoctorById(Guid id)
+        public Doctor? GetDoctorById(Guid id)
         {
-            var Doctor = _context.Doctors.Include(p =>p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == id);
+            var data = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == id);
+            if (data != null)
+                return data;
+            return null;
+        }
+
+        public ApiResponse GetDoctorDetail(Guid id)
+        {
+            var Doctor = GetDoctorById(id);
 
             if (Doctor == null)
             {
@@ -168,7 +219,7 @@ namespace BE_Healthcare.Services
             var list_TimeOff = GetTimeOffByIdDoctor(id);
 
 
-            DoctorDetailModel result = new DoctorDetailModel    
+            DoctorDetailModel result = new DoctorDetailModel
             {
                 IdDoctor = Doctor.IdDoctor,
                 Name = Doctor.User.Name,
@@ -184,7 +235,8 @@ namespace BE_Healthcare.Services
                 WorkingTimeEnd = Doctor.WorkingTimeEnd,
                 DurationPerAppointment = Doctor.DurationPerAppointment,
                 TimeOffs = list_TimeOff,
-
+                Description = Doctor.Description,
+                Avatar = Doctor.User.Avatar,
             };
 
 
@@ -199,5 +251,50 @@ namespace BE_Healthcare.Services
         }
 
 
+        public int CalculateFreeSlot(Guid idDoctor, DateTime d, string WorkingTimeStart, string WorkingTimeEnd, int DurationPerAppointment)
+        {
+            try
+            {
+                //get appointment in a day 
+                int appointmentsToday = GetTotalAppointmentByIdDoctor(d, idDoctor);
+
+                TimeSpan startTime = TimeSpan.Parse(WorkingTimeStart);
+                TimeSpan endTime = TimeSpan.Parse(WorkingTimeEnd);
+                TimeSpan totalHours = endTime - startTime;
+                int totalSlot = (int)totalHours.TotalHours / DurationPerAppointment;
+                int availableTimeSlots = totalSlot - appointmentsToday;
+
+                //get break time from time off 
+                var TimeOffBreak = GetTimeOffByIdDoctor(idDoctor).Where(e => e.Status == AppNumber.BREAK).FirstOrDefault();
+                if(TimeOffBreak != null)
+                {
+                    TimeSpan startTime_Break = TimeSpan.Parse(TimeOffBreak.StartTime);
+                    TimeSpan endTime_Break = TimeSpan.Parse(TimeOffBreak.EndTime);
+                    TimeSpan totalHours_Break = endTime_Break - startTime_Break;
+                    int totalBreak = (int)totalHours_Break.TotalHours / DurationPerAppointment;
+                    availableTimeSlots -= totalBreak;
+
+                }
+
+                //get busy time from time off
+                var listTimeOffBusy = GetTimeOffByIdDoctor(idDoctor).Where(e => e.Status == AppNumber.BUSY && e.Date == d.Date);
+                if (listTimeOffBusy != null)
+                {
+                    foreach(var i in listTimeOffBusy)
+                    {
+                        TimeSpan totalHours_Busy = TimeSpan.Parse(i.EndTime) - TimeSpan.Parse(i.StartTime);
+                        int totalBusy= (int)totalHours_Busy.TotalHours / DurationPerAppointment;
+                        availableTimeSlots -= totalBusy;
+                    }
+
+                }
+                return availableTimeSlots > 0 ? availableTimeSlots : 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return 0;
+            }
+        }
     }
 }
