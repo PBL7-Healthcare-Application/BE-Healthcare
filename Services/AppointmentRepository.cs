@@ -119,7 +119,6 @@ namespace BE_Healthcare.Services
             AddAppointment(idUser, model);
 
             // Update free slot
-            doctor.TotalFreeSlot -= 1;
             _context.SaveChanges();
 
             return new ApiResponse
