@@ -162,8 +162,7 @@ namespace BE_Healthcare.Data
                     "\r\n\r\n\r\nBác sĩ cũng là gương mặt quen thuộc trong những hội nghị hội thảo về Da liễu. " +
                     "Với nền tảng chuyên môn hơn 20 năm, bác sĩ còn được biết đến với thái độ tận tình tận tâm, " +
                     "luôn sẵn sàng tư vấn hỗ trợ bệnh nhân các vấn đề bệnh lý cũng như trao đổi về các liệu pháp " +
-                    "thẩm mỹ hiệu quả phù hợp.",
-                    TotalFreeSlot = 9
+                    "thẩm mỹ hiệu quả phù hợp."
                 },
                 new Doctor
                 {
@@ -184,8 +183,7 @@ namespace BE_Healthcare.Data
                     " khám Da liễu Thái Hà.\r\n\r\nVới nền tảng chuyên môn cực kỳ vững chắc, bác sĩ chuyên thăm khám và " +
                     "điều trị các vấn đề bệnh lý liên quan đến da: viêm da cơ địa, viêm da tiếp xúc, viêm da dầu, thủy" +
                     " đậu, nám da, nám da,...Bên cạnh đó, bác sĩ cũng nhận tư vấn các vấn đề về sẹo, vấn đề về mụn, tình" +
-                    " trạng lão hóa da, bớt sắc tố.",
-                    TotalFreeSlot = 10
+                    " trạng lão hóa da, bớt sắc tố."
 
                 },
                 new Doctor
@@ -209,8 +207,7 @@ namespace BE_Healthcare.Data
                     " cũng như đóng góp vào quá trình đào tạo nguồn lực kế cận với vai trò giảng viên tại các trường đại học." +
                     "\r\n\r\nNăm 2010, tiến sĩ Trần Thịnh đã nhận được bằng khen từ Bộ trưởng Bộ Y tế về những thành tựu có " +
                     "được. Xuyên suốt quá trình sự nghiệp, tiến sĩ được biết đến là một trong những chuyên gia vững về trình độ" +
-                    " chuyên môn, tận tâm tận tình trong quá trình thăm khám.",
-                    TotalFreeSlot = 10
+                    " chuyên môn, tận tâm tận tình trong quá trình thăm khám."
 
                 }
                 );
@@ -246,6 +243,17 @@ namespace BE_Healthcare.Data
                     EndTime = "13:00",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                     Status = 2,  //1 -> Busy; 2->Break
+                },
+                new TimeOff
+                {
+                    IdTimeOff = 4,
+                    Date = new DateTime(2024, 5, 4),
+                    StartTime = "13:00",
+                    EndTime = "15:00",
+                    IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    Status = 1,  //1 -> Busy; 2->Break
+                    Reason = "Busy with family"
+
                 }
                 );
             #endregion

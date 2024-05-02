@@ -21,6 +21,5 @@ namespace BE_Healthcare.Data.Entities
         public string WorkingTimeStart { get; set; } = null!;
         public string WorkingTimeEnd { get; set; } = null!;
         public int DurationPerAppointment { get; set; }
-        public int TotalFreeSlot { get; set; }
     }
 }
