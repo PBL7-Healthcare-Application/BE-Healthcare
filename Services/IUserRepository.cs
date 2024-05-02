@@ -12,7 +12,9 @@ namespace BE_Healthcare.Services
         TokenModel GenerateToken(User user, string? role);
         ApiResponse RenewToken(TokenModel model);
 
-        User getUserByEmail(string email);
+        User? getUserByEmail(string email);
+        User? getUserById(Guid id);
+
         void DeleteUserByEmail(string email);
 
 

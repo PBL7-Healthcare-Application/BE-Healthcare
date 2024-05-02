@@ -4,7 +4,7 @@ namespace BE_Healthcare.Models
 {
     public class DoctorDetailModel : DoctorModel
     {
-        public string PhoneNumber { get; set; } = null!;
+        public string? PhoneNumber { get; set; } = null!;
 
         public List<CertificateModel> Certificates { get; set; } = null!;
         public List<WorkingProcessModel> WorkingProcess { get; set; } = null!;

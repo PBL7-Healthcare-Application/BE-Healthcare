@@ -7,7 +7,6 @@ namespace BE_Healthcare.Data.Entities
     public class User
     {
         [Key]
-        //[ForeignKey("Doctor")]
         public Guid IdUser{ get; set; }
 
         [Required]

@@ -9,7 +9,7 @@ namespace BE_Healthcare.Data.Entities
         public Guid IdDoctor { get; set; }
         public int? YearExperience { get; set; }
         public double? Price { get; set; }
-
+        public string Description { get; set; } = null!;
         public int? IdSpecialty { get; set; }
 
         [ForeignKey(nameof(IdSpecialty))]
@@ -20,7 +20,7 @@ namespace BE_Healthcare.Data.Entities
         public User User { get; set; } = null!;
         public string WorkingTimeStart { get; set; } = null!;
         public string WorkingTimeEnd { get; set; } = null!;
-        public int? DurationPerAppointment { get; set; }
-
+        public int DurationPerAppointment { get; set; }
+        public int TotalFreeSlot { get; set; }
     }
 }
