@@ -1,6 +1,7 @@
 ﻿using BE_Healthcare.Constant;
 using BE_Healthcare.Data;
 using BE_Healthcare.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BE_Healthcare.Services
 {
@@ -28,12 +29,18 @@ namespace BE_Healthcare.Services
                 //    Address = d.User.Address,
                 //    YearExperience = d.YearExperience
                 //});
+                var res = list.Select(m => new MedicalSpecialtyModel
+                {
+                    IdSpecialty = m.IdSpecialty,
+                    Name = m.Name,
+                    Image = m.Image,
+                });
 
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_GETDATA_SUCCESS,
-                    Data = list
+                    Data = res
                 };
             }
             catch (Exception ex)

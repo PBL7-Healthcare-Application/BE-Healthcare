@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BE_Healthcare.Constant;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BE_Healthcare.Data.Entities
@@ -15,5 +16,6 @@ namespace BE_Healthcare.Data.Entities
 
         [ForeignKey(nameof(IdDoctor))]
         public Doctor Doctor { get; set; } = null!;
+        public int? StatusVerified { get; set; } = AppNumber.PENDING; //0: Pending - 1: Approved - 2: Rejected
     }
 }

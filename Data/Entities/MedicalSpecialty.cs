@@ -8,6 +8,8 @@ namespace BE_Healthcare.Data.Entities
         public int IdSpecialty { get; set; }
 
         public string Name { get; set; } = null!;
+        public string? Image { get; set; } = null!;
+
 
         //public virtual ICollection<Doctor> Doctors{ get; set; } = null!;
 

@@ -3,6 +3,7 @@ using System;
 using BE_Healthcare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_Healthcare.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240503073910_Update_TableDoctor_v4")]
+    partial class Update_TableDoctor_v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,9 +142,6 @@ namespace BE_Healthcare.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("StatusVerified")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Year")
                         .HasColumnType("int");
 
@@ -158,7 +158,6 @@ namespace BE_Healthcare.Migrations
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Image = "https://hellobacsi.com/care/bac-si/bsckii-tran-thi-hoai-huong-646/",
                             Name = "Hội viên chi hội Da liễu Hồ Chí Minh",
-                            StatusVerified = 1,
                             Year = 2020
                         },
                         new
@@ -167,7 +166,6 @@ namespace BE_Healthcare.Migrations
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Image = "https://hellobacsi.com/care/bac-si/bsckii-tran-thi-hoai-huong-646/",
                             Name = "Hội viên Hội Da liễu Việt Nam",
-                            StatusVerified = 1,
                             Year = 2022
                         });
                 });
@@ -262,9 +260,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int>("IdSpecialty")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -531,9 +526,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int?>("StartYear")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StatusVerified")
-                        .HasColumnType("int");
-
                     b.HasKey("IdTrainingProcess");
 
                     b.HasIndex("IdDoctor");
@@ -546,32 +538,28 @@ namespace BE_Healthcare.Migrations
                             IdTrainingProcess = 1,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tốt nghiệp Bác sĩ Chuyên khoa II, chuyên ngành Da liễu",
-                            SchoolName = "Đại học Y Dược TP.HCM",
-                            StatusVerified = 1
+                            SchoolName = "Đại học Y Dược TP.HCM"
                         },
                         new
                         {
                             IdTrainingProcess = 2,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tốt nghiệp Bác sĩ Chuyên khoa I, chuyên ngành Da liễu",
-                            SchoolName = "Đại học Y Dược TP.HCM",
-                            StatusVerified = 1
+                            SchoolName = "Đại học Y Dược TP.HCM"
                         },
                         new
                         {
                             IdTrainingProcess = 3,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tốt nghiệp Bác sĩ Đa khoa",
-                            SchoolName = "Đại học Y Dược TP.HCM",
-                            StatusVerified = 1
+                            SchoolName = "Đại học Y Dược TP.HCM"
                         },
                         new
                         {
                             IdTrainingProcess = 4,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tham gia lớp Sơ bộ DInh dưỡng",
-                            SchoolName = "Đại học Y khoa Phạm Ngọc Thạch",
-                            StatusVerified = 1
+                            SchoolName = "Đại học Y khoa Phạm Ngọc Thạch"
                         });
                 });
 
@@ -640,10 +628,10 @@ namespace BE_Healthcare.Migrations
                             Email = "nguyenquocthanh268@gmail.com",
                             IsVerified = true,
                             Name = "Nguyen Quoc Thanh",
-                            OTPCreatedAt = new DateTime(2024, 5, 4, 15, 8, 29, 730, DateTimeKind.Utc).AddTicks(1407),
+                            OTPCreatedAt = new DateTime(2024, 5, 3, 7, 39, 9, 911, DateTimeKind.Utc).AddTicks(1971),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 175, 119, 100, 33, 81, 67, 229, 253, 8, 33, 209, 250, 91, 15, 147, 172, 204, 114, 142, 25, 156, 153, 224, 73, 117, 182, 62, 153, 99, 50, 140, 217 },
-                            PasswordSalt = new byte[] { 31, 139, 91, 134, 7, 28, 176, 227, 240, 61, 38, 210, 153, 20, 22, 143, 1, 181, 87, 96, 70, 108, 88, 183, 192, 92, 225, 230, 28, 36, 12, 195, 157, 75, 77, 104, 135, 225, 176, 248, 64, 118, 43, 139, 186, 97, 68, 8, 199, 246, 27, 201, 31, 24, 209, 46, 57, 188, 164, 51, 14, 105, 49, 91 },
+                            PasswordHash = new byte[] { 173, 100, 230, 133, 173, 38, 166, 207, 101, 20, 144, 222, 80, 37, 166, 240, 216, 99, 145, 60, 15, 175, 240, 160, 204, 154, 248, 87, 21, 251, 142, 195 },
+                            PasswordSalt = new byte[] { 225, 51, 191, 189, 136, 65, 95, 4, 15, 231, 75, 137, 246, 219, 225, 249, 222, 205, 228, 20, 116, 37, 186, 55, 154, 243, 25, 90, 100, 81, 206, 128, 15, 8, 246, 104, 136, 184, 219, 31, 107, 196, 167, 201, 46, 198, 35, 12, 182, 190, 223, 148, 111, 45, 109, 11, 57, 244, 250, 158, 101, 101, 138, 84 },
                             idRole = 1
                         },
                         new
@@ -652,10 +640,10 @@ namespace BE_Healthcare.Migrations
                             Email = "buivanhuy@gmail.com",
                             IsVerified = true,
                             Name = "Huy Bui",
-                            OTPCreatedAt = new DateTime(2024, 5, 4, 15, 8, 29, 730, DateTimeKind.Utc).AddTicks(1429),
+                            OTPCreatedAt = new DateTime(2024, 5, 3, 7, 39, 9, 911, DateTimeKind.Utc).AddTicks(1991),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 175, 119, 100, 33, 81, 67, 229, 253, 8, 33, 209, 250, 91, 15, 147, 172, 204, 114, 142, 25, 156, 153, 224, 73, 117, 182, 62, 153, 99, 50, 140, 217 },
-                            PasswordSalt = new byte[] { 31, 139, 91, 134, 7, 28, 176, 227, 240, 61, 38, 210, 153, 20, 22, 143, 1, 181, 87, 96, 70, 108, 88, 183, 192, 92, 225, 230, 28, 36, 12, 195, 157, 75, 77, 104, 135, 225, 176, 248, 64, 118, 43, 139, 186, 97, 68, 8, 199, 246, 27, 201, 31, 24, 209, 46, 57, 188, 164, 51, 14, 105, 49, 91 },
+                            PasswordHash = new byte[] { 173, 100, 230, 133, 173, 38, 166, 207, 101, 20, 144, 222, 80, 37, 166, 240, 216, 99, 145, 60, 15, 175, 240, 160, 204, 154, 248, 87, 21, 251, 142, 195 },
+                            PasswordSalt = new byte[] { 225, 51, 191, 189, 136, 65, 95, 4, 15, 231, 75, 137, 246, 219, 225, 249, 222, 205, 228, 20, 116, 37, 186, 55, 154, 243, 25, 90, 100, 81, 206, 128, 15, 8, 246, 104, 136, 184, 219, 31, 107, 196, 167, 201, 46, 198, 35, 12, 182, 190, 223, 148, 111, 45, 109, 11, 57, 244, 250, 158, 101, 101, 138, 84 },
                             idRole = 1
                         },
                         new
@@ -664,10 +652,10 @@ namespace BE_Healthcare.Migrations
                             Email = "anhoang@gmail.com",
                             IsVerified = true,
                             Name = "Vo A Hoang",
-                            OTPCreatedAt = new DateTime(2024, 5, 4, 15, 8, 29, 730, DateTimeKind.Utc).AddTicks(1444),
+                            OTPCreatedAt = new DateTime(2024, 5, 3, 7, 39, 9, 911, DateTimeKind.Utc).AddTicks(2004),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 175, 119, 100, 33, 81, 67, 229, 253, 8, 33, 209, 250, 91, 15, 147, 172, 204, 114, 142, 25, 156, 153, 224, 73, 117, 182, 62, 153, 99, 50, 140, 217 },
-                            PasswordSalt = new byte[] { 31, 139, 91, 134, 7, 28, 176, 227, 240, 61, 38, 210, 153, 20, 22, 143, 1, 181, 87, 96, 70, 108, 88, 183, 192, 92, 225, 230, 28, 36, 12, 195, 157, 75, 77, 104, 135, 225, 176, 248, 64, 118, 43, 139, 186, 97, 68, 8, 199, 246, 27, 201, 31, 24, 209, 46, 57, 188, 164, 51, 14, 105, 49, 91 },
+                            PasswordHash = new byte[] { 173, 100, 230, 133, 173, 38, 166, 207, 101, 20, 144, 222, 80, 37, 166, 240, 216, 99, 145, 60, 15, 175, 240, 160, 204, 154, 248, 87, 21, 251, 142, 195 },
+                            PasswordSalt = new byte[] { 225, 51, 191, 189, 136, 65, 95, 4, 15, 231, 75, 137, 246, 219, 225, 249, 222, 205, 228, 20, 116, 37, 186, 55, 154, 243, 25, 90, 100, 81, 206, 128, 15, 8, 246, 104, 136, 184, 219, 31, 107, 196, 167, 201, 46, 198, 35, 12, 182, 190, 223, 148, 111, 45, 109, 11, 57, 244, 250, 158, 101, 101, 138, 84 },
                             idRole = 1
                         },
                         new
@@ -676,10 +664,10 @@ namespace BE_Healthcare.Migrations
                             Email = "doctor1@gmail.com",
                             IsVerified = true,
                             Name = "BS.CKII Trần Thị Hoài Hương",
-                            OTPCreatedAt = new DateTime(2024, 5, 4, 15, 8, 29, 730, DateTimeKind.Utc).AddTicks(1459),
+                            OTPCreatedAt = new DateTime(2024, 5, 3, 7, 39, 9, 911, DateTimeKind.Utc).AddTicks(2018),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 175, 119, 100, 33, 81, 67, 229, 253, 8, 33, 209, 250, 91, 15, 147, 172, 204, 114, 142, 25, 156, 153, 224, 73, 117, 182, 62, 153, 99, 50, 140, 217 },
-                            PasswordSalt = new byte[] { 31, 139, 91, 134, 7, 28, 176, 227, 240, 61, 38, 210, 153, 20, 22, 143, 1, 181, 87, 96, 70, 108, 88, 183, 192, 92, 225, 230, 28, 36, 12, 195, 157, 75, 77, 104, 135, 225, 176, 248, 64, 118, 43, 139, 186, 97, 68, 8, 199, 246, 27, 201, 31, 24, 209, 46, 57, 188, 164, 51, 14, 105, 49, 91 },
+                            PasswordHash = new byte[] { 173, 100, 230, 133, 173, 38, 166, 207, 101, 20, 144, 222, 80, 37, 166, 240, 216, 99, 145, 60, 15, 175, 240, 160, 204, 154, 248, 87, 21, 251, 142, 195 },
+                            PasswordSalt = new byte[] { 225, 51, 191, 189, 136, 65, 95, 4, 15, 231, 75, 137, 246, 219, 225, 249, 222, 205, 228, 20, 116, 37, 186, 55, 154, 243, 25, 90, 100, 81, 206, 128, 15, 8, 246, 104, 136, 184, 219, 31, 107, 196, 167, 201, 46, 198, 35, 12, 182, 190, 223, 148, 111, 45, 109, 11, 57, 244, 250, 158, 101, 101, 138, 84 },
                             idRole = 2
                         },
                         new
@@ -688,10 +676,10 @@ namespace BE_Healthcare.Migrations
                             Email = "doctor2@gmail.com",
                             IsVerified = true,
                             Name = "TS.BS Vũ Thái Hà",
-                            OTPCreatedAt = new DateTime(2024, 5, 4, 15, 8, 29, 730, DateTimeKind.Utc).AddTicks(1474),
+                            OTPCreatedAt = new DateTime(2024, 5, 3, 7, 39, 9, 911, DateTimeKind.Utc).AddTicks(2031),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 175, 119, 100, 33, 81, 67, 229, 253, 8, 33, 209, 250, 91, 15, 147, 172, 204, 114, 142, 25, 156, 153, 224, 73, 117, 182, 62, 153, 99, 50, 140, 217 },
-                            PasswordSalt = new byte[] { 31, 139, 91, 134, 7, 28, 176, 227, 240, 61, 38, 210, 153, 20, 22, 143, 1, 181, 87, 96, 70, 108, 88, 183, 192, 92, 225, 230, 28, 36, 12, 195, 157, 75, 77, 104, 135, 225, 176, 248, 64, 118, 43, 139, 186, 97, 68, 8, 199, 246, 27, 201, 31, 24, 209, 46, 57, 188, 164, 51, 14, 105, 49, 91 },
+                            PasswordHash = new byte[] { 173, 100, 230, 133, 173, 38, 166, 207, 101, 20, 144, 222, 80, 37, 166, 240, 216, 99, 145, 60, 15, 175, 240, 160, 204, 154, 248, 87, 21, 251, 142, 195 },
+                            PasswordSalt = new byte[] { 225, 51, 191, 189, 136, 65, 95, 4, 15, 231, 75, 137, 246, 219, 225, 249, 222, 205, 228, 20, 116, 37, 186, 55, 154, 243, 25, 90, 100, 81, 206, 128, 15, 8, 246, 104, 136, 184, 219, 31, 107, 196, 167, 201, 46, 198, 35, 12, 182, 190, 223, 148, 111, 45, 109, 11, 57, 244, 250, 158, 101, 101, 138, 84 },
                             idRole = 2
                         },
                         new
@@ -700,10 +688,10 @@ namespace BE_Healthcare.Migrations
                             Email = "doctor3@gmail.com",
                             IsVerified = true,
                             Name = "TS.BS Trần Thịnh",
-                            OTPCreatedAt = new DateTime(2024, 5, 4, 15, 8, 29, 730, DateTimeKind.Utc).AddTicks(1489),
+                            OTPCreatedAt = new DateTime(2024, 5, 3, 7, 39, 9, 911, DateTimeKind.Utc).AddTicks(2043),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 175, 119, 100, 33, 81, 67, 229, 253, 8, 33, 209, 250, 91, 15, 147, 172, 204, 114, 142, 25, 156, 153, 224, 73, 117, 182, 62, 153, 99, 50, 140, 217 },
-                            PasswordSalt = new byte[] { 31, 139, 91, 134, 7, 28, 176, 227, 240, 61, 38, 210, 153, 20, 22, 143, 1, 181, 87, 96, 70, 108, 88, 183, 192, 92, 225, 230, 28, 36, 12, 195, 157, 75, 77, 104, 135, 225, 176, 248, 64, 118, 43, 139, 186, 97, 68, 8, 199, 246, 27, 201, 31, 24, 209, 46, 57, 188, 164, 51, 14, 105, 49, 91 },
+                            PasswordHash = new byte[] { 173, 100, 230, 133, 173, 38, 166, 207, 101, 20, 144, 222, 80, 37, 166, 240, 216, 99, 145, 60, 15, 175, 240, 160, 204, 154, 248, 87, 21, 251, 142, 195 },
+                            PasswordSalt = new byte[] { 225, 51, 191, 189, 136, 65, 95, 4, 15, 231, 75, 137, 246, 219, 225, 249, 222, 205, 228, 20, 116, 37, 186, 55, 154, 243, 25, 90, 100, 81, 206, 128, 15, 8, 246, 104, 136, 184, 219, 31, 107, 196, 167, 201, 46, 198, 35, 12, 182, 190, 223, 148, 111, 45, 109, 11, 57, 244, 250, 158, 101, 101, 138, 84 },
                             idRole = 2
                         });
                 });
@@ -727,9 +715,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int?>("StartYear")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StatusVerified")
-                        .HasColumnType("int");
-
                     b.Property<string>("Workplace")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -748,7 +733,6 @@ namespace BE_Healthcare.Migrations
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Bác sĩ Da liễu",
                             StartYear = 2012,
-                            StatusVerified = 1,
                             Workplace = "Phòng khám Da liễu Táo Đỏ"
                         },
                         new
@@ -758,7 +742,6 @@ namespace BE_Healthcare.Migrations
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Nguyên Phó Trưởng khoa Lâm sàng 1",
                             StartYear = 2012,
-                            StatusVerified = 1,
                             Workplace = "Bệnh viện Da liễu TP. HCM"
                         },
                         new
@@ -768,7 +751,6 @@ namespace BE_Healthcare.Migrations
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Trưởng Khoa Dinh Dưỡng",
                             StartYear = 2012,
-                            StatusVerified = 1,
                             Workplace = "Bệnh viện Da liễu TP. HCM"
                         },
                         new
@@ -778,7 +760,6 @@ namespace BE_Healthcare.Migrations
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Bác sĩ chuyên khoa da liễu, thẩm mỹ da",
                             StartYear = 2012,
-                            StatusVerified = 1,
                             Workplace = "Bệnh viện Da liễu TP. HCM"
                         });
                 });

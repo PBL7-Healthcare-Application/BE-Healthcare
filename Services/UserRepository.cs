@@ -26,11 +26,14 @@ namespace BE_Healthcare.Services
         private readonly MyDbContext _context;
         private readonly AppSetting _appSetting;
         private readonly IEmailService _emailService;
-        public UserRepository(MyDbContext context, IOptionsMonitor<AppSetting> optionsMonitor, IEmailService emailService)
+        private readonly IDoctorRepository _doctorRepository;
+        public UserRepository(MyDbContext context, IOptionsMonitor<AppSetting> optionsMonitor, 
+            IEmailService emailService, IDoctorRepository doctorRepository)
         {
             _context = context;
             _appSetting = optionsMonitor.CurrentValue;
             _emailService = emailService;
+            _doctorRepository = doctorRepository;
         }
         public ApiResponse Validate(LoginModel model)
         {
@@ -111,9 +114,7 @@ namespace BE_Healthcare.Services
 
                 var secretKeyBytes = Encoding.UTF8.GetBytes(_appSetting.SecretKey);
 
-                var tokenDescription = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
+                var Subject = new ClaimsIdentity(new[]
                     {
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
@@ -122,8 +123,23 @@ namespace BE_Healthcare.Services
                     new Claim("IdUser", user.IdUser.ToString()),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Role, role),
+                });
+                
+                //Check Role -> Add IdDoctor to Token
+                if (user.idRole == AppNumber.ROLE_DOCTOR)
+                {
+                    var doctor = _doctorRepository.GetDoctorByIdUser(user.IdUser);
+                    if (doctor != null)
+                    {
+                        Subject.AddClaim(new Claim("IdDoctor", doctor.IdDoctor.ToString()));
 
-                }),
+                    }
+                }
+
+                var tokenDescription = new SecurityTokenDescriptor
+                {
+
+                    Subject = Subject,
                     IssuedAt = DateTime.UtcNow,
                     Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey
@@ -289,7 +305,7 @@ namespace BE_Healthcare.Services
                 //Create new token
                 var user = getUserById(storedToken.UserId);
                 //_context.Users.FirstOrDefault(x => x.IdUser == storedToken.UserId);
-                if(user == null)
+                if (user == null)
                 {
                     return new ApiResponse
                     {
