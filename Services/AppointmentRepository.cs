@@ -12,13 +12,16 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IUserRepository _userRepository;
 
-        public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository)
+
+        public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository, IUserRepository userRepository)
         {
             _context = context;
             _doctorRepository = doctorRepository;
+            _userRepository = userRepository;
         }
-        public List<Appointment> GetAppointmentByIdDoctor(Guid idDoctor)
+        public List<Appointment>? GetAppointmentByIdDoctor(Guid idDoctor)
         {
             try
             {
@@ -64,19 +67,34 @@ namespace BE_Healthcare.Services
                 };
             }
 
+
             //3. Check time book is valid
 
             TimeSpan startTime_Book = TimeSpan.Parse(model.StartTime);
             TimeSpan endTime_Book = TimeSpan.Parse(model.EndTime);
 
-            if (startTime_Book < TimeSpan.Parse(doctor.WorkingTimeStart) && startTime_Book >= TimeSpan.Parse(doctor.WorkingTimeEnd))
+            if (doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null)
+            {
+                if (startTime_Book < TimeSpan.Parse(doctor.WorkingTimeStart) && startTime_Book >= TimeSpan.Parse(doctor.WorkingTimeEnd))
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_ERROR_INVALID_TIME,
+                    };
+                }
+            }
+            else
             {
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.FAILED,
-                    Message = AppString.MESSAGE_ERROR_INVALID_TIME,
+                    Message = AppString.MESSAGE_ERROR_DOCTOR_NOTSETUPCHEDULES,
                 };
             }
+
+
+
 
             //4. Check Time Off of Doctor
             var date_book = model.Date;
@@ -101,17 +119,20 @@ namespace BE_Healthcare.Services
 
             var list_appointment = GetAppointmentByIdDoctor(model.IdDoctor).Where(e => e.Date.ToShortDateString() == date_book.ToShortDateString());
 
-            foreach( var i in list_appointment)
+            if(list_appointment.Any())
             {
-                TimeSpan startTime_appointmentbooked= TimeSpan.Parse(i.StartTime);
-                TimeSpan endTime_appointmentbooked = TimeSpan.Parse(i.EndTime);
-                if (startTime_Book >= startTime_appointmentbooked && startTime_Book < endTime_appointmentbooked) // Book time is overlaps with another appoOntment
+                foreach (var i in list_appointment)
                 {
-                    return new ApiResponse
+                    TimeSpan startTime_appointmentbooked = TimeSpan.Parse(i.StartTime);
+                    TimeSpan endTime_appointmentbooked = TimeSpan.Parse(i.EndTime);
+                    if (startTime_Book >= startTime_appointmentbooked && startTime_Book < endTime_appointmentbooked) // Book time is overlaps with another appoOntment
                     {
-                        StatusCode = StatusCode.FAILED,
-                        Message = AppString.MESSAGE_ERROR_TIMESLOT_ISSET,
-                    };
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_ERROR_TIMESLOT_ISSET,
+                        };
+                    }
                 }
             }
 
@@ -121,10 +142,29 @@ namespace BE_Healthcare.Services
             // Update free slot
             _context.SaveChanges();
 
+            var dataUser = _userRepository.getUserById(idUser);
+            var res = new ScheduleAppointmentSuccessfulModel
+            {
+                IdDoctor = model.IdDoctor,
+                Name = doctor.User.Name,
+                Address = doctor.User.Address,
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
+                Date = model.Date,
+                Issue = model.Issue,
+                Type = model.Type,
+                Price = doctor.Price,
+                Avatar_Doctor = doctor.User.Avatar,
+                IdUser = idUser,
+                Name_User = dataUser.Name,
+                Avatar_User = dataUser.Avatar,
+            };
+
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
                 Message = AppString.MESSAGE_SCHEDULED_SUCCESSFUL,
+                Data = res
             };
 
 

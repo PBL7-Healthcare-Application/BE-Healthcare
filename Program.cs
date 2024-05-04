@@ -69,6 +69,11 @@ builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IMedicalSpecialtyRepository, MedicalSpecialtyRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
+builder.Services.AddScoped<ITrainingProcessRepository, TrainingProcessRepository>();
+builder.Services.AddScoped<IWorkingProcessRepository, WorkingProcessRepository>();
+builder.Services.AddScoped<IPartnerRepository, PartnerRepository>();
+
 
 
 builder.Services.Configure<AppSetting>(configuration.GetSection("AppSettings"));
@@ -93,7 +98,7 @@ builder.Services.AddAuthentication
             ClockSkew = TimeSpan.Zero
         };
     });
-
+//builder.WebHost.UseUrls("http://10.0.11.20:7061");
 //builder.Services.AddAuthentication
 //    (JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => 
 //    { 

@@ -1,4 +1,5 @@
-﻿using BE_Healthcare.Data.Entities;
+﻿using BE_Healthcare.Constant;
+using BE_Healthcare.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection.Metadata;
@@ -162,7 +163,8 @@ namespace BE_Healthcare.Data
                     "\r\n\r\n\r\nBác sĩ cũng là gương mặt quen thuộc trong những hội nghị hội thảo về Da liễu. " +
                     "Với nền tảng chuyên môn hơn 20 năm, bác sĩ còn được biết đến với thái độ tận tình tận tâm, " +
                     "luôn sẵn sàng tư vấn hỗ trợ bệnh nhân các vấn đề bệnh lý cũng như trao đổi về các liệu pháp " +
-                    "thẩm mỹ hiệu quả phù hợp."
+                    "thẩm mỹ hiệu quả phù hợp.",
+                    StatusVerified = AppNumber.APPROVED
                 },
                 new Doctor
                 {
@@ -183,7 +185,8 @@ namespace BE_Healthcare.Data
                     " khám Da liễu Thái Hà.\r\n\r\nVới nền tảng chuyên môn cực kỳ vững chắc, bác sĩ chuyên thăm khám và " +
                     "điều trị các vấn đề bệnh lý liên quan đến da: viêm da cơ địa, viêm da tiếp xúc, viêm da dầu, thủy" +
                     " đậu, nám da, nám da,...Bên cạnh đó, bác sĩ cũng nhận tư vấn các vấn đề về sẹo, vấn đề về mụn, tình" +
-                    " trạng lão hóa da, bớt sắc tố."
+                    " trạng lão hóa da, bớt sắc tố.",
+                    StatusVerified = AppNumber.APPROVED
 
                 },
                 new Doctor
@@ -207,7 +210,9 @@ namespace BE_Healthcare.Data
                     " cũng như đóng góp vào quá trình đào tạo nguồn lực kế cận với vai trò giảng viên tại các trường đại học." +
                     "\r\n\r\nNăm 2010, tiến sĩ Trần Thịnh đã nhận được bằng khen từ Bộ trưởng Bộ Y tế về những thành tựu có " +
                     "được. Xuyên suốt quá trình sự nghiệp, tiến sĩ được biết đến là một trong những chuyên gia vững về trình độ" +
-                    " chuyên môn, tận tâm tận tình trong quá trình thăm khám."
+                    " chuyên môn, tận tâm tận tình trong quá trình thăm khám.",
+                    StatusVerified = AppNumber.APPROVED
+
 
                 }
                 );
@@ -267,6 +272,8 @@ namespace BE_Healthcare.Data
                     Year = 2020,
                     Image = "https://hellobacsi.com/care/bac-si/bsckii-tran-thi-hoai-huong-646/",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
+
                 },
                 new Certificate
                 {
@@ -275,6 +282,8 @@ namespace BE_Healthcare.Data
                     Year = 2022,
                     Image = "https://hellobacsi.com/care/bac-si/bsckii-tran-thi-hoai-huong-646/",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
+
                 }
                 );
             #endregion
@@ -287,6 +296,8 @@ namespace BE_Healthcare.Data
                     SchoolName = "Đại học Y Dược TP.HCM",
                     Major = "Tốt nghiệp Bác sĩ Chuyên khoa II, chuyên ngành Da liễu",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
+
                 },
                 new TrainingProcess
                 {
@@ -294,6 +305,8 @@ namespace BE_Healthcare.Data
                     SchoolName = "Đại học Y Dược TP.HCM",
                     Major = "Tốt nghiệp Bác sĩ Chuyên khoa I, chuyên ngành Da liễu",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
+
                 },
                 new TrainingProcess
                 {
@@ -301,6 +314,7 @@ namespace BE_Healthcare.Data
                     SchoolName = "Đại học Y Dược TP.HCM",
                     Major = "Tốt nghiệp Bác sĩ Đa khoa",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
                 },
                 new TrainingProcess
                 {
@@ -308,6 +322,7 @@ namespace BE_Healthcare.Data
                     SchoolName = "Đại học Y khoa Phạm Ngọc Thạch",
                     Major = "Tham gia lớp Sơ bộ DInh dưỡng",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
                 }
                 );
             #endregion
@@ -322,6 +337,7 @@ namespace BE_Healthcare.Data
                     EndYear = 2014,
                     Workplace = "Phòng khám Da liễu Táo Đỏ",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
                 },
                 new WorkingProcess
                 {
@@ -331,6 +347,7 @@ namespace BE_Healthcare.Data
                     EndYear = 2014,
                     Workplace = "Bệnh viện Da liễu TP. HCM",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
                 },
                 new WorkingProcess
                 {
@@ -340,6 +357,7 @@ namespace BE_Healthcare.Data
                     EndYear = 2014,
                     Workplace = "Bệnh viện Da liễu TP. HCM",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
                 },
                 new WorkingProcess
                 {
@@ -349,6 +367,7 @@ namespace BE_Healthcare.Data
                     EndYear = 2014,
                     Workplace = "Bệnh viện Da liễu TP. HCM",
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    StatusVerified = AppNumber.APPROVED
                 }
                 );
             #endregion

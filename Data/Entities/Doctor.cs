@@ -18,8 +18,10 @@ namespace BE_Healthcare.Data.Entities
 
         public Guid IdUser { get; set; }
         public User User { get; set; } = null!;
-        public string WorkingTimeStart { get; set; } = null!;
-        public string WorkingTimeEnd { get; set; } = null!;
-        public int DurationPerAppointment { get; set; }
+        public string? WorkingTimeStart { get; set; } = null!;
+        public string? WorkingTimeEnd { get; set; } = null!;
+        public int? DurationPerAppointment { get; set; }
+        public int? StatusVerified { get; set; } //0: Pending - 1: Approved - 2: Rejected
+
     }
 }

@@ -32,6 +32,16 @@
         public static string MESSAGE_ERROR_TIMESLOT_ISSET = "This time slot has been booked in advance, please check again";
         public static string MESSAGE_ERROR_INVALID_TIME = "Invalid time!";
         public static string MESSAGE_SCHEDULED_SUCCESSFUL = "Successfully scheduled a medical examination!";
+        public static string MESSAGE_ERROR_DOCTOR_NOTSETUPCHEDULES = "This doctor hasn't set up his schedules.";
+        public static string MESSAGE_REGISTERDOCTOR_SUCCESS = "Your information has been submitted, please wait for Admin to approve your information.";
+        public static string MESSAGE_ADDCERTIFICATE_SUCCESS = "Add certificate successfully!";
+        public static string MESSAGE_ADDLISTCERTIFICATE_SUCCESS = "Add list certificate successfully!";
+        public static string MESSAGE_ADDWORKINGPROCESS_SUCCESS = "Add working process successfully!";
+        public static string MESSAGE_ADDLISTWORKINGPROCESS_SUCCESS = "Add list working process successfully!";
+        public static string MESSAGE_ADDTRAININGPROCESS_SUCCESS = "Add training process successfully!";
+        public static string MESSAGE_ADDLISTTRAININGPROCESS_SUCCESS = "Add list training process successfully!";
+
+
 
 
 

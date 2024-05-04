@@ -68,11 +68,15 @@ namespace BE_Healthcare.Services
                         t = DateTime.Now.Date;
                         foreach (var doctor in listDoctor.ToList())
                         {
-                            int availableTimeSlots = CalculateFreeSlot(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, doctor.DurationPerAppointment);
-                            if (availableTimeSlots <= 0)
+                            if(doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null ) 
                             {
-                                availableDoctors.Remove(doctor);
+                                int availableTimeSlots = CalculateFreeSlot(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, (int)doctor.DurationPerAppointment);
+                                if (availableTimeSlots <= 0)
+                                {
+                                    availableDoctors.Remove(doctor);
+                                }
                             }
+
                         }
 
                     }
@@ -81,11 +85,15 @@ namespace BE_Healthcare.Services
                         t = DateTime.Now.AddDays(1).Date;
                         foreach (var doctor in listDoctor.ToList())
                         {
-                            int availableTimeSlots = CalculateFreeSlot(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, doctor.DurationPerAppointment);
-                            if (availableTimeSlots <= 0)
+                            if (doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null)
                             {
-                                availableDoctors.Remove(doctor);
+                                int availableTimeSlots = CalculateFreeSlot(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, (int)doctor.DurationPerAppointment);
+                                if (availableTimeSlots <= 0)
+                                {
+                                    availableDoctors.Remove(doctor);
+                                }
                             }
+
                         }
                     }
                 }
@@ -295,6 +303,20 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
                 return 0;
             }
+        }
+
+        public void AddDoctor(Doctor doctor)
+        {
+            _context.Doctors.Add(doctor);
+            _context.SaveChanges();
+        }
+
+        public Doctor? GetDoctorByIdUser(Guid id)
+        {
+            var data = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdUser == id);
+            if (data != null)
+                return data;
+            return null;
         }
     }
 }
