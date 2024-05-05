@@ -27,7 +27,7 @@ namespace BE_Healthcare.Services
         private readonly AppSetting _appSetting;
         private readonly IEmailService _emailService;
         private readonly IDoctorRepository _doctorRepository;
-        public UserRepository(MyDbContext context, IOptionsMonitor<AppSetting> optionsMonitor, 
+        public UserRepository(MyDbContext context, IOptionsMonitor<AppSetting> optionsMonitor,
             IEmailService emailService, IDoctorRepository doctorRepository)
         {
             _context = context;
@@ -124,7 +124,7 @@ namespace BE_Healthcare.Services
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Role, role),
                 });
-                
+
                 //Check Role -> Add IdDoctor to Token
                 if (user.idRole == AppNumber.ROLE_DOCTOR)
                 {
@@ -347,7 +347,7 @@ namespace BE_Healthcare.Services
         public void DeleteUserByEmail(string email)
         {
             var user = getUserByEmail(email);
-            if(user != null) 
+            if(user != null)
             {
                 _context.Users.Remove(user);
                 _context.SaveChanges();
@@ -401,14 +401,14 @@ namespace BE_Healthcare.Services
 
                 CreateUser(model, token);
 
-                SendOTPToEmail(model.Email, token);
+                SendOTPToEmail(AppString.MESSAGE_EMAIL_SUBJECT, model.Email, token, AppString.MESSAGE_EMAIL_CONTENT);
 
 
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_OTP_SENT_SUCCESSFUL,
-                    Data = new MailModel { email =  model.Email}
+                    Data = new MailModel { email = model.Email }
                 };
 
             }
@@ -422,9 +422,14 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-        private void SendOTPToEmail(string email, string token)
+        private void SendOTPToEmail(string subject, string email, string token, string content)
         {
-            var message = new MessageModel(new string[] { email! }, AppString.MESSAGE_EMAIL_SUBJECT, token + AppString.MESSAGE_EMAIL_CONTENT);
+            var message = new MessageModel(new string[] { email! }, subject, token + content);
+            _emailService.SendEmail(message);
+        }
+        private void SendRandomPassToEmail(string subject, string email, string pass, string content)
+        {
+            var message = new MessageModel(new string[] { email! }, subject, content + pass);
             _emailService.SendEmail(message);
         }
 
@@ -443,7 +448,7 @@ namespace BE_Healthcare.Services
                     PasswordSalt = hashFunc.Key,
                     Name = user.Name,
                     OTPVerification = token,
-                    OTPCreatedAt= DateTime.UtcNow,
+                    OTPCreatedAt = DateTime.UtcNow,
                     IsVerified = false,
                     idRole = 1,
 
@@ -472,7 +477,7 @@ namespace BE_Healthcare.Services
             return otp;
         }
 
-        private DateTime GenerateTimeNowAtVN() 
+        private DateTime GenerateTimeNowAtVN()
         {
             return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
         }
@@ -492,7 +497,7 @@ namespace BE_Healthcare.Services
                         };
                     }
 
-                    
+
                     if (currentUser.OTPCreatedAt.HasValue)  // Check if OTP creation time is not null
                     {
                         var otpExpiryTime = currentUser.OTPCreatedAt.Value.AddMinutes(2);
@@ -512,12 +517,12 @@ namespace BE_Healthcare.Services
                         return new ApiResponse  // Handle case where OTP creation time is null (optional)
                         {
                             StatusCode = StatusCode.FAILED,
-                            Message =AppString.MESSAGE_OTP_CREATIONTIME_NULL,
+                            Message = AppString.MESSAGE_OTP_CREATIONTIME_NULL,
                         };
                     }
-
-                    //Success -> Update Field 
+                    //Success->Update Field
                     currentUser.IsVerified = true;
+                    _context.Users.Update(currentUser);
                     _context.SaveChanges();
 
                     var token = GenerateToken(currentUser, currentUser.Role.Name);
@@ -527,15 +532,19 @@ namespace BE_Healthcare.Services
                     {
                         StatusCode = StatusCode.SUCCESS,
                         Message = AppString.MESSAGE_EMAIL_VERIFIED,
-                        Data = token
+                        //Data = token
                     };
+
+
+
                 }
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.FAILED,
                     Message = AppString.MESSAGE_NOTFOUND_USER,
                 };
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 return new ApiResponse
@@ -556,13 +565,13 @@ namespace BE_Healthcare.Services
                     currentUser.OTPVerification = GenerateOTP();
                     currentUser.OTPCreatedAt = DateTime.UtcNow;
                     _context.SaveChanges();
-                    SendOTPToEmail(email, currentUser.OTPVerification);
+                    SendOTPToEmail(AppString.MESSAGE_EMAIL_SUBJECT, email, currentUser.OTPVerification, AppString.MESSAGE_EMAIL_CONTENT);
 
                     return new ApiResponse
                     {
                         StatusCode = StatusCode.SUCCESS,
                         Message = AppString.MESSAGE_OTP_RESEND,
-                        Data = new MailModel{ email = email }
+                        Data = new MailModel { email = email }
                     };
                 }
                 return new ApiResponse
@@ -582,5 +591,88 @@ namespace BE_Healthcare.Services
             }
         }
 
+        public ApiResponse ResetPassword(MailModel model)
+        {
+            try
+            {
+                var currentUser = getUserByEmail(model.email);
+                if (currentUser != null)
+                {
+                    var newPass = GenerateRandomPassword(10);
+                    using var hashFunc = new HMACSHA256();
+                    var passwordBytes = Encoding.UTF8.GetBytes(newPass);
+                    currentUser.PasswordHash = hashFunc.ComputeHash(passwordBytes);
+                    currentUser.PasswordSalt = hashFunc.Key;
+
+                    _context.Users.Update(currentUser);
+                    _context.SaveChanges();
+
+                    SendRandomPassToEmail(AppString.MESSAGE_EMAIL_SUBJECT_RESETPASS, model.email, AppString.MESSAGE_EMAIL_CONTENT_RESETPASS, newPass);
+
+
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_RESETPASSWORD_SUCCESS,
+                        Data = new MailModel { email = model.email }
+                    };
+                }
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_USER,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        private string GenerateRandomPassword(int length)
+        {
+            const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string lowerChars = "abcdefghijklmnopqrstuvwxyz";
+            const string digitChars = "0123456789";
+            const string specialChars = "!@#$%^&*()_+";
+
+            var random = new Random();
+            var result = new StringBuilder(length);
+
+            result.Append(upperChars[random.Next(upperChars.Length)]);
+            result.Append(lowerChars[random.Next(lowerChars.Length)]);
+            result.Append(digitChars[random.Next(digitChars.Length)]);
+            result.Append(specialChars[random.Next(specialChars.Length)]);
+
+            for (int i = 4; i < length; i++)
+            {
+                string chars = upperChars + lowerChars + digitChars + specialChars;
+                result.Append(chars[random.Next(chars.Length)]);
+            }
+
+            // Shuffle the characters
+            string shuffledString = ShuffleString(result.ToString());
+            return shuffledString;
+        }
+        private string ShuffleString(string str)
+        {
+            char[] array = str.ToCharArray();
+            Random rng = new Random();
+            int n = array.Length;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                char value = array[k];
+                array[k] = array[n];
+                array[n] = value;
+            }
+            return new string(array);
+        }
     }
 }
