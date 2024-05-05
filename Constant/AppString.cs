@@ -40,6 +40,7 @@
         public static string MESSAGE_ADDLISTWORKINGPROCESS_SUCCESS = "Add list working process successfully!";
         public static string MESSAGE_ADDTRAININGPROCESS_SUCCESS = "Add training process successfully!";
         public static string MESSAGE_ADDLISTTRAININGPROCESS_SUCCESS = "Add list training process successfully!";
+        public static string MESSAGE_LISTAPPOINTMENT_EMPTY = "There are no upcoming appointments.";
 
 
 
