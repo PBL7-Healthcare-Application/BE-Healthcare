@@ -42,7 +42,9 @@
         public static string MESSAGE_ADDLISTTRAININGPROCESS_SUCCESS = "Add list training process successfully!";
         public static string MESSAGE_LISTAPPOINTMENT_EMPTY = "There are no upcoming appointments.";
 
-
+        public static string MESSAGE_EMAIL_SUBJECT_RESETPASS = "Reset Password for your Enclinic account";
+        public static string MESSAGE_EMAIL_CONTENT_RESETPASS = "Here is the new password for your account. Use it to login then change your password: \n\n";
+        public static string MESSAGE_RESETPASSWORD_SUCCESS = "Reset password successfully. Please Please check your email to get new password.";
 
 
 

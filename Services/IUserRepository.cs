@@ -24,6 +24,8 @@ namespace BE_Healthcare.Services
         ApiResponse ConfirmEmail(ConfirmMailModel model);
         ApiResponse ResendOTP(string email);
 
+        ApiResponse ResetPassword(MailModel model);
+
 
     }
 }
