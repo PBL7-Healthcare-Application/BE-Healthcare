@@ -42,8 +42,6 @@ namespace BE_Healthcare.Services
             }
         }
 
-
-
         public ApiResponse CreateAppointment(Guid idUser, AppointmentModel model)
         {
             //1. Check idDoctor is null or not
@@ -135,7 +133,7 @@ namespace BE_Healthcare.Services
                     }
                 }
             }
-
+            model.Price = doctor.Price;
             //check success
             AddAppointment(idUser, model);
 
@@ -181,10 +179,11 @@ namespace BE_Healthcare.Services
                     EndTime = model.EndTime,
                     Date = model.Date,
                     Issue = model.Issue,
-                    Status = 1,  //Status: 1 - Approved; 2 - Reject
+                    Status = 1,  //Status: 1 - Approved; 2 - Reject; 3 - Completed
                     Type = model.Type,
                     IdDoctor = model.IdDoctor,
-                    IdUser = idUser
+                    IdUser = idUser,
+                    Price = model.Price
                 };
 
                 _context.Add(_appointment);
@@ -194,6 +193,70 @@ namespace BE_Healthcare.Services
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        public ApiResponse GetAppointmentByIdUser(Guid idUser, int? Status = null)
+        {
+            try
+            {
+                var listAppointment = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
+                    .AsQueryable().Where(e => e.IdUser == idUser); // 
+
+                //Filtering
+                if (Status.HasValue)
+                {
+                    listAppointment = listAppointment.Where(l => l.Status == Status);
+                }
+
+                //Sorting
+                listAppointment = listAppointment.OrderBy(e => e.IdAppointment);
+
+
+                if (listAppointment.Any())
+                {
+                    var res = listAppointment.Select(a => new MyAppointmentModel
+                    {
+                        NameDoctor = a.User.Name,
+                        MedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
+                        AvatarDoctor = a.User.Avatar,
+                        IdAppointment = a.IdAppointment,
+                        StartTime = a.StartTime,
+                        EndTime = a.EndTime,
+                        Date = a.Date,
+                        Type = a.Type,
+                        Status = a.Status,
+                        Issue = a.Issue
+                    });
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                        Data = res
+                    };
+                }
+                else
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_LISTAPPOINTMENT_EMPTY,
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public ApiResponse CancelAppointment(Guid idUser, AppointmentModel model)
+        {
+            throw new NotImplementedException();
         }
 
         //public int CalculateFreeSlot(Guid idDoctor)

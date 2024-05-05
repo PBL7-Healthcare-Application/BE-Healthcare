@@ -12,5 +12,7 @@ namespace BE_Healthcare.Models
         public DateTime Date { get; set; }
         public string? Issue { get; set; } = null;
         public bool Type { get; set; } = false!;    //False - Offline; True - Online
+        public double? Price { get; set; }
+
     }
 }

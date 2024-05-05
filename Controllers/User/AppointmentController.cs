@@ -37,17 +37,45 @@ namespace BE_Healthcare.Controllers.User
             }
         }
 
-        //[HttpGet("CalculateFreeSlot/{idDoctor}")]
-        //public IActionResult CalculateFreeSlot(Guid idDoctor)
-        //{
-        //    try
-        //    {
-        //        return Ok(_appointmentRepository.CalculateFreeSlot(idDoctor));
-        //    }
-        //    catch
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError);
-        //    }
-        //}
+        [HttpGet("ViewAppointment")]
+        [Authorize(Roles = "User")]
+        public IActionResult ViewAppointment(int? Status = null) 
+        {
+            try
+            {
+                var checkIdUser = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
+                if (checkIdUser == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok(_appointmentRepository.GetAppointmentByIdUser(Guid.Parse(checkIdUser), Status));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("CancelAppointment")]
+        [Authorize(Roles = "User")]
+        public IActionResult CancelAppointment(AppointmentModel model)
+        {
+            try
+            {
+                var checkIdUser = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
+                if (checkIdUser == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok(_appointmentRepository.CancelAppointment(Guid.Parse(checkIdUser), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }
