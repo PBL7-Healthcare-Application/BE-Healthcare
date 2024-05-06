@@ -47,6 +47,7 @@
         public static string MESSAGE_RESETPASSWORD_SUCCESS = "Reset password successfully. Please Please check your email to get new password.";
         
         public static string MESSAGE_CHANGEPASSWORD_SUCCESS = "Change password successfully!";
+        public static string MESSAGE_UPDATEPROFILE_SUCCESS = "Update Profile Successfully!";
 
 
 

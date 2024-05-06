@@ -57,6 +57,23 @@ namespace BE_Healthcare.Controllers.User
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [HttpPost("UpdateProfile")]
+        public IActionResult UpdateProfile(UpdateProfileModel model)
+        {
+            try
+            {
 
+                var checkEmail = User.Claims.FirstOrDefault(u => u.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+                if (checkEmail == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(_profileRepository.UpdateProfile(checkEmail, model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
