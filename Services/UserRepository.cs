@@ -141,7 +141,7 @@ namespace BE_Healthcare.Services
 
                     Subject = Subject,
                     IssuedAt = DateTime.UtcNow,
-                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    Expires = DateTime.UtcNow.AddHours(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey
                     (secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
                 };
@@ -532,7 +532,7 @@ namespace BE_Healthcare.Services
                     {
                         StatusCode = StatusCode.SUCCESS,
                         Message = AppString.MESSAGE_EMAIL_VERIFIED,
-                        //Data = token
+                        Data = token
                     };
 
 
@@ -607,7 +607,7 @@ namespace BE_Healthcare.Services
                     _context.Users.Update(currentUser);
                     _context.SaveChanges();
 
-                    SendRandomPassToEmail(AppString.MESSAGE_EMAIL_SUBJECT_RESETPASS, model.email, AppString.MESSAGE_EMAIL_CONTENT_RESETPASS, newPass);
+                    SendRandomPassToEmail(AppString.MESSAGE_EMAIL_SUBJECT_RESETPASS, model.email, newPass, AppString.MESSAGE_EMAIL_CONTENT_RESETPASS);
 
 
                     return new ApiResponse
@@ -639,7 +639,7 @@ namespace BE_Healthcare.Services
             const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string lowerChars = "abcdefghijklmnopqrstuvwxyz";
             const string digitChars = "0123456789";
-            const string specialChars = "!@#$%^&*()_+";
+            const string specialChars = "!@#$%^&()_+";
 
             var random = new Random();
             var result = new StringBuilder(length);

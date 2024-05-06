@@ -22,6 +22,8 @@ namespace BE_Healthcare.Data.Entities
         public string? WorkingTimeEnd { get; set; } = null!;
         public int? DurationPerAppointment { get; set; }
         public int? StatusVerified { get; set; } //0: Pending - 1: Approved - 2: Rejected
+        public string? NameClinic { get; set; } = null!;
+
 
     }
 }

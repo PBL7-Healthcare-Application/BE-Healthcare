@@ -26,9 +26,9 @@ namespace BE_Healthcare.Services
             try
             {
                 var listAppointment = _context.Appointments.Include(e => e.Doctor)
-                    .AsQueryable().Where(e => e.IdDoctor == idDoctor);
+                    .AsQueryable().Where(e => e.IdDoctor == idDoctor && e.Date >= DateTime.UtcNow.Date);
 
-                if (listAppointment.Any())
+                if (listAppointment != null)
                 {
                     //listAppointment = listAppointment.OrderBy(a => a.StartTime);
                     return listAppointment.ToList();
@@ -117,7 +117,7 @@ namespace BE_Healthcare.Services
 
             var list_appointment = GetAppointmentByIdDoctor(model.IdDoctor).Where(e => e.Date.ToShortDateString() == date_book.ToShortDateString());
 
-            if(list_appointment.Any())
+            if(list_appointment != null)
             {
                 foreach (var i in list_appointment)
                 {
@@ -144,7 +144,7 @@ namespace BE_Healthcare.Services
             var res = new ScheduleAppointmentSuccessfulModel
             {
                 IdDoctor = model.IdDoctor,
-                Name = doctor.User.Name,
+                NameDoctor = doctor.User.Name,
                 Address = doctor.User.Address,
                 StartTime = model.StartTime,
                 EndTime = model.EndTime,
@@ -152,10 +152,14 @@ namespace BE_Healthcare.Services
                 Issue = model.Issue,
                 Type = model.Type,
                 Price = doctor.Price,
-                Avatar_Doctor = doctor.User.Avatar,
+                AvatarDoctor = doctor.User.Avatar,
                 IdUser = idUser,
-                Name_User = dataUser.Name,
-                Avatar_User = dataUser.Avatar,
+                NameUser = dataUser.Name,
+                AvatarUser = dataUser.Avatar,
+                EmailUser = dataUser.Email,
+                NameClinic = doctor.NameClinic,
+                NameMedicalSpecialty = doctor.MedicalSpecialty.Name
+
             };
 
             return new ApiResponse

@@ -164,7 +164,8 @@ namespace BE_Healthcare.Data
                     "Với nền tảng chuyên môn hơn 20 năm, bác sĩ còn được biết đến với thái độ tận tình tận tâm, " +
                     "luôn sẵn sàng tư vấn hỗ trợ bệnh nhân các vấn đề bệnh lý cũng như trao đổi về các liệu pháp " +
                     "thẩm mỹ hiệu quả phù hợp.",
-                    StatusVerified = AppNumber.APPROVED
+                    StatusVerified = AppNumber.APPROVED,
+                    NameClinic = "Phòng khám bác sĩ Hương"
                 },
                 new Doctor
                 {
@@ -186,7 +187,8 @@ namespace BE_Healthcare.Data
                     "điều trị các vấn đề bệnh lý liên quan đến da: viêm da cơ địa, viêm da tiếp xúc, viêm da dầu, thủy" +
                     " đậu, nám da, nám da,...Bên cạnh đó, bác sĩ cũng nhận tư vấn các vấn đề về sẹo, vấn đề về mụn, tình" +
                     " trạng lão hóa da, bớt sắc tố.",
-                    StatusVerified = AppNumber.APPROVED
+                    StatusVerified = AppNumber.APPROVED,
+                    NameClinic = "Phòng khám Bác sĩ Thái Hà"
 
                 },
                 new Doctor
@@ -211,7 +213,8 @@ namespace BE_Healthcare.Data
                     "\r\n\r\nNăm 2010, tiến sĩ Trần Thịnh đã nhận được bằng khen từ Bộ trưởng Bộ Y tế về những thành tựu có " +
                     "được. Xuyên suốt quá trình sự nghiệp, tiến sĩ được biết đến là một trong những chuyên gia vững về trình độ" +
                     " chuyên môn, tận tâm tận tình trong quá trình thăm khám.",
-                    StatusVerified = AppNumber.APPROVED
+                    StatusVerified = AppNumber.APPROVED,
+                    NameClinic = "Phòng khám bác sĩ Thịnh"
 
 
                 }

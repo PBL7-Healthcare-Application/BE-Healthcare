@@ -245,6 +245,7 @@ namespace BE_Healthcare.Services
                 TimeOffs = list_TimeOff,
                 Description = Doctor.Description,
                 Avatar = Doctor.User.Avatar,
+                NameClinic = Doctor.NameClinic
             };
 
 

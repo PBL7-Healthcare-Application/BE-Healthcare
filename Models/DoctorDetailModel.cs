@@ -13,6 +13,8 @@ namespace BE_Healthcare.Models
         public string? WorkingTimeEnd { get; set; } = null!;
         public int? DurationPerAppointment { get; set; }
         public List<TimeOffModel> TimeOffs { get; set; } = null!;
+        public string? NameClinic { get; set; } = null!;
+
 
     }
 }
