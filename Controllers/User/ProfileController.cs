@@ -1,4 +1,5 @@
-﻿using BE_Healthcare.Services;
+﻿using BE_Healthcare.Models;
+using BE_Healthcare.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,25 @@ namespace BE_Healthcare.Controllers.User
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
 
+        [HttpPost("ChangePassword")]
+        public IActionResult ChangePassword(ChangePasswordModel model)
+        {
+            try
+            {
+
+                var checkEmail = User.Claims.FirstOrDefault(u => u.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+                if (checkEmail == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(_profileRepository.ChangePassword(checkEmail, model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
     }
