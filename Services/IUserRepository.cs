@@ -25,6 +25,7 @@ namespace BE_Healthcare.Services
         ApiResponse ResendOTP(string email);
 
         ApiResponse ResetPassword(MailModel model);
+        bool CheckPassword(User currentUser, string password);
 
 
     }
