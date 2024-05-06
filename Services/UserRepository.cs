@@ -674,5 +674,33 @@ namespace BE_Healthcare.Services
             }
             return new string(array);
         }
+
+        public ApiResponse SignOut(Guid id)
+        {
+            try
+            {
+                var list = _context.RefreshTokens.Where(p => p.UserId == id).ToList();
+                if(list .Count > 0)
+                {
+                    _context.RefreshTokens.RemoveRange(list);
+                    _context.SaveChanges();
+                }
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_SIGNOUT_SUCCESS,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
     }
 }
