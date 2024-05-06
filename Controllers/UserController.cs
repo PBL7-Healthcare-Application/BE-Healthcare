@@ -3,6 +3,7 @@ using BE_Healthcare.Models;
 using BE_Healthcare.Models.Authentication.Login;
 using BE_Healthcare.Models.Authentication.SignUp;
 using BE_Healthcare.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -95,6 +96,28 @@ namespace BE_Healthcare.Controllers
             try
             {
                 var res = _userRepository.ResetPassword(model);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("SignOut")]
+        [Authorize]
+        public IActionResult SignOut()
+        {
+            try
+            {
+
+                var checkId = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
+                if (checkId == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                var res = _userRepository.SignOut(Guid.Parse(checkId));
                 return Ok(res);
             }
             catch (Exception ex)

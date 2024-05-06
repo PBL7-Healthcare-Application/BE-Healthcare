@@ -48,6 +48,7 @@
         
         public static string MESSAGE_CHANGEPASSWORD_SUCCESS = "Change password successfully!";
         public static string MESSAGE_UPDATEPROFILE_SUCCESS = "Update Profile Successfully!";
+        public static string MESSAGE_SIGNOUT_SUCCESS = "Sign out Successfully!";
 
 
 

@@ -26,6 +26,8 @@ namespace BE_Healthcare.Services
 
         ApiResponse ResetPassword(MailModel model);
         bool CheckPassword(User currentUser, string password);
+        ApiResponse SignOut(Guid id);
+
 
 
     }
