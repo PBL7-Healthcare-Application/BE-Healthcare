@@ -75,5 +75,24 @@ namespace BE_Healthcare.Controllers.User
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost("LockAccount")]
+        public IActionResult LockAccount(LockAccountModel model)
+        {
+            try
+            {
+
+                var checkIdUser = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
+                if (checkIdUser == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(_profileRepository.LockAccount(Guid.Parse(checkIdUser), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

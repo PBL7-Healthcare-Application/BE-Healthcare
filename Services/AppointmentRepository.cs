@@ -220,7 +220,8 @@ namespace BE_Healthcare.Services
                 {
                     var res = listAppointment.Select(a => new MyAppointmentModel
                     {
-                        NameDoctor = a.User.Name,
+                        IdDoctor = (Guid)a.IdDoctor,
+                        NameDoctor = a.Doctor.User.Name,
                         MedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
                         AvatarDoctor = a.User.Avatar,
                         IdAppointment = a.IdAppointment,
@@ -229,7 +230,12 @@ namespace BE_Healthcare.Services
                         Date = a.Date,
                         Type = a.Type,
                         Status = a.Status,
-                        Issue = a.Issue
+                        Issue = a.Issue,
+                        Address = a.Doctor.User.Address,
+                        NameClinic = a.Doctor.NameClinic,
+                        Price = a.Price,
+                        
+                        
                     });
                     return new ApiResponse
                     {

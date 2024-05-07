@@ -679,12 +679,7 @@ namespace BE_Healthcare.Services
         {
             try
             {
-                var list = _context.RefreshTokens.Where(p => p.UserId == id).ToList();
-                if(list .Count > 0)
-                {
-                    _context.RefreshTokens.RemoveRange(list);
-                    _context.SaveChanges();
-                }
+                RemoveRefreshToken(id);
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
@@ -700,6 +695,16 @@ namespace BE_Healthcare.Services
                     StatusCode = StatusCode.FAILED,
                     Message = AppString.MESSAGE_SERVER_ERROR,
                 };
+            }
+        }
+        
+        public void RemoveRefreshToken(Guid id)
+        {
+            var list = _context.RefreshTokens.Where(p => p.UserId == id).ToList();
+            if (list.Count > 0)
+            {
+                _context.RefreshTokens.RemoveRange(list);
+                _context.SaveChanges();
             }
         }
     }
