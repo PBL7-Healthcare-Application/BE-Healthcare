@@ -28,7 +28,7 @@ namespace BE_Healthcare.Services
         bool CheckPassword(User currentUser, string password);
         ApiResponse SignOut(Guid id);
 
-
+        void RemoveRefreshToken(Guid id);
 
     }
 }

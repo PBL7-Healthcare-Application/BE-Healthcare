@@ -50,6 +50,7 @@
         public static string MESSAGE_UPDATEPROFILE_SUCCESS = "Update Profile Successfully!";
         public static string MESSAGE_SIGNOUT_SUCCESS = "Sign out Successfully!";
 
+        public static string MESSAGE_LOCKACCOUNT_SUCCESS = "Lock Account Successfully!";
 
 
 

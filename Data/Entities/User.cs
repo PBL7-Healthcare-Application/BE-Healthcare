@@ -44,6 +44,8 @@ namespace BE_Healthcare.Data.Entities
 
         public Doctor Doctor{ get; set; } = null!;
 
+        public string? ReasonLockAccount { get; set; } = null;
+        public bool? IsLocked { get; set; } = false;
 
     }
 }

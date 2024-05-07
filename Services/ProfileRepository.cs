@@ -1,5 +1,6 @@
 ﻿using BE_Healthcare.Constant;
 using BE_Healthcare.Data;
+using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Extensions;
 using BE_Healthcare.Models;
 using System.Security.Cryptography;
@@ -76,7 +77,20 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-
+        public ProfileModel CreateProfileModel(User u)
+        {
+            var res = new ProfileModel
+            {
+                Email = u.Email,
+                Name = u.Name,
+                DOB = u.DOB,
+                Gender = u.Gender,
+                PhoneNumber = u.PhoneNumber,
+                Address = u.Address,
+                Avatar = u.Avatar,
+            };
+            return res;
+        }
         public ApiResponse GetPersonalInfo(string email)
         {
             try
@@ -90,16 +104,15 @@ namespace BE_Healthcare.Services
                     };
                 }
                 var info = _userRepository.getUserByEmail(email);
-                var res = new ProfileModel
+                if (info == null)
                 {
-                    Email = info.Email,
-                    Name = info.Name,
-                    DOB = info.DOB,
-                    Gender = info.Gender,
-                    PhoneNumber = info.PhoneNumber,
-                    Address = info.Address,
-                    Avatar = info.Avatar,
-                };
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_USER,
+                    };
+                }
+                var res = CreateProfileModel(info);
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
@@ -122,14 +135,7 @@ namespace BE_Healthcare.Services
         {
             try
             {
-                if (email == null)
-                {
-                    return new ApiResponse
-                    {
-                        StatusCode = StatusCode.FAILED,
-                        Message = AppString.MESSAGE_EMAIL_NULL,
-                    };
-                }
+
                 var user = _userRepository.getUserByEmail(email);
                 if (user == null)
                 {
@@ -149,10 +155,14 @@ namespace BE_Healthcare.Services
                 
                 _context.Update(user);
                 _context.SaveChanges();
+
+                var res = CreateProfileModel(user);
+
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_UPDATEPROFILE_SUCCESS,
+                    Data = res
                 };
             }
             catch (Exception ex)
@@ -165,5 +175,43 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+
+        public ApiResponse LockAccount(Guid id, LockAccountModel model)
+        {
+            try
+            {
+                var user = _userRepository.getUserById(id);
+                if (user == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_USER,
+                    };
+                }
+
+                user.ReasonLockAccount = model.Reason;
+                user.IsLocked = true;
+
+                _context.Update(user);
+                _context.SaveChanges();
+                _userRepository.RemoveRefreshToken(id);
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_LOCKACCOUNT_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
     }
 }

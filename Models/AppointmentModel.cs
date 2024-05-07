@@ -13,6 +13,9 @@ namespace BE_Healthcare.Models
         public string? Issue { get; set; } = null;
         public bool Type { get; set; } = false!;    //False - Offline; True - Online
         public double? Price { get; set; }
+        public string? Address { get; set; } = null!;
+        public string? NameClinic { get; set; } = null!;
+
 
     }
 }
