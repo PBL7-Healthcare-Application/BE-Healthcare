@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BE_Healthcare.Controllers.User
 {
-    [Route("api/[controller]")]
+    [Route("api/User/[controller]")]
     [ApiController]
     public class AppointmentController : ControllerBase
     {
@@ -57,25 +57,25 @@ namespace BE_Healthcare.Controllers.User
             }
         }
 
-        [HttpPost("CancelAppointment")]
-        [Authorize(Roles = "User")]
-        public IActionResult CancelAppointment(AppointmentModel model)
-        {
-            try
-            {
-                var checkIdUser = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
-                if (checkIdUser == null)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-                }
+        //[HttpPost("CancelAppointment")]
+        //[Authorize(Roles = "User")]
+        //public IActionResult CancelAppointment(AppointmentModel model)
+        //{
+        //    try
+        //    {
+        //        var checkIdUser = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
+        //        if (checkIdUser == null)
+        //        {
+        //            return StatusCode(StatusCodes.Status500InternalServerError);
+        //        }
 
-                return Ok(_appointmentRepository.CancelAppointment(Guid.Parse(checkIdUser), model));
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
+        //        return Ok(_appointmentRepository.CancelAppointment(Guid.Parse(checkIdUser), model));
+        //    }
+        //    catch
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError);
+        //    }
+        //}
 
     }
 }

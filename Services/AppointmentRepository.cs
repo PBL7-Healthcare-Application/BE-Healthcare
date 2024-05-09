@@ -4,6 +4,7 @@ using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.Authentication.SignUp;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Numerics;
 
 namespace BE_Healthcare.Services
@@ -21,17 +22,16 @@ namespace BE_Healthcare.Services
             _doctorRepository = doctorRepository;
             _userRepository = userRepository;
         }
-        public List<Appointment>? GetAppointmentByIdDoctor(Guid idDoctor)
+        public List<Appointment>? GetListAppointmentByIdDoctor(Guid idDoctor, int? Status = 1)
         {
             try
             {
-                var listAppointment = _context.Appointments.Include(e => e.Doctor)
-                    .AsQueryable().Where(e => e.IdDoctor == idDoctor && e.Date >= DateTime.UtcNow.Date);
-
+                var listAppointment = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
+                    .Where(e => e.IdDoctor == idDoctor && e.Status == Status).ToList();
                 if (listAppointment != null)
                 {
                     //listAppointment = listAppointment.OrderBy(a => a.StartTime);
-                    return listAppointment.ToList();
+                    return listAppointment;
                 }
                 return null;
             }
@@ -96,7 +96,7 @@ namespace BE_Healthcare.Services
 
             //4. Check Time Off of Doctor
             var date_book = model.Date;
-            Console.WriteLine("Day book: " + date_book.ToShortDateString() + "\n");
+            //Console.WriteLine("Day book: " + date_book.ToShortDateString() + "\n");
             var list_TimeOff = _doctorRepository.GetTimeOffByIdDoctor(model.IdDoctor).Where(d => d.Date.ToShortDateString() == date_book.ToShortDateString());
 
             foreach (var i in list_TimeOff)
@@ -115,7 +115,7 @@ namespace BE_Healthcare.Services
 
             //5. Check List Appointment of Doctor
 
-            var list_appointment = GetAppointmentByIdDoctor(model.IdDoctor).Where(e => e.Date.ToShortDateString() == date_book.ToShortDateString());
+            var list_appointment = GetListAppointmentByIdDoctor(model.IdDoctor).Where(e => e.Date.ToShortDateString() == date_book.ToShortDateString());
 
             if(list_appointment != null)
             {
@@ -203,6 +203,7 @@ namespace BE_Healthcare.Services
         {
             try
             {
+
                 var listAppointment = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
                     .AsQueryable().Where(e => e.IdUser == idUser); // 
 
@@ -264,32 +265,101 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public ApiResponse CancelAppointment(Guid idUser, AppointmentModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public int CalculateFreeSlot(Guid idDoctor)
+        //public ApiResponse CancelAppointment(Guid idUser, AppointmentModel model)
         //{
-        //    var doctor = _doctorRepository.GetDoctorById(idDoctor);
-        //    if (doctor == null)
-        //    {
-        //        return -1;
-        //    }
-        //    TimeSpan startTime = TimeSpan.Parse(doctor.WorkingTimeStart);
-        //    TimeSpan endTime= TimeSpan.Parse(doctor.WorkingTimeEnd);
-        //    TimeSpan totalHours = endTime - startTime;
-        //    int count = (int)totalHours.TotalHours;
-        //    int totalSlot = count / (doctor.DurationPerAppointment);
-        //    var listAppointment = GetAppointmentByIdDoctor(idDoctor);
-        //    int SlotAppointment = 0;
-        //    if(listAppointment != null)
-        //    {
-        //        SlotAppointment = listAppointment.Count; 
-        //    }
-        //    return totalSlot-SlotAppointment;
+        //    throw new NotImplementedException();
         //}
 
+        public ApiResponse GetAppointmentByIdDoctor(Guid idDoctor, int? Status = 1) // Default APPOINTMENT_CONFIRMED
+        {
+            try
+            {
+                if(Status == AppNumber.APPOINTMENT_CONFIRMED)
+                {
+                    UpdateStatusAppointmentByIdDoctor(idDoctor);
+                }
+                var listAppointment = GetListAppointmentByIdDoctor(idDoctor, Status);
 
+                //Filtering
+                //if (Status.HasValue)
+                //{
+                //listAppointment = listAppointment.Where(l => l.Status == Status);
+                //}
+
+                //Sorting
+                if (listAppointment == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_LISTAPPOINTMENT_EMPTY,
+                    };
+                }
+                
+                listAppointment = listAppointment.OrderBy(e => e.IdAppointment).ToList();
+                
+                var res = listAppointment.Select(a => new AppointmentManagementModel
+                {
+                    IdAppointment = a.IdAppointment,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    Date = a.Date,
+                    NamePatient = a.User.Name,
+                    PhoneNumber = a.User.PhoneNumber,
+                    Email = a.User.Email
+                });
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                    Data = res
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public void UpdateStatusAppointmentByIdDoctor (Guid idDoctor)
+        {
+            var listAppointmentCompleted = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
+                .Where(e => e.IdDoctor == idDoctor && e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED ).ToList();
+
+            //var listAppointmentCompleted = listAppointment.Where(e => e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED);
+
+            if (listAppointmentCompleted.Any())
+            {
+                foreach (var item in listAppointmentCompleted)
+                {
+                    if (item.Date == DateTime.UtcNow.Date && !IsTimeAppointmentCompleted(item.Date.Date, item.EndTime))   //The present day
+                    {
+                        continue;
+                    }
+                    item.Status = AppNumber.APPOINTMENT_COMPLETED;
+                }
+                _context.Appointments.UpdateRange(listAppointmentCompleted);
+                _context.SaveChanges();
+            }
+        }
+        private bool IsTimeAppointmentCompleted (DateTime date, string timeEnd)
+        {
+            string dateOnly = date.ToString("M/d/yyyy");
+            string dateTimeString = $"{dateOnly} {timeEnd}";
+
+            DateTime TimeEndAppointment = DateTime.ParseExact(dateTimeString, "M/d/yyyy H:mm", null);
+
+            // So sánh với thời điểm hiện tại
+            if (TimeEndAppointment >= DateTime.Now)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

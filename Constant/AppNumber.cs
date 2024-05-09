@@ -11,6 +11,14 @@
         public static int ROLE_DOCTOR = 2;
         public static int ROLE_ADMIN = 3;
 
+        public static int APPOINTMENT_CONFIRMED = 1;
+        public static int APPOINTMENT_CANCELED = 2;
+        public static int APPOINTMENT_COMPLETED = 3;
+        
+        public static int PAGE_SIZE = 2;
+
+        
+
 
     }
 }
