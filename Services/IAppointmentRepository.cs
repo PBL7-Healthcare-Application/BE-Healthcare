@@ -10,9 +10,9 @@ namespace BE_Healthcare.Services
         void AddAppointment(Guid idUser, AppointmentModel model);
         //public int CalculateFreeSlot(Guid idDoctor);
         ApiResponse GetAppointmentByIdUser(Guid idUser, int? Status = null);
-        //ApiResponse CancelAppointment (Guid idUser, AppointmentModel model);
+        ApiResponse CancelAppointment(CancelAppointmentModel model);
         ApiResponse GetAppointmentByIdDoctor(Guid idDoctor, int? Status = 1);
         void UpdateStatusAppointmentByIdDoctor(Guid idDoctor);
-
+        Appointment? GetAppointmentByIdAppointment(int idAppointment);
     }
 }
