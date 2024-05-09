@@ -265,10 +265,41 @@ namespace BE_Healthcare.Services
             }
         }
 
-        //public ApiResponse CancelAppointment(Guid idUser, AppointmentModel model)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public ApiResponse CancelAppointment(CancelAppointmentModel model)
+        {
+            try
+            {
+                var appointment = GetAppointmentByIdAppointment(model.idAppointment);
+                if(appointment == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_APPOINTMENT,
+                    };
+                }
+
+                appointment.Reason = model.Reason;
+                appointment.isUserCancel = true;
+                appointment.Status = 2;
+                _context.Update(appointment);
+                _context.SaveChanges();
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_CANCEL_APPOINTMENT_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
 
         public ApiResponse GetAppointmentByIdDoctor(Guid idDoctor, int? Status = 1) // Default APPOINTMENT_CONFIRMED
         {
@@ -360,6 +391,26 @@ namespace BE_Healthcare.Services
                 return false;
             }
             return true;
+        }
+
+        public Appointment? GetAppointmentByIdAppointment(int idAppointment)
+        {
+            try
+            {
+                var appointment = _context.Appointments
+                    .Where(e => e.IdAppointment == idAppointment).FirstOrDefault();
+                if (appointment != null)
+                {
+                    //listAppointment = listAppointment.OrderBy(a => a.StartTime);
+                    return appointment;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
         }
     }
 }

@@ -51,6 +51,8 @@
         public static string MESSAGE_SIGNOUT_SUCCESS = "Sign out Successfully!";
 
         public static string MESSAGE_LOCKACCOUNT_SUCCESS = "Lock Account Successfully!";
+        public static string MESSAGE_NOTFOUND_APPOINTMENT = "Appointment is not found!";
+        public static string MESSAGE_CANCEL_APPOINTMENT_SUCCESS = "Cancel Appointment Successfully!";
 
 
 
