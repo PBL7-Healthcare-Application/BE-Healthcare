@@ -19,11 +19,11 @@ namespace BE_Healthcare.Controllers.User
         }
 
         [HttpGet("GetDoctor")]
-        public IActionResult GetDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null)
+        public IActionResult GetDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null, int page = 1)
         {
             try
             {
-                return Ok(_doctorRepository.GetAllDoctor(search, exp, from, to, sortBy, id_specialty, filterAvailable));
+                return Ok(_doctorRepository.GetAllDoctor(search, exp, from, to, sortBy, id_specialty, filterAvailable, page));
             }
             catch
             {

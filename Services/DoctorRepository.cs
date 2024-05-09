@@ -28,7 +28,7 @@ namespace BE_Healthcare.Services
             return a;
         }
 
-        public ApiResponse GetAllDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null)
+        public ApiResponse GetAllDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null, int page = 1)
         {
             try
             {
@@ -112,6 +112,10 @@ namespace BE_Healthcare.Services
                         case "gia_desc": availableDoctors = availableDoctors.OrderByDescending(d => d.Price).ToList(); break;
                     }
                 }
+                #endregion
+
+                #region Paging
+                availableDoctors = availableDoctors.Skip((page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
                 #endregion
 
                 var result = availableDoctors.Select(d => new DoctorModel
