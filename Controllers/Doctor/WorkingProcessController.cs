@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BE_Healthcare.Controllers.Doctor
 {
-    [Route("api/[controller]")]
+    [Route("api/Doctor/[controller]")]
     [ApiController]
     public class WorkingProcessController : ControllerBase
     {

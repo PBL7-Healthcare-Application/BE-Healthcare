@@ -6,16 +6,18 @@ using System.Globalization;
 
 namespace BE_Healthcare.Controllers.User
 {
-    [Route("api/[controller]")]
+    [Route("api/User/[controller]")]
     [ApiController]
     //[Authorize(Roles = "User")]
     //[Authorize(Roles = "Doctor")]
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorRepository _doctorRepository;
-        public DoctorController(IDoctorRepository doctorRepository) 
+        private readonly IAppointmentRepository _appointmentRepository;
+        public DoctorController(IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository) 
         {
             _doctorRepository = doctorRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         [HttpGet("GetDoctor")]
@@ -37,7 +39,8 @@ namespace BE_Healthcare.Controllers.User
         {
             try
             {
-                return Ok(_doctorRepository.GetDoctorDetail(id));
+                var listAppointment = _appointmentRepository.GetListAppointmentofDoctorDetail(id);
+                return Ok(_doctorRepository.GetDoctorDetail(id, listAppointment));
             }
             catch
             {

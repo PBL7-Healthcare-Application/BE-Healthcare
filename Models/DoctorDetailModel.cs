@@ -14,7 +14,8 @@ namespace BE_Healthcare.Models
         public int? DurationPerAppointment { get; set; }
         public List<TimeOffModel> TimeOffs { get; set; } = null!;
         public string? NameClinic { get; set; } = null!;
-
+        
+        public List<SlotAppointmentModel>? SlotAppointments { get; set; } = null!;
 
     }
 }

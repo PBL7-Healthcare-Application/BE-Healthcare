@@ -53,6 +53,10 @@
         public static string MESSAGE_LOCKACCOUNT_SUCCESS = "Lock Account Successfully!";
         public static string MESSAGE_NOTFOUND_APPOINTMENT = "Appointment is not found!";
         public static string MESSAGE_CANCEL_APPOINTMENT_SUCCESS = "Cancel Appointment Successfully!";
+        
+        public static string MESSAGE_ERROR_INVALID_INFOR_CREATION = "Appointment creation information is invalid!";
+        public static string MESSAGE_SETUP_SCHEDULE_SUCCESS = "Setup schedule successfully!";
+        public static string MESSAGE_NOTALLOWED_SETUPSCHEDULE = "Not allowed to set up appointment schedules!";
 
 
 

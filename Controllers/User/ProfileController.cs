@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BE_Healthcare.Controllers.User
 {
-    [Route("api/[controller]")]
+    [Route("api/User/[controller]")]
     [ApiController]
     [Authorize]
     public class ProfileController : ControllerBase
