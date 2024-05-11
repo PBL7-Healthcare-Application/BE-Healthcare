@@ -27,6 +27,7 @@ namespace BE_Healthcare.Services
                     .Count(a => a.Date == d.Date && a.IdDoctor == idDoctor);
             return a;
         }
+        
 
         public ApiResponse GetAllDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null, int page = 1)
         {
@@ -210,7 +211,7 @@ namespace BE_Healthcare.Services
             return null;
         }
 
-        public ApiResponse GetDoctorDetail(Guid id)
+        public ApiResponse GetDoctorDetail(Guid id, List<SlotAppointmentModel>? list)
         {
             var Doctor = GetDoctorById(id);
 
@@ -230,8 +231,9 @@ namespace BE_Healthcare.Services
 
             var list_TimeOff = GetTimeOffByIdDoctor(id);
 
+            //var list_Appointment = GetTotalAppointmentByIdDoctor();
 
-            DoctorDetailModel result = new DoctorDetailModel
+            var result = new DoctorDetailModel
             {
                 IdDoctor = Doctor.IdDoctor,
                 Name = Doctor.User.Name,
@@ -249,11 +251,14 @@ namespace BE_Healthcare.Services
                 TimeOffs = list_TimeOff,
                 Description = Doctor.Description,
                 Avatar = Doctor.User.Avatar,
-                NameClinic = Doctor.NameClinic
+                NameClinic = Doctor.NameClinic,
+                //SlotAppointments
             };
 
-
-
+            if (list != null)
+            {
+                result.SlotAppointments = list;
+            }
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,

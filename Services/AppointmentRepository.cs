@@ -412,5 +412,84 @@ namespace BE_Healthcare.Services
                 return null;
             }
         }
+
+        public ApiResponse SetupSchedule(Guid idDoctor, SetupScheduleModel model)
+        {
+            try
+            {
+                var doctor = _doctorRepository.GetDoctorById(idDoctor);
+                if (doctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                    };
+                }
+                if (doctor.StatusVerified == AppNumber.APPROVED && doctor.WorkingTimeStart == null)     //Doctor setup schedule the first time
+                {
+                    if (model.StartTime == null || model.EndTime == null || model.DurationPerAppointment < 0)
+                    {
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_ERROR_INVALID_INFOR_CREATION,
+                        };
+
+                    }
+                    //UPDATE
+                    doctor.WorkingTimeStart = model.StartTime;
+                    doctor.WorkingTimeEnd = model.EndTime;
+                    doctor.DurationPerAppointment = model.DurationPerAppointment;
+                    _context.Doctors.Update(doctor);
+                    _context.SaveChanges();
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_SETUP_SCHEDULE_SUCCESS,
+                    };
+                }
+                else
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTALLOWED_SETUPSCHEDULE,
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public List<SlotAppointmentModel>? GetListAppointmentofDoctorDetail(Guid idDoctor) // Default APPOINTMENT_CONFIRMED
+        {
+            UpdateStatusAppointmentByIdDoctor(idDoctor);
+
+            var listAppointment = GetListAppointmentByIdDoctor(idDoctor);
+
+            if (listAppointment == null)
+            {
+                return null;
+            }
+
+            var res = listAppointment.Select(a => new SlotAppointmentModel
+            {
+                StartTime = a.StartTime,
+                EndTime = a.EndTime,
+                Date = a.Date.Date,
+            }).ToList();
+            return res;
+
+
+        }
+
     }
 }

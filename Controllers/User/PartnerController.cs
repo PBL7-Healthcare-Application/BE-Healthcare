@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace BE_Healthcare.Controllers.User
 {
-    [Route("api/[controller]")]
+    [Route("api/User/[controller]")]
     [ApiController]
     public class PartnerController : ControllerBase
     {

@@ -9,7 +9,7 @@ namespace BE_Healthcare.Services
         Doctor? GetDoctorById(Guid id);
         Doctor? GetDoctorByIdUser(Guid id);
 
-        ApiResponse GetDoctorDetail(Guid id);
+        ApiResponse GetDoctorDetail(Guid id, List<SlotAppointmentModel> list);
         List<TimeOffModel> GetTimeOffByIdDoctor(Guid id);
         IQueryable<Doctor> GetAll();
         int GetTotalAppointmentByIdDoctor(DateTime d, Guid idDoctor);
