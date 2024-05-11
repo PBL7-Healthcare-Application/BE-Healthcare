@@ -58,6 +58,7 @@
         public static string MESSAGE_SETUP_SCHEDULE_SUCCESS = "Setup schedule successfully!";
         public static string MESSAGE_NOTALLOWED_SETUPSCHEDULE = "Not allowed to set up appointment schedules!";
 
+        public static string MESSAGE_NOTALLOWED_CANCELAPPOINTMENT = "You are not allowed to cancel this appointment because this is not your appointment!";
 
 
 

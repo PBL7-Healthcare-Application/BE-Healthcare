@@ -26,8 +26,8 @@ namespace BE_Healthcare.Data.Entities
         public User User { get; set; } = null!;
         public double? Price { get; set; }
         public string? Reason { get; set; } = null;
-        public bool isDoctorCancel { get; set; } = false!;
-        public bool isUserCancel { get; set; } = false!;
+        public Guid? idDoctorCancel { get; set; } = null!;
+        public Guid? idUserCancel { get; set; } = null!;
 
     }
 }

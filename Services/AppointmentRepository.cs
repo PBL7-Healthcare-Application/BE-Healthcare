@@ -203,6 +203,7 @@ namespace BE_Healthcare.Services
         {
             try
             {
+                UpdateStatusAppointment(null,idUser);
 
                 var listAppointment = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
                     .AsQueryable().Where(e => e.IdUser == idUser); // 
@@ -265,7 +266,7 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public ApiResponse CancelAppointment(CancelAppointmentModel model)
+        public ApiResponse CancelAppointment(CancelAppointmentModel model, Guid? idUserCancel = null, Guid? idDoctorCancel = null)
         {
             try
             {
@@ -279,9 +280,35 @@ namespace BE_Healthcare.Services
                     };
                 }
 
+
+
+                if(idUserCancel != null)
+                {
+                    if(appointment.IdUser != idUserCancel)
+                    {
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_NOTALLOWED_CANCELAPPOINTMENT,
+                        };
+                    }
+                    appointment.idUserCancel = idUserCancel;
+                }
+                else if(idDoctorCancel != null)
+                {
+                    if (appointment.IdDoctor != idDoctorCancel)
+                    {
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_NOTALLOWED_CANCELAPPOINTMENT,
+                        };
+                    }
+                    appointment.idDoctorCancel = idDoctorCancel;
+                }
                 appointment.Reason = model.Reason;
-                appointment.isUserCancel = true;
                 appointment.Status = 2;
+
                 _context.Update(appointment);
                 _context.SaveChanges();
                 return new ApiResponse
@@ -307,7 +334,7 @@ namespace BE_Healthcare.Services
             {
                 if(Status == AppNumber.APPOINTMENT_CONFIRMED)
                 {
-                    UpdateStatusAppointmentByIdDoctor(idDoctor);
+                    UpdateStatusAppointment(idDoctor);
                 }
                 var listAppointment = GetListAppointmentByIdDoctor(idDoctor, Status);
 
@@ -356,15 +383,30 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-
-        public void UpdateStatusAppointmentByIdDoctor (Guid idDoctor)
+        private List<Appointment>? GetListAppointmentNotUpdate(Guid? idDoctor = null, Guid? idUser = null)
         {
+            if (idDoctor == null && idUser == null) return null;
             var listAppointmentCompleted = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
-                .Where(e => e.IdDoctor == idDoctor && e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED ).ToList();
+            .Where(e => e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED);
+            if (idDoctor != null)
+            {
+                listAppointmentCompleted = listAppointmentCompleted.Where(e => e.IdDoctor == idDoctor);
+            }
+            else if (idUser != null)
+            {
+                listAppointmentCompleted = listAppointmentCompleted.Where(e => e.IdUser == idUser);
+            }
+
+            return listAppointmentCompleted.ToList();
+        }
+        public void UpdateStatusAppointment (Guid? idDoctor = null, Guid? idUser = null)
+        {
+            //var listAppointmentCompleted = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
+            //    .Where(e => e.IdDoctor == idDoctor && e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED ).ToList();
 
             //var listAppointmentCompleted = listAppointment.Where(e => e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED);
-
-            if (listAppointmentCompleted.Any())
+            var listAppointmentCompleted = GetListAppointmentNotUpdate(idDoctor, idUser);
+            if (listAppointmentCompleted != null)
             {
                 foreach (var item in listAppointmentCompleted)
                 {
@@ -471,7 +513,7 @@ namespace BE_Healthcare.Services
 
         public List<SlotAppointmentModel>? GetListAppointmentofDoctorDetail(Guid idDoctor) // Default APPOINTMENT_CONFIRMED
         {
-            UpdateStatusAppointmentByIdDoctor(idDoctor);
+            UpdateStatusAppointment(idDoctor);
 
             var listAppointment = GetListAppointmentByIdDoctor(idDoctor);
 

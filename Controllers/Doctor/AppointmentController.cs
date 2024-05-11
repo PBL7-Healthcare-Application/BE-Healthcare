@@ -9,6 +9,7 @@ namespace BE_Healthcare.Controllers.Doctor
 {
     [Route("api/Doctor/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Doctor")]
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentRepository _appointmentRepository;
@@ -19,7 +20,6 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpGet("ViewAppointment")]
-        [Authorize(Roles = "Doctor")]
         public IActionResult ViewAppointment(int? Status = 1)
         {
             try
@@ -39,7 +39,6 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpPost("SetupSchedule")]
-        [Authorize(Roles = "Doctor")]
         public IActionResult SetupSchedule(SetupScheduleModel model)
         {
             try
@@ -51,6 +50,23 @@ namespace BE_Healthcare.Controllers.Doctor
                 }
 
                 return Ok(_appointmentRepository.SetupSchedule(Guid.Parse(checkIdDoctor), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+        [HttpPost("CancelAppointment")]
+        public IActionResult CancelAppointment(CancelAppointmentModel model)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(_appointmentRepository.CancelAppointment(model, null, Guid.Parse(checkIdDoctor)));
             }
             catch
             {
