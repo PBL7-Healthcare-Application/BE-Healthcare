@@ -63,7 +63,12 @@ namespace BE_Healthcare.Controllers.User
         {
             try
             {
-                return Ok(_appointmentRepository.CancelAppointment(model));
+                var checkIdUser = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
+                if (checkIdUser == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(_appointmentRepository.CancelAppointment(model, Guid.Parse(checkIdUser)));
             }
             catch
             {
