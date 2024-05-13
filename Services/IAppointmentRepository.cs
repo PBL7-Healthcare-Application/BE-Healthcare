@@ -16,7 +16,7 @@ namespace BE_Healthcare.Services
         Appointment? GetAppointmentByIdAppointment(int idAppointment);
         ApiResponse SetupSchedule (Guid idDoctor, SetupScheduleModel model);
         List<SlotAppointmentModel>? GetListAppointmentofDoctorDetail(Guid idDoctor);
-
+        ApiResponse GetAppointmentDetail(int id);
 
 
     }

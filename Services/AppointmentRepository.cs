@@ -472,7 +472,7 @@ namespace BE_Healthcare.Services
         {
             try
             {
-                var appointment = _context.Appointments
+                var appointment = _context.Appointments.Include(q  => q.User).Include(p => p.Doctor).ThenInclude(p => p.User)
                     .Where(e => e.IdAppointment == idAppointment).FirstOrDefault();
                 if (appointment != null)
                 {
@@ -566,5 +566,65 @@ namespace BE_Healthcare.Services
 
         }
 
+        public ApiResponse GetAppointmentDetail(int id)
+        {
+            try
+            {
+                var appointment = GetAppointmentByIdAppointment(id);
+
+                if (appointment == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_APPOINTMENT,
+                    };
+                }
+                var res = new AppointmentDetailOfDoctorModel
+                {
+                    IdDoctor = (Guid)appointment.IdDoctor,
+                    NameUser = appointment.User.Name,
+                    AvatarUser = appointment.User.Avatar,
+
+                    IdAppointment = appointment.IdAppointment,
+                    StartTime = appointment.StartTime,
+                    EndTime = appointment.EndTime,
+                    Date = appointment.Date,
+                    Type = appointment.Type,
+                    Status = appointment.Status,
+                    Issue = appointment.Issue,
+                    Address = appointment.Doctor.User.Address,
+                    NameClinic = appointment.Doctor.NameClinic,
+                    Price = appointment.Price,
+                };
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                    Data = res
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+
+
+
+
+
+
+
+
+
+
+            
+        }
     }
 }
