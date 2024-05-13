@@ -11,7 +11,6 @@ namespace BE_Healthcare.Services
 
         ApiResponse GetDoctorDetail(Guid id, List<SlotAppointmentModel> list);
         List<TimeOffModel>? GetTimeOffByIdDoctor(Guid id);
-        IQueryable<Doctor> GetAll();
         int GetTotalAppointmentByIdDoctor(DateTime d, Guid idDoctor);
         int CalculateFreeSlots(Guid idDoctor, DateTime d, string WorkingTimeStart, string WorkingTimeEnd, int DurationPerAppointment);
         void AddDoctor(Doctor doctor);

@@ -34,12 +34,13 @@ namespace BE_Healthcare.Services
                 var newDoctor = new Doctor
                 {
                     IdDoctor = Guid.NewGuid(),
-                    YearExperience = model.YearExperience,
-                    Price = model.Price,
-                    Description = model.Description,
+                    //YearExperience = model.YearExperience,
+                    //Price = model.Price,
+                    //Description = model.Description,
                     IdSpecialty = model.IdSpecialty,
                     IdUser = idUser,
-                    StatusVerified = AppNumber.PENDING
+                    StatusVerified = AppNumber.PENDING,
+                    BusinessLicense = model.BusinessLicense,
                 };
 
                 _doctorRepository.AddDoctor(newDoctor);

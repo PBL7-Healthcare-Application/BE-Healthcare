@@ -12,11 +12,20 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly IAuthRepository _authRepository;
-
-        public ProfileRepository(MyDbContext context, IAuthRepository authRepository)
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly ICertificateRepository _certificateRepository;
+        private readonly IWorkingProcessRepository _workingProcessRepository;
+        private readonly ITrainingProcessRepository _trainingProcessRepository;
+        public ProfileRepository(MyDbContext context, IAuthRepository authRepository, 
+            IDoctorRepository doctorRepository, ICertificateRepository certificateRepository,
+            IWorkingProcessRepository workingProcessRepository, ITrainingProcessRepository trainingProcessRepository)
         {
             _context = context;
             _authRepository = authRepository;
+            _doctorRepository = doctorRepository;
+            _certificateRepository = certificateRepository;
+            _workingProcessRepository = workingProcessRepository;
+            _trainingProcessRepository = trainingProcessRepository;
         }
 
         public ApiResponse ChangePassword(string email, ChangePasswordModel model)
@@ -213,5 +222,72 @@ namespace BE_Healthcare.Services
             }
         }
 
+        private ProfileDoctorModel CreateProfileDoctorModel(Doctor u)
+        {
+            var listCertificate = _certificateRepository.GetCertificateByIdDoctor(u.IdDoctor);
+
+            var listWorkingProcess = _workingProcessRepository.GetWorkingProcessByIdDoctor(u.IdDoctor);
+
+            var listTrainingProcess = _trainingProcessRepository.GetTrainingProcessByIdDoctor(u.IdDoctor);
+            var res = new ProfileDoctorModel
+            {
+                Email = u.User.Email,
+                Name = u.User.Name,
+                DOB = u.User.DOB,
+                Gender = u.User.Gender,
+                PhoneNumber = u.User.PhoneNumber,
+                Address = u.User.Address,
+                Avatar = u.User.Avatar,
+
+                YearExperience = u.YearExperience,
+                Price = u.Price,
+                Description = u.Description,
+                MedicalSpecialty = u.MedicalSpecialty.Name,
+                Certificates = listCertificate,
+                WorkingProcess = listWorkingProcess,
+                TrainingProcess = listTrainingProcess,
+
+                WorkingTimeStart = u.WorkingTimeStart,
+                WorkingTimeEnd = u.WorkingTimeEnd,
+                DurationPerAppointment = u.DurationPerAppointment,
+                NameClinic = u.NameClinic,
+
+                StatusVerified = u.StatusVerified
+
+            };
+            return res;
+        }
+
+        public ApiResponse GetPersonalDoctorInfo(Guid id)
+        {
+            try
+            {
+                var info = _doctorRepository.GetDoctorById(id);
+                if (info == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                    };
+                }
+                var res = CreateProfileDoctorModel(info);
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                    Data = res
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
     }
 }

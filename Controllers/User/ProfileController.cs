@@ -55,7 +55,7 @@ namespace BE_Healthcare.Controllers.User
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpPost("UpdateProfile")]
+        [HttpPut("UpdateProfile")]
         public IActionResult UpdateProfile(UpdateProfileModel model)
         {
             try

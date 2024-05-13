@@ -8,5 +8,8 @@ namespace BE_Healthcare.Services
         void AddWorkingProcess(Guid idDoctor, AddWorkingProcessModel workingprocess);
         ApiResponse AddOneWorkingProcess(Guid idDoctor, AddWorkingProcessModel workingprocess);
         ApiResponse AddListWorkingProcess(Guid idDoctor, List<AddWorkingProcessModel> workingprocesses);
+        List<WorkingProcessModel>? GetWorkingProcessByIdDoctor(Guid id);
+
+
     }
 }

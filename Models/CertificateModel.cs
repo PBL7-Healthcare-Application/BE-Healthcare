@@ -9,5 +9,7 @@ namespace BE_Healthcare.Models
         public string Name { get; set; } = null!;
         public int? Year { get; set; }
         public string Image { get; set; } = null!;
+        public int? StatusVerified { get; set; } //0: Pending - 1: Approved - 2: Rejected
+
     }
 }
