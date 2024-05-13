@@ -1,4 +1,5 @@
-﻿using BE_Healthcare.Services;
+﻿using BE_Healthcare.Models;
+using BE_Healthcare.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,11 @@ namespace BE_Healthcare.Controllers.User
         }
 
         [HttpGet("GetDoctor")]
-        public IActionResult GetDoctor(string? search = null, int? exp = null, double? from = null, double? to = null, string? sortBy = null, int? id_specialty = null, string? filterAvailable = null, int page = 1)
+        public IActionResult GetDoctor(DoctorSearchCriteriaModel model)
         {
             try
             {
-                return Ok(_doctorRepository.GetAllDoctor(search, exp, from, to, sortBy, id_specialty, filterAvailable, page));
+                return Ok(_doctorRepository.GetAllDoctor(model));
             }
             catch
             {

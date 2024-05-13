@@ -12,12 +12,12 @@ namespace BE_Healthcare.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly IAuthRepository _authRepository;
+        public AuthController(IAuthRepository authRepository)
         {
-            _userRepository = userRepository;
+            _authRepository = authRepository;
         }
 
         [HttpPost("SignIn")]
@@ -25,7 +25,7 @@ namespace BE_Healthcare.Controllers
         {
             try
             {
-                var res = _userRepository.Validate(model);
+                var res = _authRepository.Validate(model);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace BE_Healthcare.Controllers
         {
             try
             {
-                var res = _userRepository.RenewToken(model);
+                var res = _authRepository.RenewToken(model);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace BE_Healthcare.Controllers
         {
             try
             {
-                var res = _userRepository.SignUp(model);
+                var res = _authRepository.SignUp(model);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace BE_Healthcare.Controllers
             {
             try
             {
-                var res = _userRepository.ConfirmEmail(model);
+                var res = _authRepository.ConfirmEmail(model);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -81,7 +81,7 @@ namespace BE_Healthcare.Controllers
         {
             try
             {
-                var res = _userRepository.ResendOTP(model.email);
+                var res = _authRepository.ResendOTP(model.email);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace BE_Healthcare.Controllers
         {
             try
             {
-                var res = _userRepository.ResetPassword(model);
+                var res = _authRepository.ResetPassword(model);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -117,7 +117,7 @@ namespace BE_Healthcare.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
 
-                var res = _userRepository.SignOut(Guid.Parse(checkId));
+                var res = _authRepository.SignOut(Guid.Parse(checkId));
                 return Ok(res);
             }
             catch (Exception ex)

@@ -12,12 +12,10 @@ namespace BE_Healthcare.Controllers.User
     public class ProfileController : ControllerBase
     {
         private readonly IProfileRepository _profileRepository;
-        //private readonly IUserRepository _userRepository;
 
         public ProfileController(IProfileRepository profileRepository)
         {
             _profileRepository = profileRepository;
-            //_userRepository = userRepository;
         }
 
         [HttpGet("GetPersonalInfo")]

@@ -67,10 +67,13 @@ namespace BE_Healthcare.Services
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
             }
-
-            throw new NotImplementedException();
         }
     }
 }

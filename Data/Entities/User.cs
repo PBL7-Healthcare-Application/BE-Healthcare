@@ -46,6 +46,7 @@ namespace BE_Healthcare.Data.Entities
 
         public string? ReasonLockAccount { get; set; } = null;
         public bool? IsLocked { get; set; } = false;
+        public DateTime? CreatedDate { get; set; } = null;
 
     }
 }
