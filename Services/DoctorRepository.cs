@@ -13,12 +13,19 @@ namespace BE_Healthcare.Services
     public class DoctorRepository : IDoctorRepository
     {
         private readonly MyDbContext _context;
-
-        public DoctorRepository(MyDbContext context)
+        private readonly ICertificateRepository _certificateRepository;
+        private readonly IWorkingProcessRepository _workingProcessRepository;
+        private readonly ITrainingProcessRepository _trainingProcessRepository;
+        public DoctorRepository(MyDbContext context, ICertificateRepository certificateRepository, 
+            IWorkingProcessRepository workingProcessRepository, ITrainingProcessRepository trainingProcessRepository)
         {
             _context = context;
+            _certificateRepository = certificateRepository;
+            _workingProcessRepository = workingProcessRepository;
+            _trainingProcessRepository = trainingProcessRepository;
         }
-        public IQueryable<Doctor> GetAll()
+
+        private IQueryable<Doctor> GetAll()
         {
             return _context.Doctors.Include(p=>p.User).Include(q => q.MedicalSpecialty).AsQueryable();
         }
@@ -78,10 +85,22 @@ namespace BE_Healthcare.Services
             return list;
         }
 
-        //private List<Doctor> FindingAvailableDoctor()
-        //{
+        private List<Doctor> GetListAvailabeDoctor(List<Doctor> inputList, List<Doctor> outputList, DateTime t) 
+        {
+            foreach (var doctor in inputList)
+            {
+                if (doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null)
+                {
+                    int availableTimeSlots = CalculateFreeSlots(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, (int)doctor.DurationPerAppointment);
+                    if (availableTimeSlots <= 0)
+                    {
+                        outputList.Remove(doctor);
+                    }
+                }
+            }
+            return outputList;
+        }
 
-        //}
         public ApiResponse GetAllDoctor(DoctorSearchCriteriaModel criteria)
         {
             try
@@ -89,27 +108,6 @@ namespace BE_Healthcare.Services
                 var listDoctor = GetAll();
 
                 #region Filtering
-                //if (criteria.idSpecialty.HasValue)
-                //{
-                //    listDoctor = listDoctor.Where(d => d.IdSpecialty == criteria.idSpecialty);
-                //}
-                //if (!string.IsNullOrEmpty(criteria.search))
-                //{
-                //    listDoctor = listDoctor.Where(d => d.User.Name.Contains(criteria.search));
-                //}
-                //if (criteria.exp.HasValue)
-                //{
-                //    listDoctor = listDoctor.Where(d => d.YearExperience == criteria.exp);
-                //}
-                //if (criteria.from.HasValue)
-                //{
-                //    listDoctor = listDoctor.Where(d => d.Price >= criteria.from);
-                //}
-                //if (criteria.to.HasValue)
-                //{
-                //    listDoctor = listDoctor.Where(d => d.Price <= criteria.to);
-                //}
-
                 listDoctor = FilteringListDoctor(listDoctor, criteria);
 
                 var availableDoctors = listDoctor.ToList();
@@ -117,39 +115,26 @@ namespace BE_Healthcare.Services
 
                 if (!string.IsNullOrEmpty(criteria.filterAvailable))
                 {
-                    DateTime t;
                     if(criteria.filterAvailable == "TODAY")
                     {
-                        t = DateTime.Now.Date;
-                        foreach (var doctor in listDoctor.ToList())
-                        {
-                            if(doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null ) 
-                            {
-                                int availableTimeSlots = CalculateFreeSlots(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, (int)doctor.DurationPerAppointment);
-                                if (availableTimeSlots <= 0)
-                                {
-                                    availableDoctors.Remove(doctor);
-                                }
-                            }
-
-                        }
+                        //foreach (var doctor in listDoctor.ToList())
+                        //{
+                        //    if(doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null ) 
+                        //    {
+                        //        int availableTimeSlots = CalculateFreeSlots(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, (int)doctor.DurationPerAppointment);
+                        //        if (availableTimeSlots <= 0)
+                        //        {
+                        //            availableDoctors.Remove(doctor);
+                        //        }
+                        //    }
+                        //}
+                        availableDoctors = GetListAvailabeDoctor(listDoctor.ToList(), availableDoctors, DateTime.Now.Date);
 
                     }
                     if (criteria.filterAvailable == "TOMORROW")
                     {
-                        t = DateTime.Now.AddDays(1).Date;
-                        foreach (var doctor in listDoctor.ToList())
-                        {
-                            if(doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null )
-                            {
-                                int availableTimeSlots = CalculateFreeSlots(doctor.IdDoctor, t, doctor.WorkingTimeStart, doctor.WorkingTimeEnd, (int)doctor.DurationPerAppointment);
-                                if (availableTimeSlots <= 0)
-                                {
-                                    availableDoctors.Remove(doctor);
-                                }
-                            }
+                        availableDoctors = GetListAvailabeDoctor(listDoctor.ToList(), availableDoctors, DateTime.Now.AddDays(1).Date);
 
-                        }
                     }
                 }
                 #endregion
@@ -207,47 +192,8 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-        public List<CertificateModel> GetCertificateByIdDoctor(Guid id)
-        {
-            var list_Certificate = _context.Certificates.Include(e => e.Doctor)
-                .AsQueryable().Where(e => e.IdDoctor == id);
-            var result_certificate = list_Certificate.Select(c => new CertificateModel
-            {
-                IdCertificate = c.IdCertificate,
-                Name = c.Name,
-                Year = c.Year,
-                Image = c.Image
-            }).ToList();
-            return result_certificate;
-        }
-        public List<WorkingProcessModel> GetWorkingProcessByIdDoctor(Guid id)
-        {
-            var list_WorkingProcess = _context.WorkingProcesses.Include(e => e.Doctor)
-                .AsQueryable().Where(e => e.IdDoctor == id);
-            var result_WorkingProcess = list_WorkingProcess.Select(c => new WorkingProcessModel
-            {
-                IdWorkingProcess = c.IdWorkingProcess,
-                Position = c.Position,
-                StartYear = c.StartYear,
-                EndYear = c.EndYear,
-                Workplace = c.Workplace
-            }).ToList();
-            return result_WorkingProcess;
-        }
-        public List<TrainingProcessModel> GetTrainingProcessByIdDoctor(Guid id)
-        {
-            var list_trainingProcess = _context.TrainingProcesses.Include(e => e.Doctor)
-                .AsQueryable().Where(e => e.IdDoctor == id);
-            var result_trainingProcess = list_trainingProcess.Select(c => new TrainingProcessModel
-            {
-                IdTrainingProcess = c.IdTrainingProcess,
-                SchoolName = c.SchoolName,
-                StartYear = c.StartYear,
-                EndYear = c.EndYear,
-                Major = c.Major
-            }).ToList();
-            return result_trainingProcess;
-        }
+
+
         public List<TimeOffModel>? GetTimeOffByIdDoctor(Guid id)
         {
             var list_timeOff = _context.TimeOffs.Include(e => e.Doctor)
@@ -284,15 +230,13 @@ namespace BE_Healthcare.Services
                     Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
                 };
             }
-            var list_Certificate = GetCertificateByIdDoctor(id);
+            var list_Certificate = _certificateRepository.GetCertificateByIdDoctor(id);
 
-            var list_WorkingProcess = GetWorkingProcessByIdDoctor(id);
+            var list_WorkingProcess = _workingProcessRepository.GetWorkingProcessByIdDoctor(id);
 
-            var list_TrainingProcess = GetTrainingProcessByIdDoctor(id);
+            var list_TrainingProcess = _trainingProcessRepository.GetTrainingProcessByIdDoctor(id);
 
             var list_TimeOff = GetTimeOffByIdDoctor(id);
-
-            //var list_Appointment = GetTotalAppointmentByIdDoctor();
 
             var result = new DoctorDetailModel
             {
@@ -313,7 +257,6 @@ namespace BE_Healthcare.Services
                 Description = Doctor.Description,
                 Avatar = Doctor.User.Avatar,
                 NameClinic = Doctor.NameClinic,
-                //SlotAppointments
             };
 
             if (list != null)
@@ -326,71 +269,6 @@ namespace BE_Healthcare.Services
                 Message = AppString.MESSAGE_GETDATA_SUCCESS,
                 Data = result
             };
-            //return result;
-        }
-
-
-        public int CalculateFreeSlot(Guid idDoctor, DateTime d, string WorkingTimeStart, string WorkingTimeEnd, int DurationPerAppointment)
-        {
-            try
-            {
-                int availableTimeSlots;
-
-                if (d == DateTime.Now.Date)
-                {
-                    DateTime now = DateTime.Now;
-                    TimeSpan timeNow = new TimeSpan(now.Hour, now.Minute, 0); // Calculate how many hour left to do Today
-                    //TimeSpan end = TimeSpan.Parse(WorkingTimeEnd);
-                    TimeSpan end = TimeSpan.Parse("19:00");
-                    TimeSpan total = end - timeNow;
-                    int hour = (int)total.TotalHours;
-                    int totalSlott = hour / DurationPerAppointment;
-
-                    int appointments= GetTotalAppointmentByIdDoctor(d, idDoctor); // Calculate number of Appointment in remain hour Today
-
-                }
-
-                TimeSpan startTime = TimeSpan.Parse(WorkingTimeStart);
-                TimeSpan endTime = TimeSpan.Parse(WorkingTimeEnd);
-                TimeSpan totalHours = endTime - startTime;
-                int totalSlot = (int)totalHours.TotalHours / DurationPerAppointment;
-
-                //get appointment in a day 
-                int appointmentsToday = GetTotalAppointmentByIdDoctor(d, idDoctor);
-
-                availableTimeSlots = totalSlot - appointmentsToday;
-
-                //get break time from time off 
-                var TimeOffBreak = GetTimeOffByIdDoctor(idDoctor).Where(e => e.Status == AppNumber.BREAK).FirstOrDefault();
-                if(TimeOffBreak != null)
-                {
-                    TimeSpan startTime_Break = TimeSpan.Parse(TimeOffBreak.StartTime);
-                    TimeSpan endTime_Break = TimeSpan.Parse(TimeOffBreak.EndTime);
-                    TimeSpan totalHours_Break = endTime_Break - startTime_Break;
-                    int totalBreak = (int)totalHours_Break.TotalHours / DurationPerAppointment;
-                    availableTimeSlots -= totalBreak;
-
-                }
-
-                //get busy time from time off
-                var listTimeOffBusy = GetTimeOffByIdDoctor(idDoctor).Where(e => e.Status == AppNumber.BUSY && e.Date == d.Date);
-                if (listTimeOffBusy != null)
-                {
-                    foreach(var i in listTimeOffBusy)
-                    {
-                        TimeSpan totalHours_Busy = TimeSpan.Parse(i.EndTime) - TimeSpan.Parse(i.StartTime);
-                        int totalBusy= (int)totalHours_Busy.TotalHours / DurationPerAppointment;
-                        availableTimeSlots -= totalBusy;
-                    }
-
-                }
-                return availableTimeSlots > 0 ? availableTimeSlots : 0;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return 0;
-            }
         }
         public int CalculateFreeSlots(Guid idDoctor, DateTime d, string WorkingTimeStart, string WorkingTimeEnd, int DurationPerAppointment)
         {

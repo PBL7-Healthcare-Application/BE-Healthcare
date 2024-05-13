@@ -9,5 +9,7 @@ namespace BE_Healthcare.Services
         void AddTrainingProcess(Guid idDoctor, AddTrainingProcessModel trainingProcess);
         void Save();
         ApiResponse AddOneTrainingProcess(Guid idDoctor, AddTrainingProcessModel trainingProcess);
+        List<TrainingProcessModel>? GetTrainingProcessByIdDoctor(Guid id);
+
     }
 }

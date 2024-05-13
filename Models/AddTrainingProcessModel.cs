@@ -6,6 +6,6 @@
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
         public string Major { get; set; } = null!;
-        public Guid? IdDoctor { get; set; }
+        //public Guid? IdDoctor { get; set; }
     }
 }

@@ -7,6 +7,6 @@
         public int? EndYear { get; set; }
         public string Workplace { get; set; } = null!;
 
-        public Guid? IdDoctor { get; set; }
+        //public Guid? IdDoctor { get; set; }
     }
 }

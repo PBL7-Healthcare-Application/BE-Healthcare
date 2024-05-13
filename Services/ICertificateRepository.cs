@@ -9,6 +9,7 @@ namespace BE_Healthcare.Services
         void AddCertificate(Guid idDoctor, AddCertificateModel certificate);
         void Save();
         ApiResponse AddOneCertificate(Guid idDoctor, AddCertificateModel certificate);
+        List<CertificateModel>? GetCertificateByIdDoctor(Guid id);
 
     }
 }

@@ -7,9 +7,9 @@ namespace BE_Healthcare.Data.Entities
     {
         [Key]
         public Guid IdDoctor { get; set; }
-        public int? YearExperience { get; set; }
-        public double? Price { get; set; }
-        public string Description { get; set; } = null!;
+        public int? YearExperience { get; set; } = null!;
+        public double? Price { get; set; } = null!;
+        public string? Description { get; set; } = null!;
         public int? IdSpecialty { get; set; }
 
         [ForeignKey(nameof(IdSpecialty))]
@@ -23,6 +23,8 @@ namespace BE_Healthcare.Data.Entities
         public int? DurationPerAppointment { get; set; }
         public int? StatusVerified { get; set; } //0: Pending - 1: Approved - 2: Rejected
         public string? NameClinic { get; set; } = null!;
+        public string? BusinessLicense { get; set; } = null!;
+
 
 
     }

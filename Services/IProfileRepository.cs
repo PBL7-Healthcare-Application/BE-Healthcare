@@ -12,6 +12,7 @@ namespace BE_Healthcare.Services
         ApiResponse UpdateProfile(string email, UpdateProfileModel model);
         
         ApiResponse LockAccount(Guid id, LockAccountModel model);
+        ApiResponse GetPersonalDoctorInfo(Guid id);
 
     }
 }
