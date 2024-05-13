@@ -73,5 +73,18 @@ namespace BE_Healthcare.Controllers.Doctor
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [HttpGet("ViewAppointment/{id}")]
+        public IActionResult ViewAppointmentDetail(int id)
+        {
+            try
+            {
+
+                return Ok(_appointmentRepository.GetAppointmentDetail(id));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
