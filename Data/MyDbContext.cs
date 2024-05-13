@@ -141,8 +141,21 @@ namespace BE_Healthcare.Data
                     OTPCreatedAt = DateTime.UtcNow,
                     IsVerified = true,
                     idRole = 2      //Doctor
+                },
+                new User
+                {
+                    IdUser = Guid.Parse("efaaf143-4211-45d1-9b08-f085f19caa56"),
+                    Email = "admin@gmail.com",
+                    PasswordHash = hashFunc.ComputeHash(Encoding.UTF8.GetBytes(password_sample)),
+                    PasswordSalt = hashFunc.Key,
+                    Name = "Admin",
+                    OTPVerification = "123456",
+                    OTPCreatedAt = DateTime.UtcNow,
+                    IsVerified = true,
+                    idRole = 3      //Doctor
                 }
                 );
+
             #endregion
 
             #region Data Doctor

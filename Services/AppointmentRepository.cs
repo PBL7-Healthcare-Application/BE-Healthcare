@@ -13,27 +13,34 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly IDoctorRepository _doctorRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IAuthRepository _authRepository;
 
 
-        public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository, IUserRepository userRepository)
+        public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository, IAuthRepository authRepository)
         {
             _context = context;
             _doctorRepository = doctorRepository;
-            _userRepository = userRepository;
+            _authRepository = authRepository;
         }
-        public List<Appointment>? GetListAppointmentByIdDoctor(Guid idDoctor, int? Status = 1)
+        public List<Appointment>? GetListAppointmentByIdDoctor(Guid idDoctor, int? Status = 1, string? search = null)
         {
             try
             {
                 var listAppointment = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
-                    .Where(e => e.IdDoctor == idDoctor && e.Status == Status).ToList();
-                if (listAppointment != null)
+                    .Where(e => e.IdDoctor == idDoctor && e.Status == Status);
+                if (listAppointment == null)
                 {
                     //listAppointment = listAppointment.OrderBy(a => a.StartTime);
-                    return listAppointment;
+                    return null;
+
                 }
-                return null;
+
+                //Filter
+                if(search != null)
+                {
+                    listAppointment = listAppointment.Where(p => p.User.Name.Contains(search));
+                }
+                return listAppointment.ToList();
             }
             catch (Exception ex)
             {
@@ -140,7 +147,15 @@ namespace BE_Healthcare.Services
             // Update free slot
             _context.SaveChanges();
 
-            var dataUser = _userRepository.getUserById(idUser);
+            var dataUser = _authRepository.getUserById(idUser);
+            if (dataUser == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_USER,
+                };
+            }
             var res = new ScheduleAppointmentSuccessfulModel
             {
                 IdDoctor = model.IdDoctor,
@@ -328,21 +343,31 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public ApiResponse GetAppointmentByIdDoctor(Guid idDoctor, int? Status = 1) // Default APPOINTMENT_CONFIRMED
+        public ApiResponse GetAppointmentByIdDoctor(Guid idDoctor, AppointmentSearchCriteriaModel criteria) // Default APPOINTMENT_CONFIRMED
         {
             try
             {
-                if(Status == AppNumber.APPOINTMENT_CONFIRMED)
+                if(criteria.Status == AppNumber.APPOINTMENT_CONFIRMED)
                 {
                     UpdateStatusAppointment(idDoctor);
                 }
-                var listAppointment = GetListAppointmentByIdDoctor(idDoctor, Status);
+                var listAppointment = GetListAppointmentByIdDoctor(idDoctor, criteria.Status, criteria.search);
 
                 //Filtering
-                //if (Status.HasValue)
-                //{
-                //listAppointment = listAppointment.Where(l => l.Status == Status);
-                //}
+                if (criteria.filterAvailable != null)
+                {
+                    DateTime t;
+                    if (criteria.filterAvailable == "TODAY")
+                    {
+                        t = DateTime.Now.Date;
+                        listAppointment = listAppointment.Where(d => d.Date == t).ToList();
+                    }
+                    if (criteria.filterAvailable == "TOMORROW")
+                    {
+                        t = DateTime.Now.AddDays(1).Date;
+                        listAppointment = listAppointment.Where(d => d.Date == t).ToList();
+                    }
+                }
 
                 //Sorting
                 if (listAppointment == null)
@@ -355,7 +380,9 @@ namespace BE_Healthcare.Services
                 }
                 
                 listAppointment = listAppointment.OrderBy(e => e.IdAppointment).ToList();
-                
+
+                listAppointment = listAppointment.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
+
                 var res = listAppointment.Select(a => new AppointmentManagementModel
                 {
                     IdAppointment = a.IdAppointment,
@@ -366,11 +393,17 @@ namespace BE_Healthcare.Services
                     PhoneNumber = a.User.PhoneNumber,
                     Email = a.User.Email
                 });
-                return new ApiResponse
+                return new ApiResponseWithPaging
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_GETDATA_SUCCESS,
-                    Data = res
+                    Data = res,
+                    PagingInfo = new PagingInfoModel
+                    {
+                        TotalItems = listAppointment.Count(),
+                        CurrentPage = criteria.page,
+                        ItemsPerPage = AppNumber.PAGE_SIZE
+                    }
                 };
             }
             catch (Exception ex)

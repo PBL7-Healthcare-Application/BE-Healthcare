@@ -64,7 +64,7 @@ var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfig
 builder.Services.AddSingleton(emailConfig);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IMedicalSpecialtyRepository, MedicalSpecialtyRepository>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
@@ -73,6 +73,7 @@ builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
 builder.Services.AddScoped<ITrainingProcessRepository, TrainingProcessRepository>();
 builder.Services.AddScoped<IWorkingProcessRepository, WorkingProcessRepository>();
 builder.Services.AddScoped<IPartnerRepository, PartnerRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 

@@ -20,7 +20,7 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpGet("ViewAppointment")]
-        public IActionResult ViewAppointment(int? Status = 1)
+        public IActionResult ViewAppointment(AppointmentSearchCriteriaModel criteria)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace BE_Healthcare.Controllers.Doctor
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
 
-                return Ok(_appointmentRepository.GetAppointmentByIdDoctor(Guid.Parse(checkIdDoctor), Status));
+                return Ok(_appointmentRepository.GetAppointmentByIdDoctor(Guid.Parse(checkIdDoctor), criteria));
             }
             catch
             {

@@ -11,12 +11,12 @@ namespace BE_Healthcare.Services
     public class ProfileRepository : IProfileRepository
     {
         private readonly MyDbContext _context;
-        private readonly IUserRepository _userRepository;
+        private readonly IAuthRepository _authRepository;
 
-        public ProfileRepository(MyDbContext context, IUserRepository userRepository)
+        public ProfileRepository(MyDbContext context, IAuthRepository authRepository)
         {
             _context = context;
-            _userRepository = userRepository;
+            _authRepository = authRepository;
         }
 
         public ApiResponse ChangePassword(string email, ChangePasswordModel model)
@@ -32,7 +32,7 @@ namespace BE_Healthcare.Services
                     };
                 }
 
-                var user = _userRepository.getUserByEmail(email);
+                var user = _authRepository.getUserByEmail(email);
                 if (user == null)
                 {
                     return new ApiResponse
@@ -42,7 +42,7 @@ namespace BE_Healthcare.Services
                     };
                 }
 
-                var isValidPass = _userRepository.CheckPassword(user, model.OldPassword);   // Check Old Password
+                var isValidPass = _authRepository.CheckPassword(user, model.OldPassword);   // Check Old Password
                 if (!isValidPass)
                 {
                     return new ApiResponse
@@ -103,7 +103,7 @@ namespace BE_Healthcare.Services
                         Message = AppString.MESSAGE_EMAIL_NULL,
                     };
                 }
-                var info = _userRepository.getUserByEmail(email);
+                var info = _authRepository.getUserByEmail(email);
                 if (info == null)
                 {
                     return new ApiResponse
@@ -136,7 +136,7 @@ namespace BE_Healthcare.Services
             try
             {
 
-                var user = _userRepository.getUserByEmail(email);
+                var user = _authRepository.getUserByEmail(email);
                 if (user == null)
                 {
                     return new ApiResponse
@@ -180,7 +180,7 @@ namespace BE_Healthcare.Services
         {
             try
             {
-                var user = _userRepository.getUserById(id);
+                var user = _authRepository.getUserById(id);
                 if (user == null)
                 {
                     return new ApiResponse
@@ -195,7 +195,7 @@ namespace BE_Healthcare.Services
 
                 _context.Update(user);
                 _context.SaveChanges();
-                _userRepository.RemoveRefreshToken(id);
+                _authRepository.RemoveRefreshToken(id);
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,

@@ -3,6 +3,7 @@ using System;
 using BE_Healthcare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_Healthcare.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240511170709_Create_AdminAccount")]
+    partial class Create_AdminAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -605,9 +608,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<string>("Avatar")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<DateTime?>("DOB")
                         .HasColumnType("datetime(6)");
 
@@ -668,10 +668,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Nguyen Quoc Thanh",
-                            OTPCreatedAt = new DateTime(2024, 5, 12, 7, 14, 17, 778, DateTimeKind.Utc).AddTicks(7112),
+                            OTPCreatedAt = new DateTime(2024, 5, 11, 17, 7, 9, 450, DateTimeKind.Utc).AddTicks(1537),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 13, 86, 33, 183, 57, 84, 3, 29, 170, 51, 93, 146, 189, 131, 181, 218, 49, 149, 194, 112, 251, 217, 36, 228, 46, 193, 23, 154, 127, 81, 72, 184 },
-                            PasswordSalt = new byte[] { 91, 24, 45, 141, 112, 112, 246, 43, 144, 144, 1, 17, 186, 239, 3, 29, 168, 191, 251, 85, 167, 208, 186, 65, 114, 137, 193, 169, 91, 29, 171, 128, 19, 183, 13, 154, 186, 221, 45, 198, 7, 39, 20, 178, 143, 184, 146, 133, 49, 60, 146, 191, 82, 9, 170, 104, 148, 23, 166, 24, 226, 166, 251, 43 },
+                            PasswordHash = new byte[] { 64, 228, 146, 99, 51, 116, 115, 230, 49, 230, 65, 174, 151, 232, 131, 2, 11, 238, 64, 166, 29, 86, 212, 183, 109, 128, 6, 51, 68, 146, 90, 20 },
+                            PasswordSalt = new byte[] { 166, 166, 59, 99, 194, 68, 91, 159, 95, 10, 208, 188, 169, 247, 213, 17, 35, 77, 206, 8, 182, 218, 136, 238, 247, 250, 228, 207, 179, 212, 77, 120, 163, 45, 141, 215, 215, 58, 186, 71, 237, 55, 36, 81, 252, 192, 102, 68, 92, 124, 30, 202, 64, 168, 133, 240, 144, 205, 39, 0, 157, 223, 21, 83 },
                             idRole = 1
                         },
                         new
@@ -681,10 +681,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Huy Bui",
-                            OTPCreatedAt = new DateTime(2024, 5, 12, 7, 14, 17, 778, DateTimeKind.Utc).AddTicks(7133),
+                            OTPCreatedAt = new DateTime(2024, 5, 11, 17, 7, 9, 450, DateTimeKind.Utc).AddTicks(1555),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 13, 86, 33, 183, 57, 84, 3, 29, 170, 51, 93, 146, 189, 131, 181, 218, 49, 149, 194, 112, 251, 217, 36, 228, 46, 193, 23, 154, 127, 81, 72, 184 },
-                            PasswordSalt = new byte[] { 91, 24, 45, 141, 112, 112, 246, 43, 144, 144, 1, 17, 186, 239, 3, 29, 168, 191, 251, 85, 167, 208, 186, 65, 114, 137, 193, 169, 91, 29, 171, 128, 19, 183, 13, 154, 186, 221, 45, 198, 7, 39, 20, 178, 143, 184, 146, 133, 49, 60, 146, 191, 82, 9, 170, 104, 148, 23, 166, 24, 226, 166, 251, 43 },
+                            PasswordHash = new byte[] { 64, 228, 146, 99, 51, 116, 115, 230, 49, 230, 65, 174, 151, 232, 131, 2, 11, 238, 64, 166, 29, 86, 212, 183, 109, 128, 6, 51, 68, 146, 90, 20 },
+                            PasswordSalt = new byte[] { 166, 166, 59, 99, 194, 68, 91, 159, 95, 10, 208, 188, 169, 247, 213, 17, 35, 77, 206, 8, 182, 218, 136, 238, 247, 250, 228, 207, 179, 212, 77, 120, 163, 45, 141, 215, 215, 58, 186, 71, 237, 55, 36, 81, 252, 192, 102, 68, 92, 124, 30, 202, 64, 168, 133, 240, 144, 205, 39, 0, 157, 223, 21, 83 },
                             idRole = 1
                         },
                         new
@@ -694,10 +694,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Vo A Hoang",
-                            OTPCreatedAt = new DateTime(2024, 5, 12, 7, 14, 17, 778, DateTimeKind.Utc).AddTicks(7147),
+                            OTPCreatedAt = new DateTime(2024, 5, 11, 17, 7, 9, 450, DateTimeKind.Utc).AddTicks(1570),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 13, 86, 33, 183, 57, 84, 3, 29, 170, 51, 93, 146, 189, 131, 181, 218, 49, 149, 194, 112, 251, 217, 36, 228, 46, 193, 23, 154, 127, 81, 72, 184 },
-                            PasswordSalt = new byte[] { 91, 24, 45, 141, 112, 112, 246, 43, 144, 144, 1, 17, 186, 239, 3, 29, 168, 191, 251, 85, 167, 208, 186, 65, 114, 137, 193, 169, 91, 29, 171, 128, 19, 183, 13, 154, 186, 221, 45, 198, 7, 39, 20, 178, 143, 184, 146, 133, 49, 60, 146, 191, 82, 9, 170, 104, 148, 23, 166, 24, 226, 166, 251, 43 },
+                            PasswordHash = new byte[] { 64, 228, 146, 99, 51, 116, 115, 230, 49, 230, 65, 174, 151, 232, 131, 2, 11, 238, 64, 166, 29, 86, 212, 183, 109, 128, 6, 51, 68, 146, 90, 20 },
+                            PasswordSalt = new byte[] { 166, 166, 59, 99, 194, 68, 91, 159, 95, 10, 208, 188, 169, 247, 213, 17, 35, 77, 206, 8, 182, 218, 136, 238, 247, 250, 228, 207, 179, 212, 77, 120, 163, 45, 141, 215, 215, 58, 186, 71, 237, 55, 36, 81, 252, 192, 102, 68, 92, 124, 30, 202, 64, 168, 133, 240, 144, 205, 39, 0, 157, 223, 21, 83 },
                             idRole = 1
                         },
                         new
@@ -707,10 +707,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "BS.CKII Trần Thị Hoài Hương",
-                            OTPCreatedAt = new DateTime(2024, 5, 12, 7, 14, 17, 778, DateTimeKind.Utc).AddTicks(7160),
+                            OTPCreatedAt = new DateTime(2024, 5, 11, 17, 7, 9, 450, DateTimeKind.Utc).AddTicks(1584),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 13, 86, 33, 183, 57, 84, 3, 29, 170, 51, 93, 146, 189, 131, 181, 218, 49, 149, 194, 112, 251, 217, 36, 228, 46, 193, 23, 154, 127, 81, 72, 184 },
-                            PasswordSalt = new byte[] { 91, 24, 45, 141, 112, 112, 246, 43, 144, 144, 1, 17, 186, 239, 3, 29, 168, 191, 251, 85, 167, 208, 186, 65, 114, 137, 193, 169, 91, 29, 171, 128, 19, 183, 13, 154, 186, 221, 45, 198, 7, 39, 20, 178, 143, 184, 146, 133, 49, 60, 146, 191, 82, 9, 170, 104, 148, 23, 166, 24, 226, 166, 251, 43 },
+                            PasswordHash = new byte[] { 64, 228, 146, 99, 51, 116, 115, 230, 49, 230, 65, 174, 151, 232, 131, 2, 11, 238, 64, 166, 29, 86, 212, 183, 109, 128, 6, 51, 68, 146, 90, 20 },
+                            PasswordSalt = new byte[] { 166, 166, 59, 99, 194, 68, 91, 159, 95, 10, 208, 188, 169, 247, 213, 17, 35, 77, 206, 8, 182, 218, 136, 238, 247, 250, 228, 207, 179, 212, 77, 120, 163, 45, 141, 215, 215, 58, 186, 71, 237, 55, 36, 81, 252, 192, 102, 68, 92, 124, 30, 202, 64, 168, 133, 240, 144, 205, 39, 0, 157, 223, 21, 83 },
                             idRole = 2
                         },
                         new
@@ -720,10 +720,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "TS.BS Vũ Thái Hà",
-                            OTPCreatedAt = new DateTime(2024, 5, 12, 7, 14, 17, 778, DateTimeKind.Utc).AddTicks(7173),
+                            OTPCreatedAt = new DateTime(2024, 5, 11, 17, 7, 9, 450, DateTimeKind.Utc).AddTicks(1596),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 13, 86, 33, 183, 57, 84, 3, 29, 170, 51, 93, 146, 189, 131, 181, 218, 49, 149, 194, 112, 251, 217, 36, 228, 46, 193, 23, 154, 127, 81, 72, 184 },
-                            PasswordSalt = new byte[] { 91, 24, 45, 141, 112, 112, 246, 43, 144, 144, 1, 17, 186, 239, 3, 29, 168, 191, 251, 85, 167, 208, 186, 65, 114, 137, 193, 169, 91, 29, 171, 128, 19, 183, 13, 154, 186, 221, 45, 198, 7, 39, 20, 178, 143, 184, 146, 133, 49, 60, 146, 191, 82, 9, 170, 104, 148, 23, 166, 24, 226, 166, 251, 43 },
+                            PasswordHash = new byte[] { 64, 228, 146, 99, 51, 116, 115, 230, 49, 230, 65, 174, 151, 232, 131, 2, 11, 238, 64, 166, 29, 86, 212, 183, 109, 128, 6, 51, 68, 146, 90, 20 },
+                            PasswordSalt = new byte[] { 166, 166, 59, 99, 194, 68, 91, 159, 95, 10, 208, 188, 169, 247, 213, 17, 35, 77, 206, 8, 182, 218, 136, 238, 247, 250, 228, 207, 179, 212, 77, 120, 163, 45, 141, 215, 215, 58, 186, 71, 237, 55, 36, 81, 252, 192, 102, 68, 92, 124, 30, 202, 64, 168, 133, 240, 144, 205, 39, 0, 157, 223, 21, 83 },
                             idRole = 2
                         },
                         new
@@ -733,24 +733,11 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "TS.BS Trần Thịnh",
-                            OTPCreatedAt = new DateTime(2024, 5, 12, 7, 14, 17, 778, DateTimeKind.Utc).AddTicks(7186),
+                            OTPCreatedAt = new DateTime(2024, 5, 11, 17, 7, 9, 450, DateTimeKind.Utc).AddTicks(1609),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 13, 86, 33, 183, 57, 84, 3, 29, 170, 51, 93, 146, 189, 131, 181, 218, 49, 149, 194, 112, 251, 217, 36, 228, 46, 193, 23, 154, 127, 81, 72, 184 },
-                            PasswordSalt = new byte[] { 91, 24, 45, 141, 112, 112, 246, 43, 144, 144, 1, 17, 186, 239, 3, 29, 168, 191, 251, 85, 167, 208, 186, 65, 114, 137, 193, 169, 91, 29, 171, 128, 19, 183, 13, 154, 186, 221, 45, 198, 7, 39, 20, 178, 143, 184, 146, 133, 49, 60, 146, 191, 82, 9, 170, 104, 148, 23, 166, 24, 226, 166, 251, 43 },
+                            PasswordHash = new byte[] { 64, 228, 146, 99, 51, 116, 115, 230, 49, 230, 65, 174, 151, 232, 131, 2, 11, 238, 64, 166, 29, 86, 212, 183, 109, 128, 6, 51, 68, 146, 90, 20 },
+                            PasswordSalt = new byte[] { 166, 166, 59, 99, 194, 68, 91, 159, 95, 10, 208, 188, 169, 247, 213, 17, 35, 77, 206, 8, 182, 218, 136, 238, 247, 250, 228, 207, 179, 212, 77, 120, 163, 45, 141, 215, 215, 58, 186, 71, 237, 55, 36, 81, 252, 192, 102, 68, 92, 124, 30, 202, 64, 168, 133, 240, 144, 205, 39, 0, 157, 223, 21, 83 },
                             idRole = 2
-                        },
-                        new
-                        {
-                            IdUser = new Guid("efaaf143-4211-45d1-9b08-f085f19caa56"),
-                            Email = "admin@gmail.com",
-                            IsLocked = false,
-                            IsVerified = true,
-                            Name = "Admin",
-                            OTPCreatedAt = new DateTime(2024, 5, 12, 7, 14, 17, 778, DateTimeKind.Utc).AddTicks(7199),
-                            OTPVerification = "123456",
-                            PasswordHash = new byte[] { 13, 86, 33, 183, 57, 84, 3, 29, 170, 51, 93, 146, 189, 131, 181, 218, 49, 149, 194, 112, 251, 217, 36, 228, 46, 193, 23, 154, 127, 81, 72, 184 },
-                            PasswordSalt = new byte[] { 91, 24, 45, 141, 112, 112, 246, 43, 144, 144, 1, 17, 186, 239, 3, 29, 168, 191, 251, 85, 167, 208, 186, 65, 114, 137, 193, 169, 91, 29, 171, 128, 19, 183, 13, 154, 186, 221, 45, 198, 7, 39, 20, 178, 143, 184, 146, 133, 49, 60, 146, 191, 82, 9, 170, 104, 148, 23, 166, 24, 226, 166, 251, 43 },
-                            idRole = 3
                         });
                 });
 
