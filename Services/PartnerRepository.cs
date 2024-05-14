@@ -41,6 +41,7 @@ namespace BE_Healthcare.Services
                     IdUser = idUser,
                     StatusVerified = AppNumber.PENDING,
                     BusinessLicense = model.BusinessLicense,
+                    NameClinic = model.NameClinic,
                 };
 
                 _doctorRepository.AddDoctor(newDoctor);

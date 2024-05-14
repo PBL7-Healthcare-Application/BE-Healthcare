@@ -40,13 +40,14 @@ namespace BE_Healthcare.Data.Entities
         public string OTPVerification { get; set; } = null!;
         public DateTime? OTPCreatedAt { get; set; }
 
-        public bool? IsVerified { get; set; } = false;
+        public bool IsVerified { get; set; } = false;
 
         public Doctor Doctor{ get; set; } = null!;
 
         public string? ReasonLockAccount { get; set; } = null;
-        public bool? IsLocked { get; set; } = false;
+        public bool IsLocked { get; set; } = false;
         public DateTime? CreatedDate { get; set; } = null;
+        public bool IsAdminDisabled { get; set; } = false;
 
     }
 }

@@ -20,7 +20,7 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpGet("ViewAppointment")]
-        public IActionResult ViewAppointment(AppointmentSearchCriteriaModel criteria)
+        public IActionResult ViewAppointment([FromQuery] AppointmentSearchCriteriaModel criteria)
         {
             try
             {
