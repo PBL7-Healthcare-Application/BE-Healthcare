@@ -27,7 +27,11 @@ namespace BE_Healthcare.Services
             try
             {
                 var listAppointment = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
-                    .Where(e => e.IdDoctor == idDoctor && e.Status == Status);
+                    .Where(e => e.IdDoctor == idDoctor);
+                if(Status > 0 && Status <= 3)
+                {
+                    listAppointment = listAppointment.Where(e => e.Status == Status);
+                }
                 if (listAppointment == null)
                 {
                     //listAppointment = listAppointment.OrderBy(a => a.StartTime);
@@ -391,7 +395,8 @@ namespace BE_Healthcare.Services
                     Date = a.Date,
                     NamePatient = a.User.Name,
                     PhoneNumber = a.User.PhoneNumber,
-                    Email = a.User.Email
+                    Email = a.User.Email,
+                    Status = a.Status,
                 });
                 return new ApiResponseWithPaging
                 {

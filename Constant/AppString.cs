@@ -60,7 +60,11 @@
 
         public static string MESSAGE_NOTALLOWED_CANCELAPPOINTMENT = "You are not allowed to cancel this appointment because this is not your appointment!";
 
+        public static string MESSAGE_DISABLEACCOUNT_SUCCESS = "Disable Account Successfully!";
+        public static string MESSAGE_ERROR_ACCOUNTDISABLED = "This account cannot be disabled because the admin has disabled it before.";
+        public static string MESSAGE_ERROR_CANNOTDISABLEACCOUNT_USERHADDISABLED = "This account cannot be disabled because the user has already disabled it!";
 
+        public static string MESSAGE_ERROR_ACCOUNT_DISABLED = "Your account has been disabled";
 
     }
 }

@@ -22,7 +22,7 @@ namespace BE_Healthcare.Controllers.User
         }
 
         [HttpGet("GetDoctor")]
-        public IActionResult GetDoctor(DoctorSearchCriteriaModel model)
+        public IActionResult GetDoctor( [FromQuery] DoctorSearchCriteriaModel model)
         {
             try
             {

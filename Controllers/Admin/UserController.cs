@@ -29,7 +29,18 @@ namespace BE_Healthcare.Controllers.Admin
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-
+        }
+        [HttpPost("DisableAccount")]
+        public IActionResult DisableAccount(DisableAccountModel model)
+        {
+            try
+            {
+                return Ok(_userRepository.DisableAccount(model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

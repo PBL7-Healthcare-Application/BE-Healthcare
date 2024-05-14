@@ -9,10 +9,13 @@ namespace BE_Healthcare.Services
     public class UserRepository : IUserRepository
     {
         private readonly MyDbContext _context;
+        private readonly IAuthRepository _authRepository;
 
-        public UserRepository(MyDbContext context)
+        public UserRepository(MyDbContext context, IAuthRepository authRepository)
         {
             _context = context;
+            _authRepository = authRepository;
+
         }
         public IQueryable<User> GetAll()
         {
@@ -64,6 +67,70 @@ namespace BE_Healthcare.Services
                         CurrentPage = criteria.page,
                         ItemsPerPage = AppNumber.PAGE_SIZE
                     }
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        private ApiResponse? CheckifTheAccountDisabled(User? user)
+        {
+            if (user == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_USER,
+                };
+            }
+
+            if (user.IsAdminDisabled)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_ACCOUNTDISABLED,
+                };
+            }
+            if (user.IsLocked)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_CANNOTDISABLEACCOUNT_USERHADDISABLED,
+                };
+            }
+            return null;
+        }
+
+        public ApiResponse DisableAccount(DisableAccountModel model)
+        {
+            try
+            {
+                var user = _authRepository.getUserByEmail(model.Email);
+
+                var check = CheckifTheAccountDisabled(user);
+                if(check != null) 
+                {
+                    return check;
+                }
+
+                user.IsLocked = true;
+                user.IsAdminDisabled = true;
+
+                _context.Update(user);
+                _context.SaveChanges();
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_DISABLEACCOUNT_SUCCESS,
                 };
             }
             catch (Exception ex)

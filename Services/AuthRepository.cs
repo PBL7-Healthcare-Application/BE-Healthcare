@@ -65,7 +65,7 @@ namespace BE_Healthcare.Services
                         Message = AppString.MESSAGE_NOTFOUND_USER,
                     };
                 }
-                if ((bool)!currentUser.IsVerified)
+                if (!currentUser.IsVerified)
                 {
                     //xoa record trong DB
                     DeleteUserByEmail(currentUser.Email);
@@ -84,6 +84,25 @@ namespace BE_Healthcare.Services
                         StatusCode = StatusCode.FAILED,
                         Message = AppString.MESSAGE_PASSWORD_NOT_MATCH,
                     };
+                }
+
+                //Check Account Disabled
+                if(currentUser.IsAdminDisabled)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_ERROR_ACCOUNT_DISABLED,
+                    };
+                }
+
+                if(currentUser.IsLocked)
+                {
+                    currentUser.IsLocked = false;
+                    currentUser.ReasonLockAccount= null;
+
+                    _context.Update(currentUser);
+                    _context.SaveChanges();
                 }
                 //Cap Token
                 var token = GenerateToken(currentUser, currentUser.Role.Name);
