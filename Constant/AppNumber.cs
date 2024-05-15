@@ -17,7 +17,7 @@
         public static int APPOINTMENT_CANCELED = 2;
         public static int APPOINTMENT_COMPLETED = 3;
         
-        public static int PAGE_SIZE = 10;
+        public static int PAGE_SIZE = 3;
 
         public static int STATUS_ALL = -1;
         public static int STATUS_ACTIVE = 0;

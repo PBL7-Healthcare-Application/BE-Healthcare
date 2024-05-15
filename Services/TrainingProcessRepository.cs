@@ -73,7 +73,9 @@ namespace BE_Healthcare.Services
                 SchoolName = c.SchoolName,
                 StartYear = c.StartYear,
                 EndYear = c.EndYear,
-                Major = c.Major
+                Major = c.Major,
+                StatusVerified = c.StatusVerified
+
             }).ToList();
             return result_trainingProcess;
         }

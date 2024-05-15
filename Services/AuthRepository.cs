@@ -190,7 +190,9 @@ namespace BE_Healthcare.Services
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
-                    Role = user.Role.Name
+                    Role = user.Role.Name,
+                    Email = user.Email,
+                    Name = user.Name,
                 };
             }
             catch (Exception ex)

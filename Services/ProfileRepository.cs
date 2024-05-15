@@ -86,7 +86,7 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-        public ProfileModel CreateProfileModel(User u)
+        private ProfileModel CreateProfileModel(User u)
         {
             var res = new ProfileModel
             {
