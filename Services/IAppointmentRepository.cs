@@ -17,6 +17,7 @@ namespace BE_Healthcare.Services
         ApiResponse SetupSchedule (Guid idDoctor, SetupScheduleModel model);
         List<SlotAppointmentModel>? GetListAppointmentofDoctorDetail(Guid idDoctor);
         ApiResponse GetAppointmentDetail(int id);
+        ApiResponse? CheckTimeIsValid(TimeSpan startTime, TimeSpan WorkingTimeStart, TimeSpan WorkingTimeEnd);
 
 
     }

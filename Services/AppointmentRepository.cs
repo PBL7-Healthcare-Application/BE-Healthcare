@@ -70,6 +70,20 @@ namespace BE_Healthcare.Services
             }
             return null;
         }
+
+        //Check the time available within the working hours
+        public ApiResponse? CheckTimeIsValid(TimeSpan startTime, TimeSpan WorkingTimeStart, TimeSpan WorkingTimeEnd)
+        {
+            if (startTime < WorkingTimeStart && startTime >= WorkingTimeEnd)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_INVALID_TIME,
+                };
+            }
+            return null;
+        }
         public ApiResponse CreateAppointment(Guid idUser, AppointmentModel model)
         {
             //1. Check idDoctor is null or not
@@ -101,14 +115,16 @@ namespace BE_Healthcare.Services
 
             if (doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null)
             {
-                if (startTime_Book < TimeSpan.Parse(doctor.WorkingTimeStart) && startTime_Book >= TimeSpan.Parse(doctor.WorkingTimeEnd))
-                {
-                    return new ApiResponse
-                    {
-                        StatusCode = StatusCode.FAILED,
-                        Message = AppString.MESSAGE_ERROR_INVALID_TIME,
-                    };
-                }
+                var CheckTimeValid = CheckTimeIsValid(startTime_Book, TimeSpan.Parse(doctor.WorkingTimeStart), TimeSpan.Parse(doctor.WorkingTimeEnd));
+                if (CheckTimeValid != null) return CheckTimeValid;
+                //if (startTime_Book < TimeSpan.Parse(doctor.WorkingTimeStart) && startTime_Book >= TimeSpan.Parse(doctor.WorkingTimeEnd))
+                //{
+                //    return new ApiResponse
+                //    {
+                //        StatusCode = StatusCode.FAILED,
+                //        Message = AppString.MESSAGE_ERROR_INVALID_TIME,
+                //    };
+                //}
             }
             else
             {

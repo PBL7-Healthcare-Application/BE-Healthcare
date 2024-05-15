@@ -10,7 +10,7 @@ namespace BE_Healthcare.Services
         ApiResponse Validate(LoginModel model);
 
         TokenModel GenerateToken(User user, string? role);
-        ApiResponse RenewToken(TokenModel model);
+        ApiResponse RenewToken(RenewTokenModel model);
 
         User? getUserByEmail(string email);
         User? getUserById(Guid id);

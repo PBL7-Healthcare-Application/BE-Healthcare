@@ -162,6 +162,7 @@ namespace BE_Healthcare.Services
                 {
                     IdDoctor = d.IdDoctor,
                     Name = d.User.Name,
+                    Email= d.User.Email,
                     MedicalSpecialty = d.MedicalSpecialty.Name,
                     Price = d.Price,
                     Address = d.User.Address,
