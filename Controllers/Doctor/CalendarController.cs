@@ -36,5 +36,25 @@ namespace BE_Healthcare.Controllers.Doctor
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost("CreateTimeOff")]
+        public IActionResult CreateTimeOff(List<InformationTimeOffModel> listCreateTimeOff)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok(_calendarRepository.CreateTimeOff(Guid.Parse(checkIdDoctor), listCreateTimeOff));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
+
 }

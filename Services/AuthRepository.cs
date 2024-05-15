@@ -215,7 +215,7 @@ namespace BE_Healthcare.Services
             return Convert.ToBase64String(random);
         }
 
-        public ApiResponse RenewToken(TokenModel model)
+        public ApiResponse RenewToken(RenewTokenModel model)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 

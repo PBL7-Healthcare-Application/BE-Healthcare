@@ -68,6 +68,10 @@
         public static string MESSAGE_ERROR_ACCOUNT_DISABLED = "Your account has been disabled";
         
         public static string MESSAGE_LISTTIMEOFF_EMPTY = "There are no Time Off.";
+        public static string MESSAGE_ERROR_LISTTIMEOFF_EMPTY = "Error no input data.";
+        public static string MESSAGE_ERROR_TIMELINE_ESTABLISHED = "This timeline has been established!";
+        
+        public static string MESSAGE_ADDTIMEOFF_SUCCESS = "Add Time Off successfully!";
 
     }
 }

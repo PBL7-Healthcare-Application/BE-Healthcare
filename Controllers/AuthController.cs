@@ -35,7 +35,7 @@ namespace BE_Healthcare.Controllers
         }
 
         [HttpPost("RenewToken")]
-        public IActionResult RenewToken(TokenModel model)
+        public IActionResult RenewToken(RenewTokenModel model)
         {
             try
             {
