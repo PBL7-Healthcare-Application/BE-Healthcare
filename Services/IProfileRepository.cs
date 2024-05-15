@@ -7,7 +7,6 @@ namespace BE_Healthcare.Services
     {
         ApiResponse GetPersonalInfo(string email);
         ApiResponse ChangePassword(string email, ChangePasswordModel model);
-        ProfileModel CreateProfileModel(User u);
 
         ApiResponse UpdateProfile(string email, UpdateProfileModel model);
         

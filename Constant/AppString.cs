@@ -29,6 +29,7 @@
         public static string MESSAGE_EMAIL_NULL = "Email is null!";
         public static string MESSAGE_BOOKAPPOINTMENT_ERROR = "You (Doctor) cannot make your own appointments";
         public static string MESSAGE_OVERLAP_TIMEOFF = "Can't book this time because doctor is off at this time";
+        public static string MESSAGE_OVERLAP_TIMEOFF_BREAK = "Can't book this time because doctor is resting at this time";
         public static string MESSAGE_ERROR_TIMESLOT_ISSET = "This time slot has been booked in advance, please check again";
         public static string MESSAGE_ERROR_INVALID_TIME = "Invalid time!";
         public static string MESSAGE_SCHEDULED_SUCCESSFUL = "Successfully scheduled a medical examination!";
@@ -65,6 +66,8 @@
         public static string MESSAGE_ERROR_CANNOTDISABLEACCOUNT_USERHADDISABLED = "This account cannot be disabled because the user has already disabled it!";
 
         public static string MESSAGE_ERROR_ACCOUNT_DISABLED = "Your account has been disabled";
+        
+        public static string MESSAGE_LISTTIMEOFF_EMPTY = "There are no Time Off.";
 
     }
 }

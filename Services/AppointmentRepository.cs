@@ -53,6 +53,23 @@ namespace BE_Healthcare.Services
             }
         }
 
+        private ApiResponse? CheckOverlapTimeOff(TimeSpan startTime_Book, List<TimeOffModel> list_TimeOff, string message)
+        {
+            foreach (var i in list_TimeOff)
+            {
+                TimeSpan startTime_timeoff = TimeSpan.Parse(i.StartTime);
+                TimeSpan endTime_timeoff = TimeSpan.Parse(i.EndTime);
+                if (startTime_Book >= startTime_timeoff && startTime_Book < endTime_timeoff) // Book time is overlaps with off time
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = message,
+                    };
+                }
+            }
+            return null;
+        }
         public ApiResponse CreateAppointment(Guid idUser, AppointmentModel model)
         {
             //1. Check idDoctor is null or not
@@ -103,27 +120,25 @@ namespace BE_Healthcare.Services
             }
 
 
-
-
             //4. Check Time Off of Doctor
             var date_book = model.Date;
-            //Console.WriteLine("Day book: " + date_book.ToShortDateString() + "\n");
-            var list_TimeOff = _doctorRepository.GetTimeOffByIdDoctor(model.IdDoctor).Where(d => d.Date.ToShortDateString() == date_book.ToShortDateString());
+            var list_TimeOff = _doctorRepository.GetTimeOffByIdDoctor(model.IdDoctor);
 
-            foreach (var i in list_TimeOff)
+            //Check TimeBusy of Doctor 
+            var list_TimeOffBusy = list_TimeOff.Where(d => d.Date.ToShortDateString() == date_book.ToShortDateString()).ToList();
+            if(list_TimeOffBusy.Any())
             {
-                TimeSpan startTime_timeoff = TimeSpan.Parse(i.StartTime);
-                TimeSpan endTime_timeoff = TimeSpan.Parse(i.EndTime);
-                if (startTime_Book >= startTime_timeoff && startTime_Book < endTime_timeoff) // Book time is overlaps with off time
-                {
-                    return new ApiResponse
-                    {
-                        StatusCode = StatusCode.FAILED,
-                        Message = AppString.MESSAGE_OVERLAP_TIMEOFF,
-                    };
-                }
+                var CheckOverlapTime = CheckOverlapTimeOff(startTime_Book, list_TimeOffBusy, AppString.MESSAGE_OVERLAP_TIMEOFF);
+                if(CheckOverlapTime != null) return CheckOverlapTime;
             }
 
+            //Check TimeBreak of Doctor 
+            var list_TimeOffBreak = list_TimeOff.Where(d => d.Status == AppNumber.BREAK).ToList();
+            if(list_TimeOffBreak.Any())
+            {
+                var CheckOverlapTime = CheckOverlapTimeOff(startTime_Book, list_TimeOffBreak, AppString.MESSAGE_OVERLAP_TIMEOFF_BREAK);
+                if (CheckOverlapTime != null) return CheckOverlapTime;
+            }
             //5. Check List Appointment of Doctor
 
             var list_appointment = GetListAppointmentByIdDoctor(model.IdDoctor).Where(e => e.Date.ToShortDateString() == date_book.ToShortDateString());
@@ -384,6 +399,7 @@ namespace BE_Healthcare.Services
                 }
                 
                 listAppointment = listAppointment.OrderBy(e => e.IdAppointment).ToList();
+                int TotalItems = listAppointment.Count;
 
                 listAppointment = listAppointment.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
 
@@ -405,7 +421,7 @@ namespace BE_Healthcare.Services
                     Data = res,
                     PagingInfo = new PagingInfoModel
                     {
-                        TotalItems = listAppointment.Count(),
+                        TotalItems = TotalItems,
                         CurrentPage = criteria.page,
                         ItemsPerPage = AppNumber.PAGE_SIZE
                     }

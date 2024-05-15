@@ -7,5 +7,7 @@
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
         public string Major { get; set; } = null!;
+        public int? StatusVerified { get; set; } //0: Pending - 1: Approved - 2: Rejected
+
     }
 }

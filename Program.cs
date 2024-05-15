@@ -74,6 +74,7 @@ builder.Services.AddScoped<ITrainingProcessRepository, TrainingProcessRepository
 builder.Services.AddScoped<IWorkingProcessRepository, WorkingProcessRepository>();
 builder.Services.AddScoped<IPartnerRepository, PartnerRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICalendarRepository,  CalendarRepository>();
 
 
 
