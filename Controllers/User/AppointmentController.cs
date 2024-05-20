@@ -19,7 +19,7 @@ namespace BE_Healthcare.Controllers.User
 
         [HttpPost("BookAppointment")]
         [Authorize(Roles = "User")]
-        public IActionResult BookAppointment(AppointmentModel model)
+        public async Task<IActionResult> BookAppointment(AppointmentModel model)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace BE_Healthcare.Controllers.User
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
 
-                return Ok(_appointmentRepository.CreateAppointment(Guid.Parse(checkIdUser), model));
+                return Ok(await _appointmentRepository.CreateAppointment(Guid.Parse(checkIdUser), model));
             }
             catch
             {
@@ -59,7 +59,7 @@ namespace BE_Healthcare.Controllers.User
 
         [HttpPost("CancelAppointment")]
         [Authorize(Roles = "User, Doctor")]
-        public IActionResult CancelAppointment(CancelAppointmentModel model)
+        public async Task<IActionResult> CancelAppointment(CancelAppointmentModel model)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace BE_Healthcare.Controllers.User
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_appointmentRepository.CancelAppointment(model, Guid.Parse(checkIdUser)));
+                return Ok( await _appointmentRepository.CancelAppointment(model, Guid.Parse(checkIdUser)));
             }
             catch
             {

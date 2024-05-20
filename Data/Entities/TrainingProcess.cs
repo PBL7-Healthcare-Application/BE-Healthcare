@@ -17,6 +17,7 @@ namespace BE_Healthcare.Data.Entities
         [ForeignKey(nameof(IdDoctor))]
         public Doctor Doctor { get; set; } = null!;
         public int? StatusVerified { get; set; } = AppNumber.PENDING; //0: Pending - 1: Approved - 2: Rejected
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
     }
 }

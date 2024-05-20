@@ -73,5 +73,14 @@
         
         public static string MESSAGE_ADDTIMEOFF_SUCCESS = "Add Time Off successfully!";
 
+        public static string MESSAGE_SEND_NOTIFICATION_SUCCESS = "Send Notification successfully!";
+
+        public static string TITLE_CREATENEWAPPOINTMENT = "New Appointment";
+        public static string BODY_CREATENEWAPPOINTMENT = "You have a new medical appointment.";
+
+        public static string TITLE_CANCELAPPOINTMENT = "Cancel Appointment";
+        public static string BODY_CANCELAPPOINTMENT = "Your medical appointment has been cancelled.";
+        public static string PATH_CREDENTIALS = @"F:\PBL7\healthcare-2d0e4-firebase-adminsdk-20q4k-d55b92ccba.json";
+
     }
 }

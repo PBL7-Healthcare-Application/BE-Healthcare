@@ -48,6 +48,10 @@ namespace BE_Healthcare.Data.Entities
         public bool IsLocked { get; set; } = false;
         public DateTime? CreatedDate { get; set; } = null;
         public bool IsAdminDisabled { get; set; } = false;
+        public string? latitude { get; set; } = null!;
+        public string? longtitude { get; set; } = null!;
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+
 
     }
 }

@@ -57,7 +57,7 @@ namespace BE_Healthcare.Controllers.Doctor
             }
         }
         [HttpPost("CancelAppointment")]
-        public IActionResult CancelAppointment(CancelAppointmentModel model)
+        public async Task<IActionResult> CancelAppointment(CancelAppointmentModel model)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace BE_Healthcare.Controllers.Doctor
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_appointmentRepository.CancelAppointment(model, null, Guid.Parse(checkIdDoctor)));
+                return Ok(await _appointmentRepository.CancelAppointment(model, null, Guid.Parse(checkIdDoctor)));
             }
             catch
             {

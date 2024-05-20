@@ -213,10 +213,18 @@ namespace BE_Healthcare.Services
         }
         public Doctor? GetDoctorById(Guid id)
         {
-            var data = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == id);
-            if (data != null)
-                return data;
-            return null;
+            try
+            {
+                var data = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == id);
+                if (data != null)
+                    return data;
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
         }
 
         public ApiResponse GetDoctorDetail(Guid id, List<SlotAppointmentModel>? list)
