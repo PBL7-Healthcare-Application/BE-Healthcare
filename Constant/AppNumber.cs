@@ -23,7 +23,8 @@
         public static int STATUS_ACTIVE = 0;
         public static int STATUS_LOCKED = 1;
 
-
+        public static int NOTIFICATIONTYPE_APPOINTMENT = 1;
+        public static int NOTIFICATIONTYPE_APPLYINGDOCTOR = 2;
 
 
 

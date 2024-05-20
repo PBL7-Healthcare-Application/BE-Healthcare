@@ -24,6 +24,7 @@ namespace BE_Healthcare.Data.Entities
         public int? StatusVerified { get; set; } //0: Pending - 1: Approved - 2: Rejected
         public string? NameClinic { get; set; } = null!;
         public string? BusinessLicense { get; set; } = null!;
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
 
 

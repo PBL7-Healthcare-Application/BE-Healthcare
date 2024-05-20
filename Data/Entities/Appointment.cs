@@ -28,6 +28,8 @@ namespace BE_Healthcare.Data.Entities
         public string? Reason { get; set; } = null;
         public Guid? idDoctorCancel { get; set; } = null!;
         public Guid? idUserCancel { get; set; } = null!;
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+
 
     }
 }

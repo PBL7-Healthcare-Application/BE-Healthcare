@@ -8,6 +8,8 @@ using System.Text;
 using BE_Healthcare.Models.EmailModel;
 using Microsoft.OpenApi.Models;
 
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -35,19 +37,19 @@ builder.Services.AddSwaggerGen(c =>
         Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
+            new OpenApiSecurityScheme
             {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                Array.Empty<string>()
-            }
-        });
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 var connectionString = configuration.GetConnectionString("Default");
@@ -75,6 +77,7 @@ builder.Services.AddScoped<IWorkingProcessRepository, WorkingProcessRepository>(
 builder.Services.AddScoped<IPartnerRepository, PartnerRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICalendarRepository,  CalendarRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 
 
@@ -117,13 +120,36 @@ builder.Services.AddAuthentication
 //    }); 
 builder.Services.AddAuthorization();
 
+builder.Services.AddSignalR();
+
+//var pathToFirebaseConfig = Path.Combine(Directory.GetCurrentDirectory(), "healthcare-2d0e4-firebase-adminsdk-20q4k-d55b92ccba.json");
+
+//var defaultApp = FirebaseApp.Create(new AppOptions()
+//{
+//    Credential = GoogleCredential.FromFile(pathToFirebaseConfig),
+//});
+
+
+
+builder.Services.Configure<AppSetting>(configuration.GetSection("FirebaseConfig"));
+
+//var serverKey = configuration["FirebaseConfig:server_key"];
+var projectId = configuration["FirebaseConfig:project_id"];
+
+builder.Services.AddSingleton(new FirestoreService(projectId));
 
 var app = builder.Build();
 
-app.UseCors(opt =>
-{
-    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-});
+//app.UseCors(opt =>
+//{
+//    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+//});
+app.UseCors(builder => builder
+    //.WithOrigins("http://localhost:3000") // replace with your React app's address
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -134,8 +160,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseRouting();
+app.UseAuthorization();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.Run();

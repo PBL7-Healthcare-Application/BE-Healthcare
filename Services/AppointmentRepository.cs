@@ -3,8 +3,14 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.Authentication.SignUp;
+using BE_Healthcare.Models.Notification;
+using FirebaseAdmin;
+using FirebaseAdmin.Messaging;
+using Google.Cloud.Firestore;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data;
 using System.Numerics;
 
 namespace BE_Healthcare.Services
@@ -14,13 +20,19 @@ namespace BE_Healthcare.Services
         private readonly MyDbContext _context;
         private readonly IDoctorRepository _doctorRepository;
         private readonly IAuthRepository _authRepository;
+        private readonly INotificationRepository _notificationRepository;
 
+        private readonly FirestoreService _firestoreService;
 
-        public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository, IAuthRepository authRepository)
+        public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository, 
+            IAuthRepository authRepository, INotificationRepository notificationRepository, 
+            FirestoreService firestoreService)
         {
             _context = context;
             _doctorRepository = doctorRepository;
             _authRepository = authRepository;
+            _notificationRepository = notificationRepository;
+            _firestoreService = firestoreService;
         }
         public List<Appointment>? GetListAppointmentByIdDoctor(Guid idDoctor, int? Status = 1, string? search = null)
         {
@@ -70,7 +82,21 @@ namespace BE_Healthcare.Services
             }
             return null;
         }
-        public ApiResponse CreateAppointment(Guid idUser, AppointmentModel model)
+
+        //Check the time available within the working hours
+        public ApiResponse? CheckTimeIsValid(TimeSpan startTime, TimeSpan WorkingTimeStart, TimeSpan WorkingTimeEnd)
+        {
+            if (startTime < WorkingTimeStart && startTime >= WorkingTimeEnd)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_INVALID_TIME,
+                };
+            }
+            return null;
+        }
+        public async Task<ApiResponse> CreateAppointment(Guid idUser, AppointmentModel model)
         {
             //1. Check idDoctor is null or not
             var doctor = _doctorRepository.GetDoctorById(model.IdDoctor);
@@ -95,20 +121,13 @@ namespace BE_Healthcare.Services
 
 
             //3. Check time book is valid
-
             TimeSpan startTime_Book = TimeSpan.Parse(model.StartTime);
             TimeSpan endTime_Book = TimeSpan.Parse(model.EndTime);
 
             if (doctor.WorkingTimeStart != null && doctor.WorkingTimeEnd != null && doctor.DurationPerAppointment != null)
             {
-                if (startTime_Book < TimeSpan.Parse(doctor.WorkingTimeStart) && startTime_Book >= TimeSpan.Parse(doctor.WorkingTimeEnd))
-                {
-                    return new ApiResponse
-                    {
-                        StatusCode = StatusCode.FAILED,
-                        Message = AppString.MESSAGE_ERROR_INVALID_TIME,
-                    };
-                }
+                var CheckTimeValid = CheckTimeIsValid(startTime_Book, TimeSpan.Parse(doctor.WorkingTimeStart), TimeSpan.Parse(doctor.WorkingTimeEnd));
+                if (CheckTimeValid != null) return CheckTimeValid;
             }
             else
             {
@@ -161,10 +180,8 @@ namespace BE_Healthcare.Services
             }
             model.Price = doctor.Price;
             //check success
-            AddAppointment(idUser, model);
+            model.IdAppointment = AddAppointment(idUser, model);
 
-            // Update free slot
-            _context.SaveChanges();
 
             var dataUser = _authRepository.getUserById(idUser);
             if (dataUser == null)
@@ -175,6 +192,11 @@ namespace BE_Healthcare.Services
                     Message = AppString.MESSAGE_NOTFOUND_USER,
                 };
             }
+
+            //Create Notification for creating new appointment
+            //await CreateNotification(model);
+            await _notificationRepository.CreateNotificationForCreatingAppointment(model);
+
             var res = new ScheduleAppointmentSuccessfulModel
             {
                 IdDoctor = model.IdDoctor,
@@ -192,7 +214,8 @@ namespace BE_Healthcare.Services
                 AvatarUser = dataUser.Avatar,
                 EmailUser = dataUser.Email,
                 NameClinic = doctor.NameClinic,
-                NameMedicalSpecialty = doctor.MedicalSpecialty.Name
+                NameMedicalSpecialty = doctor.MedicalSpecialty.Name,
+                IdAppointment = model.IdAppointment,
 
             };
 
@@ -202,12 +225,9 @@ namespace BE_Healthcare.Services
                 Message = AppString.MESSAGE_SCHEDULED_SUCCESSFUL,
                 Data = res
             };
-
-
-            throw new NotImplementedException();
         }
 
-        public void AddAppointment(Guid idUser, AppointmentModel model)
+        public int AddAppointment(Guid idUser, AppointmentModel model)
         {
             try
             {
@@ -226,10 +246,12 @@ namespace BE_Healthcare.Services
 
                 _context.Add(_appointment);
                 _context.SaveChanges();
+                return _appointment.IdAppointment;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return -1;
             }
         }
 
@@ -300,10 +322,12 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public ApiResponse CancelAppointment(CancelAppointmentModel model, Guid? idUserCancel = null, Guid? idDoctorCancel = null)
+        public async Task<ApiResponse> CancelAppointment(CancelAppointmentModel model, Guid? idUserCancel = null, Guid? idDoctorCancel = null)
         {
             try
             {
+                bool isUserCancel = false;
+                Guid? idReceiver = Guid.Empty;
                 var appointment = GetAppointmentByIdAppointment(model.idAppointment);
                 if(appointment == null)
                 {
@@ -313,9 +337,6 @@ namespace BE_Healthcare.Services
                         Message = AppString.MESSAGE_NOTFOUND_APPOINTMENT,
                     };
                 }
-
-
-
                 if(idUserCancel != null)
                 {
                     if(appointment.IdUser != idUserCancel)
@@ -327,6 +348,8 @@ namespace BE_Healthcare.Services
                         };
                     }
                     appointment.idUserCancel = idUserCancel;
+                    idReceiver = appointment.IdDoctor;
+                    isUserCancel = true;
                 }
                 else if(idDoctorCancel != null)
                 {
@@ -339,12 +362,18 @@ namespace BE_Healthcare.Services
                         };
                     }
                     appointment.idDoctorCancel = idDoctorCancel;
+                    idReceiver = appointment.IdUser;
                 }
+                
                 appointment.Reason = model.Reason;
                 appointment.Status = 2;
 
                 _context.Update(appointment);
                 _context.SaveChanges();
+
+                //Create Notification for cancellingappointment
+                await _notificationRepository.CreateNotificationForCancellingAppointment(model, appointment, idReceiver);
+
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
@@ -636,16 +665,38 @@ namespace BE_Healthcare.Services
                 };
             }
 
-
-
-
-
-
-
-
-
-
             
         }
+
+
+        //public async Task<ApiResponse> SendNotification()
+        //{
+        //    try
+        //    {
+        //        // Send a notification to Firebase
+        //        //string title = "Appointment booked";
+        //        //string body = $"Your appointment with {dataUser.Name} on {model.Date.ToShortDateString()} {model.StartTime} has been booked successfully.";
+        //        //await _firebaseMessagingService.SendNotification(title, body);
+
+
+        //        // Save the notification to Firestore
+        //        //await _firestoreService.AddDocumentAsync("notifications", "thanh nguyen");
+        //        return new ApiResponse
+        //        {
+        //            StatusCode = StatusCode.SUCCESS,
+        //            Message = AppString.MESSAGE_SEND_NOTIFICATION_SUCCESS,
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Console.WriteLine($"An error occurred: {ex.Message}");
+        //        return new ApiResponse
+        //        {
+        //            StatusCode = StatusCode.FAILED,
+        //            Message = AppString.MESSAGE_SERVER_ERROR,
+        //        };
+        //    }
+        //}
     }
 }

@@ -18,7 +18,8 @@ namespace BE_Healthcare.Data.Entities
         public Doctor Doctor { get; set; } = null!;
         public int? Status { get; set; }
         public string? Reason { get; set; } = null;
-        
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+
 
     }
 }

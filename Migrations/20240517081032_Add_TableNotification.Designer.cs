@@ -3,6 +3,7 @@ using System;
 using BE_Healthcare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_Healthcare.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517081032_Add_TableNotification")]
+    partial class Add_TableNotification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,9 +27,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int>("IdAppointment")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("Date");
@@ -78,7 +78,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 5,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5925),
                             Date = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "11:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -91,7 +90,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 6,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5932),
                             Date = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "10:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -104,7 +102,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 7,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5935),
                             Date = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "16:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -117,7 +114,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 8,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5939),
                             Date = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "17:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -130,7 +126,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 9,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5942),
                             Date = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "9:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -147,9 +142,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int>("IdCertificate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("IdDoctor")
                         .HasColumnType("char(36)");
@@ -178,7 +170,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 1,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5850),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Image = "https://hellobacsi.com/care/bac-si/bsckii-tran-thi-hoai-huong-646/",
                             Name = "Hội viên chi hội Da liễu Hồ Chí Minh",
@@ -188,7 +179,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 2,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5854),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Image = "https://hellobacsi.com/care/bac-si/bsckii-tran-thi-hoai-huong-646/",
                             Name = "Hội viên Hội Da liễu Việt Nam",
@@ -205,9 +195,6 @@ namespace BE_Healthcare.Migrations
 
                     b.Property<string>("BusinessLicense")
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
@@ -252,7 +239,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5776),
                             Description = "Bác sĩ Chuyên khoa I Trần Thị Hoài Hương nguyên là Phó Trưởng khoa Lâm sàng 1 tại Bệnh viện Da liễu TP.HCM.\r\n\r\nVề chuyên môn, bác sĩ chuyên thăm khám và điều trị các vấn đề bệnh lý chuyên sâu về da, bệnh da ở trẻ cũng như các phương pháp thẩm mỹ da liễu.\r\n\r\n\r\nBác sĩ cũng là gương mặt quen thuộc trong những hội nghị hội thảo về Da liễu. Với nền tảng chuyên môn hơn 20 năm, bác sĩ còn được biết đến với thái độ tận tình tận tâm, luôn sẵn sàng tư vấn hỗ trợ bệnh nhân các vấn đề bệnh lý cũng như trao đổi về các liệu pháp thẩm mỹ hiệu quả phù hợp.",
                             DurationPerAppointment = 1,
                             IdSpecialty = 7,
@@ -267,7 +253,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5787),
                             Description = "Tiến sĩ - Bác sĩ Vũ Thái Hà có gần 20 năm kinh nghiệm trong việc tư vấn và điều trị các vấn đề về da liễu như nám, mụn, lão hóa da,…\r\n\r\nVề quá trình đào tạo, bác sĩ tốt nghiệp Bác sĩ nội trú Da liễu, tốt nghiệp bậc Thạc sĩ tại trường Đại học Y Hà Nội. Sau đó, bác sĩ có khoảng thời gian thực tập tại Pháp về phương pháp điều trị các bệnh về da liễu, bệnh về tóc, bệnh về móng.\r\n\r\n\r\nBác sĩ hiện đang đảm nhận vai trò Trưởng khoa Nghiên cứu và Ứng dụng công nghệ tế bào gốc tại Bệnh viện Da liễu Trung Ương. Bên cạnh đó, bác sĩ cũng là người phụ trách chuyên môn tại Phòng khám Da liễu Thái Hà.\r\n\r\nVới nền tảng chuyên môn cực kỳ vững chắc, bác sĩ chuyên thăm khám và điều trị các vấn đề bệnh lý liên quan đến da: viêm da cơ địa, viêm da tiếp xúc, viêm da dầu, thủy đậu, nám da, nám da,...Bên cạnh đó, bác sĩ cũng nhận tư vấn các vấn đề về sẹo, vấn đề về mụn, tình trạng lão hóa da, bớt sắc tố.",
                             DurationPerAppointment = 1,
                             IdSpecialty = 5,
@@ -282,7 +267,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5794),
                             Description = "Tiến sĩ - Bác sĩ Trần Thịnh có gần 40 năm kinh nghiệm thăm khám và điều trị các vấn đề Da liễu. Tiến sĩ nguyên là Trưởng khoa Da liễu - Bệnh viện Da liễu TP.HCM và hiện đang là người điều hành phòng khám Chuyên khoa Da liễu Trần Thịnh.\r\n\r\nVề quá trình đào tạo, tiến sĩ tốt nghiệp chuyên ngành Da liễu tại trường Đại học Y Dược TP. HCM. Sau khi tốt nghiệp, tiến sĩ được giữ lại trường và đảm nhiệm vai trò bác sĩ, cán bộ phòng Khoa học kỹ thuật khoa Y. Đến năm 2009, dù đã là người dày dặn kinh nghiệm trong ngành, bác sĩ tiếp tục dành thời gian học thêm chuyên ngành về Quản lý Y tế tại trường Đại học Y Dược.\r\n\r\n\r\nNgoài cương vị bác sĩ, giai đoạn từ năm 1991 - 1999, tiến sĩ còn đảm đương nhiều vai trò quan trọng tại bệnh viện Da liễu. Trong đó có việc tham gia phụ trách chương trình kiểm soát bệnh lây qua tình dục và AIDS tại TP.HCM cũng như đóng góp vào quá trình đào tạo nguồn lực kế cận với vai trò giảng viên tại các trường đại học.\r\n\r\nNăm 2010, tiến sĩ Trần Thịnh đã nhận được bằng khen từ Bộ trưởng Bộ Y tế về những thành tựu có được. Xuyên suốt quá trình sự nghiệp, tiến sĩ được biết đến là một trong những chuyên gia vững về trình độ chuyên môn, tận tâm tận tình trong quá trình thăm khám.",
                             DurationPerAppointment = 1,
                             IdSpecialty = 1,
@@ -302,9 +286,6 @@ namespace BE_Healthcare.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Image")
                         .HasColumnType("longtext");
 
@@ -320,111 +301,124 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdSpecialty = 1,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4988),
                             Name = "Internal Medicine"
                         },
                         new
                         {
                             IdSpecialty = 2,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4992),
                             Name = "General Surgery"
                         },
                         new
                         {
                             IdSpecialty = 3,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4993),
                             Name = "Obstetrics and Gynecology"
                         },
                         new
                         {
                             IdSpecialty = 4,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4994),
                             Name = "Pediatrics"
                         },
                         new
                         {
                             IdSpecialty = 5,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4995),
                             Name = "Emergency Medicine"
                         },
                         new
                         {
                             IdSpecialty = 6,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4995),
                             Name = "Dermatology"
                         },
                         new
                         {
                             IdSpecialty = 7,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4996),
                             Name = "Dentistry"
                         },
                         new
                         {
                             IdSpecialty = 8,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4997),
                             Name = "Plastic Surgery"
                         },
                         new
                         {
                             IdSpecialty = 9,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4998),
                             Name = "Nuclear Medicine"
                         },
                         new
                         {
                             IdSpecialty = 10,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4998),
                             Name = "Cardiology"
                         },
                         new
                         {
                             IdSpecialty = 11,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(4999),
                             Name = "Pulmonology"
                         },
                         new
                         {
                             IdSpecialty = 12,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5000),
                             Name = "Gastroenterology"
                         },
                         new
                         {
                             IdSpecialty = 13,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5000),
                             Name = "Hematology"
                         },
                         new
                         {
                             IdSpecialty = 14,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5001),
                             Name = "Endocrinology"
                         },
                         new
                         {
                             IdSpecialty = 15,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5002),
                             Name = "Public Health"
                         },
                         new
                         {
                             IdSpecialty = 16,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5003),
                             Name = "Preventive Medicine"
                         },
                         new
                         {
                             IdSpecialty = 17,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5004),
                             Name = "Psychiatry"
                         },
                         new
                         {
                             IdSpecialty = 18,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5004),
                             Name = "Traditional Medicine"
                         });
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.Notification", b =>
+                {
+                    b.Property<int>("IdNotification")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("IdAppointment")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("IdUser")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("NotificationType")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdNotification");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("BE_Healthcare.Data.Entities.RefreshToken", b =>
@@ -432,9 +426,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("ExpiredAt")
                         .HasColumnType("datetime(6)");
@@ -503,9 +494,6 @@ namespace BE_Healthcare.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("Date");
 
@@ -536,7 +524,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTimeOff = 1,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5817),
                             Date = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "10:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -547,7 +534,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTimeOff = 2,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5827),
                             Date = new DateTime(2024, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "16:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -558,7 +544,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTimeOff = 3,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5830),
                             Date = new DateTime(2024, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "13:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -568,7 +553,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTimeOff = 4,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5832),
                             Date = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "15:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -583,9 +567,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int>("IdTrainingProcess")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("EndYear")
                         .HasColumnType("int");
@@ -617,7 +598,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 1,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5869),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tốt nghiệp Bác sĩ Chuyên khoa II, chuyên ngành Da liễu",
                             SchoolName = "Đại học Y Dược TP.HCM",
@@ -626,7 +606,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 2,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5873),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tốt nghiệp Bác sĩ Chuyên khoa I, chuyên ngành Da liễu",
                             SchoolName = "Đại học Y Dược TP.HCM",
@@ -635,7 +614,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 3,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5875),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tốt nghiệp Bác sĩ Đa khoa",
                             SchoolName = "Đại học Y Dược TP.HCM",
@@ -644,7 +622,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 4,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5877),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Tham gia lớp Sơ bộ DInh dưỡng",
                             SchoolName = "Đại học Y khoa Phạm Ngọc Thạch",
@@ -663,9 +640,6 @@ namespace BE_Healthcare.Migrations
 
                     b.Property<string>("Avatar")
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime(6)");
@@ -719,12 +693,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int>("idRole")
                         .HasColumnType("int");
 
-                    b.Property<string>("latitude")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("longtitude")
-                        .HasColumnType("longtext");
-
                     b.HasKey("IdUser");
 
                     b.HasIndex("idRole");
@@ -735,106 +703,99 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdUser = new Guid("9117c626-c3d0-4d14-b345-d70d85268623"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5501),
                             Email = "nguyenquocthanh268@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Nguyen Quoc Thanh",
-                            OTPCreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5619),
+                            OTPCreatedAt = new DateTime(2024, 5, 17, 8, 10, 31, 963, DateTimeKind.Utc).AddTicks(6694),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 191, 42, 79, 209, 83, 254, 54, 74, 116, 63, 123, 69, 91, 47, 77, 174, 219, 137, 2, 247, 72, 85, 55, 44, 227, 231, 56, 72, 60, 102, 239, 99 },
-                            PasswordSalt = new byte[] { 44, 199, 213, 23, 134, 10, 19, 240, 37, 30, 71, 87, 134, 189, 226, 63, 236, 236, 99, 28, 77, 148, 176, 3, 199, 58, 93, 10, 227, 59, 22, 203, 74, 154, 240, 18, 254, 171, 36, 240, 98, 235, 99, 96, 78, 43, 135, 57, 127, 38, 124, 228, 196, 94, 48, 68, 101, 209, 116, 242, 75, 192, 178, 206 },
+                            PasswordHash = new byte[] { 241, 185, 206, 197, 157, 79, 23, 26, 116, 17, 19, 182, 182, 118, 73, 26, 246, 13, 138, 233, 20, 200, 178, 26, 68, 88, 17, 93, 239, 183, 254, 16 },
+                            PasswordSalt = new byte[] { 243, 92, 25, 142, 46, 3, 171, 133, 186, 23, 106, 127, 238, 235, 169, 179, 191, 212, 51, 188, 124, 164, 63, 146, 228, 62, 246, 165, 96, 36, 197, 29, 234, 201, 190, 36, 166, 35, 237, 137, 126, 114, 156, 206, 83, 54, 221, 122, 108, 43, 80, 5, 154, 162, 119, 182, 224, 41, 245, 119, 19, 47, 80, 136 },
                             idRole = 1
                         },
                         new
                         {
                             IdUser = new Guid("85f97fe1-83e4-4dcc-91ca-367cb29f148e"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5621),
                             Email = "buivanhuy@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Huy Bui",
-                            OTPCreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5637),
+                            OTPCreatedAt = new DateTime(2024, 5, 17, 8, 10, 31, 963, DateTimeKind.Utc).AddTicks(6711),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 191, 42, 79, 209, 83, 254, 54, 74, 116, 63, 123, 69, 91, 47, 77, 174, 219, 137, 2, 247, 72, 85, 55, 44, 227, 231, 56, 72, 60, 102, 239, 99 },
-                            PasswordSalt = new byte[] { 44, 199, 213, 23, 134, 10, 19, 240, 37, 30, 71, 87, 134, 189, 226, 63, 236, 236, 99, 28, 77, 148, 176, 3, 199, 58, 93, 10, 227, 59, 22, 203, 74, 154, 240, 18, 254, 171, 36, 240, 98, 235, 99, 96, 78, 43, 135, 57, 127, 38, 124, 228, 196, 94, 48, 68, 101, 209, 116, 242, 75, 192, 178, 206 },
+                            PasswordHash = new byte[] { 241, 185, 206, 197, 157, 79, 23, 26, 116, 17, 19, 182, 182, 118, 73, 26, 246, 13, 138, 233, 20, 200, 178, 26, 68, 88, 17, 93, 239, 183, 254, 16 },
+                            PasswordSalt = new byte[] { 243, 92, 25, 142, 46, 3, 171, 133, 186, 23, 106, 127, 238, 235, 169, 179, 191, 212, 51, 188, 124, 164, 63, 146, 228, 62, 246, 165, 96, 36, 197, 29, 234, 201, 190, 36, 166, 35, 237, 137, 126, 114, 156, 206, 83, 54, 221, 122, 108, 43, 80, 5, 154, 162, 119, 182, 224, 41, 245, 119, 19, 47, 80, 136 },
                             idRole = 1
                         },
                         new
                         {
                             IdUser = new Guid("bfa4b5ec-1ad8-4676-8871-122749af64e4"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5639),
                             Email = "anhoang@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Vo A Hoang",
-                            OTPCreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5655),
+                            OTPCreatedAt = new DateTime(2024, 5, 17, 8, 10, 31, 963, DateTimeKind.Utc).AddTicks(6723),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 191, 42, 79, 209, 83, 254, 54, 74, 116, 63, 123, 69, 91, 47, 77, 174, 219, 137, 2, 247, 72, 85, 55, 44, 227, 231, 56, 72, 60, 102, 239, 99 },
-                            PasswordSalt = new byte[] { 44, 199, 213, 23, 134, 10, 19, 240, 37, 30, 71, 87, 134, 189, 226, 63, 236, 236, 99, 28, 77, 148, 176, 3, 199, 58, 93, 10, 227, 59, 22, 203, 74, 154, 240, 18, 254, 171, 36, 240, 98, 235, 99, 96, 78, 43, 135, 57, 127, 38, 124, 228, 196, 94, 48, 68, 101, 209, 116, 242, 75, 192, 178, 206 },
+                            PasswordHash = new byte[] { 241, 185, 206, 197, 157, 79, 23, 26, 116, 17, 19, 182, 182, 118, 73, 26, 246, 13, 138, 233, 20, 200, 178, 26, 68, 88, 17, 93, 239, 183, 254, 16 },
+                            PasswordSalt = new byte[] { 243, 92, 25, 142, 46, 3, 171, 133, 186, 23, 106, 127, 238, 235, 169, 179, 191, 212, 51, 188, 124, 164, 63, 146, 228, 62, 246, 165, 96, 36, 197, 29, 234, 201, 190, 36, 166, 35, 237, 137, 126, 114, 156, 206, 83, 54, 221, 122, 108, 43, 80, 5, 154, 162, 119, 182, 224, 41, 245, 119, 19, 47, 80, 136 },
                             idRole = 1
                         },
                         new
                         {
                             IdUser = new Guid("6d2fc8cc-cbfa-401d-aef5-2d1588751d32"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5688),
                             Email = "doctor1@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "BS.CKII Trần Thị Hoài Hương",
-                            OTPCreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5701),
+                            OTPCreatedAt = new DateTime(2024, 5, 17, 8, 10, 31, 963, DateTimeKind.Utc).AddTicks(6734),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 191, 42, 79, 209, 83, 254, 54, 74, 116, 63, 123, 69, 91, 47, 77, 174, 219, 137, 2, 247, 72, 85, 55, 44, 227, 231, 56, 72, 60, 102, 239, 99 },
-                            PasswordSalt = new byte[] { 44, 199, 213, 23, 134, 10, 19, 240, 37, 30, 71, 87, 134, 189, 226, 63, 236, 236, 99, 28, 77, 148, 176, 3, 199, 58, 93, 10, 227, 59, 22, 203, 74, 154, 240, 18, 254, 171, 36, 240, 98, 235, 99, 96, 78, 43, 135, 57, 127, 38, 124, 228, 196, 94, 48, 68, 101, 209, 116, 242, 75, 192, 178, 206 },
+                            PasswordHash = new byte[] { 241, 185, 206, 197, 157, 79, 23, 26, 116, 17, 19, 182, 182, 118, 73, 26, 246, 13, 138, 233, 20, 200, 178, 26, 68, 88, 17, 93, 239, 183, 254, 16 },
+                            PasswordSalt = new byte[] { 243, 92, 25, 142, 46, 3, 171, 133, 186, 23, 106, 127, 238, 235, 169, 179, 191, 212, 51, 188, 124, 164, 63, 146, 228, 62, 246, 165, 96, 36, 197, 29, 234, 201, 190, 36, 166, 35, 237, 137, 126, 114, 156, 206, 83, 54, 221, 122, 108, 43, 80, 5, 154, 162, 119, 182, 224, 41, 245, 119, 19, 47, 80, 136 },
                             idRole = 2
                         },
                         new
                         {
                             IdUser = new Guid("9f12c430-de83-4910-92ac-704bffefaab2"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5702),
                             Email = "doctor2@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "TS.BS Vũ Thái Hà",
-                            OTPCreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5715),
+                            OTPCreatedAt = new DateTime(2024, 5, 17, 8, 10, 31, 963, DateTimeKind.Utc).AddTicks(6744),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 191, 42, 79, 209, 83, 254, 54, 74, 116, 63, 123, 69, 91, 47, 77, 174, 219, 137, 2, 247, 72, 85, 55, 44, 227, 231, 56, 72, 60, 102, 239, 99 },
-                            PasswordSalt = new byte[] { 44, 199, 213, 23, 134, 10, 19, 240, 37, 30, 71, 87, 134, 189, 226, 63, 236, 236, 99, 28, 77, 148, 176, 3, 199, 58, 93, 10, 227, 59, 22, 203, 74, 154, 240, 18, 254, 171, 36, 240, 98, 235, 99, 96, 78, 43, 135, 57, 127, 38, 124, 228, 196, 94, 48, 68, 101, 209, 116, 242, 75, 192, 178, 206 },
+                            PasswordHash = new byte[] { 241, 185, 206, 197, 157, 79, 23, 26, 116, 17, 19, 182, 182, 118, 73, 26, 246, 13, 138, 233, 20, 200, 178, 26, 68, 88, 17, 93, 239, 183, 254, 16 },
+                            PasswordSalt = new byte[] { 243, 92, 25, 142, 46, 3, 171, 133, 186, 23, 106, 127, 238, 235, 169, 179, 191, 212, 51, 188, 124, 164, 63, 146, 228, 62, 246, 165, 96, 36, 197, 29, 234, 201, 190, 36, 166, 35, 237, 137, 126, 114, 156, 206, 83, 54, 221, 122, 108, 43, 80, 5, 154, 162, 119, 182, 224, 41, 245, 119, 19, 47, 80, 136 },
                             idRole = 2
                         },
                         new
                         {
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb451"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5716),
                             Email = "doctor3@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "TS.BS Trần Thịnh",
-                            OTPCreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5729),
+                            OTPCreatedAt = new DateTime(2024, 5, 17, 8, 10, 31, 963, DateTimeKind.Utc).AddTicks(6755),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 191, 42, 79, 209, 83, 254, 54, 74, 116, 63, 123, 69, 91, 47, 77, 174, 219, 137, 2, 247, 72, 85, 55, 44, 227, 231, 56, 72, 60, 102, 239, 99 },
-                            PasswordSalt = new byte[] { 44, 199, 213, 23, 134, 10, 19, 240, 37, 30, 71, 87, 134, 189, 226, 63, 236, 236, 99, 28, 77, 148, 176, 3, 199, 58, 93, 10, 227, 59, 22, 203, 74, 154, 240, 18, 254, 171, 36, 240, 98, 235, 99, 96, 78, 43, 135, 57, 127, 38, 124, 228, 196, 94, 48, 68, 101, 209, 116, 242, 75, 192, 178, 206 },
+                            PasswordHash = new byte[] { 241, 185, 206, 197, 157, 79, 23, 26, 116, 17, 19, 182, 182, 118, 73, 26, 246, 13, 138, 233, 20, 200, 178, 26, 68, 88, 17, 93, 239, 183, 254, 16 },
+                            PasswordSalt = new byte[] { 243, 92, 25, 142, 46, 3, 171, 133, 186, 23, 106, 127, 238, 235, 169, 179, 191, 212, 51, 188, 124, 164, 63, 146, 228, 62, 246, 165, 96, 36, 197, 29, 234, 201, 190, 36, 166, 35, 237, 137, 126, 114, 156, 206, 83, 54, 221, 122, 108, 43, 80, 5, 154, 162, 119, 182, 224, 41, 245, 119, 19, 47, 80, 136 },
                             idRole = 2
                         },
                         new
                         {
                             IdUser = new Guid("efaaf143-4211-45d1-9b08-f085f19caa56"),
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5730),
                             Email = "admin@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Admin",
-                            OTPCreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5742),
+                            OTPCreatedAt = new DateTime(2024, 5, 17, 8, 10, 31, 963, DateTimeKind.Utc).AddTicks(6765),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 191, 42, 79, 209, 83, 254, 54, 74, 116, 63, 123, 69, 91, 47, 77, 174, 219, 137, 2, 247, 72, 85, 55, 44, 227, 231, 56, 72, 60, 102, 239, 99 },
-                            PasswordSalt = new byte[] { 44, 199, 213, 23, 134, 10, 19, 240, 37, 30, 71, 87, 134, 189, 226, 63, 236, 236, 99, 28, 77, 148, 176, 3, 199, 58, 93, 10, 227, 59, 22, 203, 74, 154, 240, 18, 254, 171, 36, 240, 98, 235, 99, 96, 78, 43, 135, 57, 127, 38, 124, 228, 196, 94, 48, 68, 101, 209, 116, 242, 75, 192, 178, 206 },
+                            PasswordHash = new byte[] { 241, 185, 206, 197, 157, 79, 23, 26, 116, 17, 19, 182, 182, 118, 73, 26, 246, 13, 138, 233, 20, 200, 178, 26, 68, 88, 17, 93, 239, 183, 254, 16 },
+                            PasswordSalt = new byte[] { 243, 92, 25, 142, 46, 3, 171, 133, 186, 23, 106, 127, 238, 235, 169, 179, 191, 212, 51, 188, 124, 164, 63, 146, 228, 62, 246, 165, 96, 36, 197, 29, 234, 201, 190, 36, 166, 35, 237, 137, 126, 114, 156, 206, 83, 54, 221, 122, 108, 43, 80, 5, 154, 162, 119, 182, 224, 41, 245, 119, 19, 47, 80, 136 },
                             idRole = 3
                         });
                 });
@@ -844,9 +805,6 @@ namespace BE_Healthcare.Migrations
                     b.Property<int>("IdWorkingProcess")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("EndYear")
                         .HasColumnType("int");
@@ -878,7 +836,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 1,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5898),
                             EndYear = 2014,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Bác sĩ Da liễu",
@@ -889,7 +846,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 2,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5902),
                             EndYear = 2014,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Nguyên Phó Trưởng khoa Lâm sàng 1",
@@ -900,7 +856,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 3,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5905),
                             EndYear = 2014,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Trưởng Khoa Dinh Dưỡng",
@@ -911,7 +866,6 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 4,
-                            CreatedAt = new DateTime(2024, 5, 20, 9, 10, 55, 264, DateTimeKind.Utc).AddTicks(5908),
                             EndYear = 2014,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Bác sĩ chuyên khoa da liễu, thẩm mỹ da",
@@ -958,6 +912,15 @@ namespace BE_Healthcare.Migrations
                         .IsRequired();
 
                     b.Navigation("MedicalSpecialty");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BE_Healthcare.Data.Entities.Notification", b =>
+                {
+                    b.HasOne("BE_Healthcare.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("IdUser");
 
                     b.Navigation("User");
                 });
