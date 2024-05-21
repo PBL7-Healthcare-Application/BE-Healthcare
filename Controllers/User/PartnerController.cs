@@ -1,4 +1,4 @@
-﻿using BE_Healthcare.Models;
+﻿using BE_Healthcare.Models.Partner;
 using BE_Healthcare.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -82,5 +82,11 @@
         public static string BODY_CANCELAPPOINTMENT = "Your medical appointment has been cancelled.";
         public static string PATH_CREDENTIALS = @"F:\PBL7\healthcare-2d0e4-firebase-adminsdk-20q4k-d55b92ccba.json";
 
+        public static string MESSAGE_LISTPARTNER_EMPTY = "Partner list is empty.";
+        public static string MESSAGE_NOTFOUND_PARTNER = "Partner is not found!";
+        
+        public static string MESSAGE_ERROR_APPLYPARTNER = "You have registered to become our partner, please wait for admin to approve your information!";
+        public static string MESSAGE_VERIFYINFPARTNER_SUCCESS = "Verify information of doctor successfully.";
+
     }
 }
