@@ -27,7 +27,7 @@ namespace BE_Healthcare.Services
 
         private IQueryable<Doctor> GetAll()
         {
-            return _context.Doctors.Include(p=>p.User).Include(q => q.MedicalSpecialty).AsQueryable();
+            return _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).AsQueryable().Where(e => e.StatusVerified == 1); ;
         }
         public int GetTotalAppointmentByIdDoctor(DateTime d, Guid idDoctor)
         {

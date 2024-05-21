@@ -9,7 +9,7 @@ namespace BE_Healthcare.Services
         Doctor? GetDoctorById(Guid id);
         Doctor? GetDoctorByIdUser(Guid id);
 
-        ApiResponse GetDoctorDetail(Guid id, List<SlotAppointmentModel> list);
+        ApiResponse GetDoctorDetail(Guid id, List<SlotAppointmentModel>? list);
         List<TimeOffModel>? GetTimeOffByIdDoctor(Guid id);
         int GetTotalAppointmentByIdDoctor(DateTime d, Guid idDoctor);
         int CalculateFreeSlots(Guid idDoctor, DateTime d, string WorkingTimeStart, string WorkingTimeEnd, int DurationPerAppointment);

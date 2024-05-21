@@ -19,7 +19,7 @@ namespace BE_Healthcare.Controllers.Admin
         }
 
         [HttpGet("GetUser")]
-        public IActionResult GetUser(UserSearchCriteriaModel model)
+        public IActionResult GetUser([FromQuery] UserSearchCriteriaModel model)
         {
             try
             {

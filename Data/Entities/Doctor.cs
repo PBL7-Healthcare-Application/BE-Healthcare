@@ -25,6 +25,8 @@ namespace BE_Healthcare.Data.Entities
         public string? NameClinic { get; set; } = null!;
         public string? BusinessLicense { get; set; } = null!;
         public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? IsVerifiedAt { get; set; }
+        public bool IsVerifiedAllInfo { get; set; } = true;
 
 
 
