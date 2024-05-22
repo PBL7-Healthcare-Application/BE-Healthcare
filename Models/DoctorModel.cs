@@ -8,7 +8,7 @@ namespace BE_Healthcare.Models
         public Guid IdDoctor { get; set; }
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; } = null!;
         public string? Avatar { get; set; } = null!;
 
         public string MedicalSpecialty { get; set; } = null!;

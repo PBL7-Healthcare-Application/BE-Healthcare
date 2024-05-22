@@ -2,6 +2,7 @@
 using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
+using BE_Healthcare.Models.Partner;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Ocsp;
 using Org.BouncyCastle.Tls;
@@ -78,6 +79,48 @@ namespace BE_Healthcare.Services
 
             }).ToList();
             return result_trainingProcess;
+        }
+        public TrainingProcess? GetTrainingProcessOfDoctorByIdTrainingProcess(Guid idDoctor, int idTrainingProcess)
+        {
+            var list_TrainingProcess = GetTrainingProcess(idDoctor);
+            if (list_TrainingProcess == null) return null;
+            return list_TrainingProcess.FirstOrDefault(c => c.IdTrainingProcess == idTrainingProcess);
+        }
+
+        public int GetNumberOfTrainingProcessWaitingForApproval(Guid idDoctor)
+        {
+            try
+            {
+                var trainingprocess = GetTrainingProcess(idDoctor);
+                if (trainingprocess == null) return 0;
+                else return trainingprocess.Where(p => p.StatusVerified == 0).Count();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return -1;
+            }
+        }
+
+        public void VerifyTrainingProcess(VerifyTrainingProcessModel model)
+        {
+            try
+            {
+                foreach (var trainingprocessModel in model.TrainingProcesses)
+                {
+                    var trainingprocess = GetTrainingProcessOfDoctorByIdTrainingProcess(model.IdDoctor, trainingprocessModel.IdTrainingProcess);
+                    if (trainingprocess != null)
+                    {
+                        trainingprocess.StatusVerified = trainingprocessModel.StatusVerified;
+                        _context.TrainingProcesses.Update(trainingprocess);
+                    }
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

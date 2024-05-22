@@ -90,6 +90,7 @@ namespace BE_Healthcare.Services
         {
             var res = new ProfileModel
             {
+                IdUser = u.IdUser,
                 Email = u.Email,
                 Name = u.Name,
                 DOB = u.DOB,
@@ -231,6 +232,7 @@ namespace BE_Healthcare.Services
             var listTrainingProcess = _trainingProcessRepository.GetTrainingProcessByIdDoctor(u.IdDoctor);
             var res = new ProfileDoctorModel
             {
+                IdDoctor = u.IdDoctor,
                 Email = u.User.Email,
                 Name = u.User.Name,
                 DOB = u.User.DOB,

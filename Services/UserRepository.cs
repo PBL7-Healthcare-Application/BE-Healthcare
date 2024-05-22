@@ -19,7 +19,8 @@ namespace BE_Healthcare.Services
         }
         public IQueryable<User> GetAll()
         {
-            return _context.Users.Include(p => p.Doctor).Include(q => q.Role).AsQueryable().Where(p => p.IsVerified == true);
+            return _context.Users.Include(p => p.Doctor).Include(q => q.Role).AsQueryable().Where(p => p.IsVerified == true &&
+            p.idRole != AppNumber.ROLE_ADMIN);
         }
         private IQueryable<User> FilteringListUser(IQueryable<User> list, UserSearchCriteriaModel criteria)
         {
@@ -47,6 +48,8 @@ namespace BE_Healthcare.Services
             {
                 var listUser = GetAll();
                 listUser = FilteringListUser(listUser, criteria);
+                int TotalItems = listUser.Count();
+
                 var res = listUser.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
                 var result = res.Select(p => new UserModel
                 {
@@ -63,7 +66,7 @@ namespace BE_Healthcare.Services
                     Data = result,
                     PagingInfo = new PagingInfoModel
                     {
-                        TotalItems = listUser.Count(),
+                        TotalItems = TotalItems,
                         CurrentPage = criteria.page,
                         ItemsPerPage = AppNumber.PAGE_SIZE
                     }
