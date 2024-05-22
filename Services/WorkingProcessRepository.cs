@@ -2,7 +2,9 @@
 using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
+using BE_Healthcare.Models.Partner;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Tls;
 
 namespace BE_Healthcare.Services
 {
@@ -75,6 +77,50 @@ namespace BE_Healthcare.Services
             }).ToList();
             return result_WorkingProcess;
         }
+        public WorkingProcess? GetWorkingProcessOfDoctorByIdWorkingProcess(Guid idDoctor, int idWorkingProcess)
+        {
+            var list_WorkingProcess = GetWorkingProcess(idDoctor);
+            if (list_WorkingProcess == null) return null;
+            return list_WorkingProcess.FirstOrDefault(c => c.IdWorkingProcess == idWorkingProcess);
+        }
+
+        public int GetNumberOfWorkingProcessWaitingForApproval(Guid idDoctor)
+        {
+            try
+            {
+                var workingprocess = GetWorkingProcess(idDoctor);
+                if (workingprocess == null) return 0;
+                else return workingprocess.Where(p => p.StatusVerified == 0).Count();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return -1;
+            }
+        }
+        public void VerifyWorkingProcess(VerifyWorkingProcessModel model)
+        {
+            try
+            {
+                foreach (var workingprocessModel in model.WorkingProcesses)
+                {
+                    var workingprocess = GetWorkingProcessOfDoctorByIdWorkingProcess(model.IdDoctor, workingprocessModel.IdWorkingProcess);
+                    if (workingprocess != null)
+                    {
+                        workingprocess.StatusVerified = workingprocessModel.StatusVerified;
+                        _context.WorkingProcesses.Update(workingprocess);
+                    }
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
+
+
     }
 
 }

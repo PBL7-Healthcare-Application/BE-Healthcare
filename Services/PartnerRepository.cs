@@ -45,33 +45,33 @@ namespace BE_Healthcare.Services
                 var newDoctor = new Doctor
                 {
                     IdDoctor = Guid.NewGuid(),
-                    //YearExperience = model.YearExperience,
-                    //Price = model.Price,
-                    //Description = model.Description,
                     IdSpecialty = model.IdSpecialty,
                     IdUser = idUser,
                     StatusVerified = AppNumber.PENDING,
                     BusinessLicense = model.BusinessLicense,
                     NameClinic = model.NameClinic,
                 };
+                _doctorRepository.AddDoctor(newDoctor);
 
-                if(model.Certificates != null)
+                if (model.Certificates != null)
                 {
-                    newDoctor.IsVerifiedAllInfo = false;
+                    newDoctor.IsVerifiedInfoCertificate = false;
                     _certificateRepository.AddListCertificate(newDoctor.IdDoctor, model.Certificates);
                 }
                 if(model.WorkingProcesses != null)
                 {
-                    newDoctor.IsVerifiedAllInfo = false;
+                    newDoctor.IsVerifiedInfoWorkingProcess = false;
                     _workingProcessRepository.AddListWorkingProcess(newDoctor.IdDoctor, model.WorkingProcesses);
                 }
                 if(model.TrainingProcesses != null)
                 {
-                    newDoctor.IsVerifiedAllInfo = false;
+                    newDoctor.IsVerifiedInfoTrainingProcess = false;
                     _trainingProcessRepository.AddListTrainingProcess(newDoctor.IdDoctor, model.TrainingProcesses);
                 }
 
-                _doctorRepository.AddDoctor(newDoctor);
+                _context.Doctors.Update(newDoctor);
+                _context.SaveChanges();
+
 
                 return new ApiResponse
                 {
@@ -93,7 +93,7 @@ namespace BE_Healthcare.Services
 
         private IQueryable<Doctor> GetAllPartner()
         {
-            return _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).AsQueryable().Where(e => e.StatusVerified == 0);
+            return _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).AsQueryable();
         }
         private IQueryable<Doctor> FilteringListPartner(IQueryable<Doctor> list, PartnerSearchCriteriaModel criteria)
         {
@@ -112,6 +112,16 @@ namespace BE_Healthcare.Services
             try
             {
                 var listPartner = GetAllPartner();
+                if (criteria.TypePartner == AppNumber.TYPEPARTNER_PARTNER_REGISTRATIONFORM)
+                {
+                    listPartner = listPartner.Where(e => e.StatusVerified == AppNumber.PENDING);
+                }
+                if (criteria.TypePartner == AppNumber.TYPEPARTNER_DOCTOR_INFORMATION_PENDING_APPROVAL)
+                {
+                    listPartner = listPartner.Where(d => d.StatusVerified == AppNumber.APPROVED && 
+                    d.IsVerifiedInfoCertificate == false || d.IsVerifiedInfoWorkingProcess == false || 
+                    d.IsVerifiedInfoTrainingProcess == false);
+                }
                 if (listPartner == null)
                 {
                     return new ApiResponse
@@ -246,6 +256,84 @@ namespace BE_Healthcare.Services
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_VERIFYINFPARTNER_SUCCESS,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public ApiResponse VerifyCertificate(VerifyCertificateModel model)
+        {
+            try
+            {
+                _certificateRepository.VerifyCertificate(model);
+
+                //Check if there are any cetificate that have not been verified
+                 _doctorRepository.UpdateFieldIsVerifiedInfoCertificate(model.IdDoctor);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_VERIFYCERTIFICATE_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+        public ApiResponse VerifyWorkingProcess(VerifyWorkingProcessModel model)
+        {
+            try
+            {
+                _workingProcessRepository.VerifyWorkingProcess(model);
+
+                //Check if there are any workingprocesses that have not been verified
+                _doctorRepository.UpdateFieldIsVerifiedInfoCertificate(model.IdDoctor);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_VERIFYCERTIFICATE_SUCCESS,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+        public ApiResponse VerifyTrainingProcess(VerifyTrainingProcessModel model)
+        {
+            try
+            {
+                _trainingProcessRepository.VerifyTrainingProcess(model);
+
+                //Check if there are any working processes that have not been verified
+                _doctorRepository.UpdateFieldIsVerifiedInfoCertificate(model.IdDoctor);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_VERIFYCERTIFICATE_SUCCESS,
                 };
 
             }

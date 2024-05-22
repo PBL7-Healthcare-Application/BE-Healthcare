@@ -12,7 +12,7 @@ namespace BE_Healthcare.Data.Entities
 
 
         //public virtual ICollection<Doctor> Doctors{ get; set; } = null!;
-        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
     }
 }

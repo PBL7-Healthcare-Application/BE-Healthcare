@@ -87,6 +87,7 @@
         
         public static string MESSAGE_ERROR_APPLYPARTNER = "You have registered to become our partner, please wait for admin to approve your information!";
         public static string MESSAGE_VERIFYINFPARTNER_SUCCESS = "Verify information of doctor successfully.";
+        public static string MESSAGE_VERIFYCERTIFICATE_SUCCESS = "Verify information of certificate successfully.";
 
     }
 }

@@ -8,6 +8,10 @@ namespace BE_Healthcare.Services
         ApiResponse RegisterAsDoctor(Guid idUser, RegistrationFormDoctorModel model);
         ApiResponse GetPartner(PartnerSearchCriteriaModel model);
         ApiResponse VerifyInfoPartner(VerifyPartnerModel model);
+        ApiResponse VerifyCertificate(VerifyCertificateModel model);
+        ApiResponse VerifyWorkingProcess(VerifyWorkingProcessModel model);
+        ApiResponse VerifyTrainingProcess(VerifyTrainingProcessModel model);
+
 
     }
 }

@@ -63,5 +63,19 @@ namespace BE_Healthcare.Controllers.Admin
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost("VerifyCertificate")]
+        public IActionResult VerifyCertificate(VerifyCertificateModel model)
+        {
+            try
+            {
+                return Ok(_partnerRepository.VerifyCertificate(model));
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

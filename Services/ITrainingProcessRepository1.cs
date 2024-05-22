@@ -4,15 +4,15 @@ using BE_Healthcare.Models.Partner;
 
 namespace BE_Healthcare.Services
 {
-    public interface ITrainingProcessRepository
+    public interface ITrainingProcessRepository1
     {
         ApiResponse AddListTrainingProcess(Guid idDoctor, List<AddTrainingProcessModel> trainingProcesses);
-        void AddTrainingProcess(Guid idDoctor, AddTrainingProcessModel trainingProcess);
-        void Save();
         ApiResponse AddOneTrainingProcess(Guid idDoctor, AddTrainingProcessModel trainingProcess);
-        List<TrainingProcessModel>? GetTrainingProcessByIdDoctor(Guid id);
+        void AddTrainingProcess(Guid idDoctor, AddTrainingProcessModel trainingProcess);
         int GetNumberOfTrainingProcessWaitingForApproval(Guid idDoctor);
-        TrainingProcess? GetTrainingProcessOfDoctorByIdTrainingProcess(Guid idDoctor, int idTrainingProcess);
-        void VerifyTrainingProcess(VerifyTrainingProcessModel model);
+        List<TrainingProcessModel>? GetTrainingProcessByIdDoctor(Guid id);
+        TrainingProcess? GetTrainingProcessOfDoctorByIdTrainingProcess(Guid idDoctor, int idCertificate);
+        void Save();
+        void VerifyTrainingProcess(VerifyCertificateModel model);
     }
 }

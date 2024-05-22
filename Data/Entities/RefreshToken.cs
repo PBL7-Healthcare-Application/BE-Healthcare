@@ -20,7 +20,7 @@ namespace BE_Healthcare.Data.Entities
         public bool IsRevoked { get; set; }
         public DateTime IssuedAt { get; set; }
         public DateTime ExpiredAt { get; set; }
-        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
     }
 }

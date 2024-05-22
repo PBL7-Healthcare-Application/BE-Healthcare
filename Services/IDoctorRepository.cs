@@ -14,5 +14,8 @@ namespace BE_Healthcare.Services
         int GetTotalAppointmentByIdDoctor(DateTime d, Guid idDoctor);
         int CalculateFreeSlots(Guid idDoctor, DateTime d, string WorkingTimeStart, string WorkingTimeEnd, int DurationPerAppointment);
         void AddDoctor(Doctor doctor);
+        void UpdateFieldIsVerifiedInfoCertificate(Guid IdDoctor);
+        void UpdateFieldIsVerifiedInfoWorkingProcess(Guid IdDoctor);
+        void UpdateFieldIsVerifiedInfoTrainingProcess(Guid IdDoctor);
     }
 }

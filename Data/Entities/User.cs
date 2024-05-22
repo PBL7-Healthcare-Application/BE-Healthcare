@@ -50,7 +50,7 @@ namespace BE_Healthcare.Data.Entities
         public bool IsAdminDisabled { get; set; } = false;
         public string? latitude { get; set; } = null!;
         public string? longtitude { get; set; } = null!;
-        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
 
     }

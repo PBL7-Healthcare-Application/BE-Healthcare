@@ -2,6 +2,8 @@
 {
     public class ProfileModel
     {
+        public Guid IdUser { get; set; }
+
         public string Email { get; set; } = null!;
         public string Name { get; set; } = null!;
         public DateTime? DOB { get; set; }

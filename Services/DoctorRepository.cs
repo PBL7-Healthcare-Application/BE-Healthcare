@@ -153,6 +153,7 @@ namespace BE_Healthcare.Services
                     }
                 }
                 #endregion
+                int TotalItems = availableDoctors.Count;
 
                 #region Paging
                 availableDoctors = availableDoctors.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
@@ -176,7 +177,7 @@ namespace BE_Healthcare.Services
                     Data = result,
                     PagingInfo = new PagingInfoModel
                     {
-                        TotalItems = availableDoctors.Count(),
+                        TotalItems = TotalItems,
                         CurrentPage = criteria.page,
                         ItemsPerPage = AppNumber.PAGE_SIZE
                     }
@@ -408,6 +409,51 @@ namespace BE_Healthcare.Services
             if (data != null)
                 return data;
             return null;
+        }
+
+        public void UpdateFieldIsVerifiedInfoCertificate(Guid IdDoctor)
+        {
+            int NumberOfCertificateUnverified = _certificateRepository.GetNumberOfCertificateWaitingForApproval(IdDoctor);
+            if (NumberOfCertificateUnverified == 0)
+            {
+                var doctor = GetDoctorById(IdDoctor);
+                if (doctor != null)
+                {
+                    doctor.IsVerifiedInfoCertificate = true;
+                    _context.Doctors.Update(doctor);
+                    _context.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateFieldIsVerifiedInfoWorkingProcess(Guid IdDoctor)
+        {
+            int NumberOfWorkingProcessUnverified = _workingProcessRepository.GetNumberOfWorkingProcessWaitingForApproval(IdDoctor);
+            if (NumberOfWorkingProcessUnverified == 0)
+            {
+                var doctor = GetDoctorById(IdDoctor);
+                if (doctor != null)
+                {
+                    doctor.IsVerifiedInfoWorkingProcess = true;
+                    _context.Doctors.Update(doctor);
+                    _context.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateFieldIsVerifiedInfoTrainingProcess(Guid IdDoctor)
+        {
+            int NumberOfTrainingProcessUnverified = _trainingProcessRepository.GetNumberOfTrainingProcessWaitingForApproval(IdDoctor);
+            if (NumberOfTrainingProcessUnverified == 0)
+            {
+                var doctor = GetDoctorById(IdDoctor);
+                if (doctor != null)
+                {
+                    doctor.IsVerifiedInfoTrainingProcess = true;
+                    _context.Doctors.Update(doctor);
+                    _context.SaveChanges();
+                }
+            }
         }
     }
 }
