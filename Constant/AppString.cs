@@ -89,5 +89,8 @@
         public static string MESSAGE_VERIFYINFPARTNER_SUCCESS = "Verify information of doctor successfully.";
         public static string MESSAGE_VERIFYCERTIFICATE_SUCCESS = "Verify information of certificate successfully.";
 
+        public static string MESSAGE_ERROR_APPOINTMENT_ISEVALUATED = "This appointment has been evaluated!";
+        public static string MESSAGE_EVALUATED_SUCCESS = "You have rated this doctor successfully!";
+
     }
 }

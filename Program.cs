@@ -78,6 +78,7 @@ builder.Services.AddScoped<IPartnerRepository, PartnerRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICalendarRepository,  CalendarRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 
 
@@ -145,7 +146,7 @@ var app = builder.Build();
 //    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
 //});
 app.UseCors(builder => builder
-    //.WithOrigins("http://localhost:3000") // replace with your React app's address
+    .WithOrigins("http://localhost:5173") // replace with your React app's address
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials());
