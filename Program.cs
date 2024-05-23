@@ -139,6 +139,7 @@ var projectId = configuration["FirebaseConfig:project_id"];
 
 builder.Services.AddSingleton(new FirestoreService(projectId));
 
+
 var app = builder.Build();
 
 //app.UseCors(opt =>

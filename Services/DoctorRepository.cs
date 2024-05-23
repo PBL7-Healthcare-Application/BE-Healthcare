@@ -16,6 +16,7 @@ namespace BE_Healthcare.Services
         private readonly ICertificateRepository _certificateRepository;
         private readonly IWorkingProcessRepository _workingProcessRepository;
         private readonly ITrainingProcessRepository _trainingProcessRepository;
+
         public DoctorRepository(MyDbContext context, ICertificateRepository certificateRepository, 
             IWorkingProcessRepository workingProcessRepository, ITrainingProcessRepository trainingProcessRepository)
         {
