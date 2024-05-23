@@ -19,7 +19,7 @@ namespace BE_Healthcare.Controllers.User
 
         [HttpPost("CreateRating")]
         [Authorize(Roles = "User")]
-        public IActionResult CreateRating(RatingModel model)
+        public IActionResult CreateRating(CreateRatingModel model)
         {
             try
             {
@@ -30,6 +30,20 @@ namespace BE_Healthcare.Controllers.User
                 }
 
                 return Ok( _ratingRepository.CreateRating(Guid.Parse(checkIdUser), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("GetRating")]
+        public IActionResult GetRating([FromQuery] GetRatingCriteriaModel model)
+        {
+            try
+            {
+
+                return Ok(_ratingRepository.GetRatingByIdDoctor(model));
             }
             catch
             {

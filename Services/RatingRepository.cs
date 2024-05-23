@@ -2,6 +2,7 @@
 using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE_Healthcare.Services
 {
@@ -16,7 +17,7 @@ namespace BE_Healthcare.Services
             _appointmentRepository = appointmentRepository;
         }
 
-        private void AddRating(Guid IdUser, RatingModel model)
+        private void AddRating(Guid IdUser, CreateRatingModel model)
         {
             try
             {
@@ -50,7 +51,7 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
             }
         }
-        public ApiResponse CreateRating(Guid IdUser, RatingModel model)
+        public ApiResponse CreateRating(Guid IdUser, CreateRatingModel model)
         {
             try
             {
@@ -82,6 +83,49 @@ namespace BE_Healthcare.Services
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_EVALUATED_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public ApiResponse GetRatingByIdDoctor(GetRatingCriteriaModel model)
+        {
+            try
+            {
+                var listRating = _context.Ratings.Include(p => p.User).Include(q => q.Doctor).Where(e => e.IdDoctor == model.IdDoctor);
+                if (listRating == null)
+                    return null;
+                listRating = listRating.OrderByDescending(p => p.CreatedAt);
+                int TotalItems = listRating.Count();
+
+                var result = listRating.Select(c => new ListRatingModel
+                {
+                    IdRating = c.IdRating,
+                    RatingScore = c.RatingScore,
+                    Comment = c.Comment,
+                    CreatedAt = c.CreatedAt,
+                    NameUserRating = c.User.Name
+                }).ToList();
+
+                return new ApiResponseWithPaging
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                    Data = result,
+                    PagingInfo = new PagingInfoModel
+                    {
+                        TotalItems = TotalItems,
+                        CurrentPage = model.page,
+                        ItemsPerPage = AppNumber.PAGE_SIZE
+                    }
                 };
             }
             catch (Exception ex)
