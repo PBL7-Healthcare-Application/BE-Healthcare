@@ -53,6 +53,8 @@ namespace BE_Healthcare.Services
                 var res = listUser.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
                 var result = res.Select(p => new UserModel
                 {
+                    IdUser = p.IdUser,
+                    Name = p.Name,
                     Email = p.Email,
                     CreatedDate = p.CreatedDate,
                     Role = p.Role.Name,

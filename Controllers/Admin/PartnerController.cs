@@ -56,7 +56,6 @@ namespace BE_Healthcare.Controllers.Admin
             try
             {
                 return Ok(_partnerRepository.VerifyInfoPartner(model));
-
             }
             catch
             {
@@ -70,7 +69,30 @@ namespace BE_Healthcare.Controllers.Admin
             try
             {
                 return Ok(_partnerRepository.VerifyCertificate(model));
-
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+        [HttpPost("VerifyWorkingProcess")]
+        public IActionResult VerifyWorkingProcess(VerifyWorkingProcessModel model)
+        {
+            try
+            {
+                return Ok(_partnerRepository.VerifyWorkingProcess(model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+        [HttpPost("VerifyTrainingProcess")]
+        public IActionResult VerifyTrainingProcess(VerifyTrainingProcessModel model)
+        {
+            try
+            {
+                return Ok(_partnerRepository.VerifyTrainingProcess(model));
             }
             catch
             {

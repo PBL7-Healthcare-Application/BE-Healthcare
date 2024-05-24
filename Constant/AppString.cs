@@ -92,5 +92,7 @@
         public static string MESSAGE_ERROR_APPOINTMENT_ISEVALUATED = "This appointment has been evaluated!";
         public static string MESSAGE_EVALUATED_SUCCESS = "You have rated this doctor successfully!";
 
+        public static string MESSAGE_LISTRATING_EMPTY = "List rating is empty!";
+
     }
 }
