@@ -8,5 +8,6 @@ namespace BE_Healthcare.Services
     {
         void AddMedicalRecord(MedicalRecordModel model);
         ApiResponse CreateMedicalRecord(MedicalRecordModel model);
+        ApiResponse GetMedicalRecordByIdUser(Guid idUser);
     }
 }

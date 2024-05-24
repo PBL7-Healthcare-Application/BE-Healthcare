@@ -3,6 +3,7 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.MedicalRecord;
+using Microsoft.EntityFrameworkCore;
 
 namespace BE_Healthcare.Services
 {
@@ -61,6 +62,56 @@ namespace BE_Healthcare.Services
                     Message = AppString.MESSAGE_ADDMEDICALRECORD_SUCCESS
                 };
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public ApiResponse GetMedicalRecordByIdUser(Guid idUser)
+        {
+            try
+            {
+
+                var listMedicalRecord = _context.MedicalRecords.Include(e => e.User).Include(d => d.Doctor)
+                    .AsQueryable().Where(e => e.IdUser == idUser);
+
+                if (listMedicalRecord != null)
+                {
+                    var res = listMedicalRecord.Select(a => new MedicalRecordHistoryModel
+                    {
+                        IdDoctor = a.IdDoctor,
+                        IdUser = a.IdUser,
+                        IdAppointment = a.IdAppointment,
+                        Height = a.Height,
+                        Weight = a.Weight,
+                        Temperature = a.Temperature,
+                        Content = a.Content,
+                        Date = a.Date,
+                        Name = a.Doctor.User.Name,
+                        MedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
+                    });
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                        Data = res
+                    };
+                }
+                else
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_LISTAPPOINTMENT_EMPTY,
+                    };
+                }
             }
             catch (Exception ex)
             {

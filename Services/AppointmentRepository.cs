@@ -298,8 +298,8 @@ namespace BE_Healthcare.Services
                         Address = a.Doctor.User.Address,
                         NameClinic = a.Doctor.NameClinic,
                         Price = a.Price,
-                        
-                        
+                        IsRating = a.IsRating,
+
                     });
                     return new ApiResponse
                     {

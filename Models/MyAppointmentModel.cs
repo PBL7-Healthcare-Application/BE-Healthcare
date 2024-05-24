@@ -8,6 +8,7 @@
 
         public int IdAppointment { get; set; }
         public int? Status { get; set; }    //Status: 1 - Approved; 2 - Reject; 3 - Completed
+        public bool? IsRating { get; set; } = null!;
 
     }
 }

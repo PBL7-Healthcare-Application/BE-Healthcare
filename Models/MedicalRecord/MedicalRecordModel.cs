@@ -12,5 +12,7 @@ namespace BE_Healthcare.Models.MedicalRecord
         public double Weight { get; set; }
         public double Temperature { get; set; }
         public string Content { get; set; } = null!;
+        public DateTime? Date { get; set; } = null!;
+
     }
 }
