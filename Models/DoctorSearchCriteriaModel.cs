@@ -10,5 +10,7 @@
         public int? idSpecialty { get; set; } = null;
         public string? filterAvailable { get; set; } = null;
         public int page { get; set; } = 1;
+        public int? rate{ get; set; } = null!;
+
     }
 }

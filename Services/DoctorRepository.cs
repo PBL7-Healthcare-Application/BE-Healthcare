@@ -82,6 +82,10 @@ namespace BE_Healthcare.Services
                 {
                     list = list.Where(d => d.Price <= criteria.to);
                 }
+                if (criteria.rate != null)
+                {
+                    list = list.Where(d => d.RateAverage >= criteria.rate);
+                }
             }
             return list;
         }
@@ -168,7 +172,9 @@ namespace BE_Healthcare.Services
                     MedicalSpecialty = d.MedicalSpecialty.Name,
                     Price = d.Price,
                     Address = d.User.Address,
-                    YearExperience = d.YearExperience
+                    YearExperience = d.YearExperience,
+                    RateAverage = d.RateAverage,
+                    NumberOfComment = d.NumberOfComment,
                 });
 
                 return new ApiResponseWithPaging
@@ -252,6 +258,7 @@ namespace BE_Healthcare.Services
             var result = new DoctorDetailModel
             {
                 IdDoctor = Doctor.IdDoctor,
+                Email = Doctor.User.Email,
                 Name = Doctor.User.Name,
                 MedicalSpecialty = Doctor.MedicalSpecialty.Name,
                 Price = Doctor.Price,

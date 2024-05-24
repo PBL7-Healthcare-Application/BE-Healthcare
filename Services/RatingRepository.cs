@@ -10,13 +10,18 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IDoctorRepository _doctorRepository;
 
-        public RatingRepository(MyDbContext context, IAppointmentRepository appointmentRepository)
+        public RatingRepository(MyDbContext context, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository)
         {
             _context = context;
             _appointmentRepository = appointmentRepository;
+            _doctorRepository = doctorRepository;
         }
-
+        private IQueryable<Rating> GetListRatingByIdDoctor(Guid idDoctor)
+        {
+            return _context.Ratings.Include(p => p.User).Include(q => q.Doctor).Where(e => e.IdDoctor == idDoctor);
+        }
         private void AddRating(Guid IdUser, CreateRatingModel model)
         {
             try
@@ -51,6 +56,32 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
             }
         }
+        private void UpdateRatingScoreOfDoctor(Guid idDoctor, int ratingScore)
+        {
+            try
+            {
+                var doctor = _doctorRepository.GetDoctorById(idDoctor);
+                if(doctor != null)
+                {
+                    doctor.NumberOfComment++;
+                    var numberOfRating = GetListRatingByIdDoctor(idDoctor).Count();
+                    if (numberOfRating == 1)
+                    {
+                        doctor.RateAverage = ratingScore;
+                    }
+                    else if (numberOfRating > 1)
+                    {
+                        doctor.RateAverage = (doctor.RateAverage * (numberOfRating - 1) + ratingScore) / numberOfRating;
+                    }
+                    _context.Doctors.Update(doctor);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
         public ApiResponse CreateRating(Guid IdUser, CreateRatingModel model)
         {
             try
@@ -79,6 +110,12 @@ namespace BE_Healthcare.Services
                 //Update Appointment is Rated
                 UpdateAppointmentIsRated(appointment);
 
+                //Update Rating Score and Comment of Doctor
+                if(appointment.IdDoctor != null)
+                {
+                    UpdateRatingScoreOfDoctor((Guid)appointment.IdDoctor, model.RatingScore);
+                }
+
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
@@ -100,9 +137,13 @@ namespace BE_Healthcare.Services
         {
             try
             {
-                var listRating = _context.Ratings.Include(p => p.User).Include(q => q.Doctor).Where(e => e.IdDoctor == model.IdDoctor);
+                var listRating = GetListRatingByIdDoctor(model.IdDoctor);
                 if (listRating == null)
-                    return null;
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_LISTRATING_EMPTY,
+                    };
                 listRating = listRating.OrderByDescending(p => p.CreatedAt);
                 int TotalItems = listRating.Count();
 
