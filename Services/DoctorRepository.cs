@@ -275,6 +275,9 @@ namespace BE_Healthcare.Services
                 Description = Doctor.Description,
                 Avatar = Doctor.User.Avatar,
                 NameClinic = Doctor.NameClinic,
+                IsVerifiedInfoCertificate = Doctor.IsVerifiedInfoCertificate,
+                IsVerifiedInfoWorkingProcess = Doctor.IsVerifiedInfoWorkingProcess,
+                IsVerifiedInfoTrainingProcess = Doctor.IsVerifiedInfoTrainingProcess,
             };
 
             if (list != null)

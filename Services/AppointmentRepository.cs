@@ -34,6 +34,12 @@ namespace BE_Healthcare.Services
             _notificationRepository = notificationRepository;
             _firestoreService = firestoreService;
         }
+        public void UpdateAppointment(Appointment appointment)
+        {
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+        }
+
         public List<Appointment>? GetListAppointmentByIdDoctor(Guid idDoctor, int? Status = 1, string? search = null)
         {
             try
@@ -244,7 +250,7 @@ namespace BE_Healthcare.Services
                     Price = model.Price
                 };
 
-                _context.Add(_appointment);
+                _context.Appointments.Add(_appointment);
                 _context.SaveChanges();
                 return _appointment.IdAppointment;
             }
@@ -667,36 +673,16 @@ namespace BE_Healthcare.Services
 
             
         }
+        
+        public void UpdateAppointmentCompleted(int idAppointment)
+        {
+            var appointment = GetAppointmentByIdAppointment(idAppointment);
+            if(appointment != null)
+            {
+                appointment.Status = AppNumber.APPOINTMENT_COMPLETED;
+                UpdateAppointment(appointment);
+            }
+        }
 
-
-        //public async Task<ApiResponse> SendNotification()
-        //{
-        //    try
-        //    {
-        //        // Send a notification to Firebase
-        //        //string title = "Appointment booked";
-        //        //string body = $"Your appointment with {dataUser.Name} on {model.Date.ToShortDateString()} {model.StartTime} has been booked successfully.";
-        //        //await _firebaseMessagingService.SendNotification(title, body);
-
-
-        //        // Save the notification to Firestore
-        //        //await _firestoreService.AddDocumentAsync("notifications", "thanh nguyen");
-        //        return new ApiResponse
-        //        {
-        //            StatusCode = StatusCode.SUCCESS,
-        //            Message = AppString.MESSAGE_SEND_NOTIFICATION_SUCCESS,
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        Console.WriteLine($"An error occurred: {ex.Message}");
-        //        return new ApiResponse
-        //        {
-        //            StatusCode = StatusCode.FAILED,
-        //            Message = AppString.MESSAGE_SERVER_ERROR,
-        //        };
-        //    }
-        //}
     }
 }

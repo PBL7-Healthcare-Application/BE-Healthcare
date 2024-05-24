@@ -48,8 +48,7 @@ namespace BE_Healthcare.Services
             try
             {
                 appointment.IsRating = true;
-                _context.Appointments.Update(appointment);
-                _context.SaveChanges();
+                _appointmentRepository.UpdateAppointment(appointment);
             }
             catch (Exception ex)
             {
