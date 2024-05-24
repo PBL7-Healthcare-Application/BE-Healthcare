@@ -93,6 +93,9 @@
         public static string MESSAGE_EVALUATED_SUCCESS = "You have rated this doctor successfully!";
 
         public static string MESSAGE_LISTRATING_EMPTY = "List rating is empty!";
+        public static string MESSAGE_ADDMEDICALRECORD_SUCCESS = "Add Medical record successfully!";
+
+        public static string MESSAGE_ERROR_MEDICALRECORD_NOTALLOWTOCREATE = "You are not allow to create this medical record!";
 
     }
 }

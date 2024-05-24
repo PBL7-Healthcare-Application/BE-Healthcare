@@ -19,6 +19,9 @@ namespace BE_Healthcare.Services
         ApiResponse GetAppointmentDetail(int id);
         ApiResponse? CheckTimeIsValid(TimeSpan startTime, TimeSpan WorkingTimeStart, TimeSpan WorkingTimeEnd);
         //Task<ApiResponse> SendNotification();
+        void UpdateAppointment(Appointment appointment);
+        void UpdateAppointmentCompleted(int idAppointment);
+
 
 
     }

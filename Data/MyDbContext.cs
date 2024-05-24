@@ -24,6 +24,7 @@ namespace BE_Healthcare.Data
         public DbSet<WorkingProcess> WorkingProcesses { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<MedicalRecord> MedicalRecords { get; set; }
 
         #endregion
 
