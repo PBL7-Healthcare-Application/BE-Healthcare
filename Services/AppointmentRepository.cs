@@ -277,7 +277,7 @@ namespace BE_Healthcare.Services
                 }
 
                 //Sorting
-                listAppointment = listAppointment.OrderBy(e => e.IdAppointment);
+                listAppointment = listAppointment.OrderByDescending(e => e.CreatedAt);
 
 
                 if (listAppointment.Any())

@@ -162,7 +162,7 @@ namespace BE_Healthcare.Services
                 if (model.Address != null) user.Address = model.Address;
                 if (model.Avatar != null) user.Avatar = model.Avatar;
                 if (model.Gender != null) user.Gender = model.Gender;
-                
+                user.UpdatedAt = DateTime.Now;
                 _context.Update(user);
                 _context.SaveChanges();
 
@@ -279,6 +279,55 @@ namespace BE_Healthcare.Services
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_GETDATA_SUCCESS,
                     Data = res
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public ApiResponse UpdateProfileDoctor(Guid idDoctor, UpdateProfileDoctorModel model)
+        {
+            try
+            {
+
+                var doctor = _doctorRepository.GetDoctorById(idDoctor);
+                if (doctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                    };
+                }
+
+                if (model.Name != null) doctor.User.Name = model.Name;
+                if (model.DOB != null) doctor.User.DOB = model.DOB;
+                if (model.PhoneNumber != null) doctor.User.PhoneNumber = model.PhoneNumber;
+                if (model.Address != null) doctor.User.Address = model.Address;
+                if (model.Avatar != null) doctor.User.Avatar = model.Avatar;
+                if (model.Gender != null) doctor.User.Gender = model.Gender;
+
+                if (model.YearExperience != null) doctor.YearExperience = model.YearExperience;
+                if (model.Price != null) doctor.Price = model.Price;
+                if (model.Description != null) doctor.Description = model.Description;
+                if (model.IdSpecialty != null && model.IdSpecialty != doctor.IdSpecialty) doctor.IdSpecialty = model.IdSpecialty;
+
+                doctor.UpdatedAt = DateTime.Now;
+                _context.Doctors.Update(doctor);
+                _context.SaveChanges();
+
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_UPDATEPROFILE_SUCCESS,
                 };
             }
             catch (Exception ex)

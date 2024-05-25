@@ -31,7 +31,8 @@ namespace BE_Healthcare.Data.Entities
         public bool IsVerifiedInfoTrainingProcess { get; set; } = true;
 
         public double? RateAverage {  get; set; }
-        public int? NumberOfComment { get; set; } = 0;
+        public int NumberOfComment { get; set; } = 0;
+        public DateTime? UpdatedAt { get; set; } = null!;
 
     }
 }
