@@ -3,6 +3,8 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BE_Healthcare.Services
 {
@@ -152,10 +154,12 @@ namespace BE_Healthcare.Services
                     RatingScore = c.RatingScore,
                     Comment = c.Comment,
                     CreatedAt = c.CreatedAt,
-                    NameUserRating = c.User.Name
+                    NameUserRating = c.User.Name,
+                    UrlAvatarUserRating = c.User.Avatar,
                 }).ToList();
 
-                return new ApiResponseWithPaging
+                var statisticalTable = GetTableOfRatings(model.IdDoctor);
+                return new ApiResponseWithPagingAndTableRating
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_GETDATA_SUCCESS,
@@ -165,7 +169,8 @@ namespace BE_Healthcare.Services
                         TotalItems = TotalItems,
                         CurrentPage = model.page,
                         ItemsPerPage = AppNumber.PAGE_SIZE
-                    }
+                    },
+                    StatisticalTableOfRating = statisticalTable
                 };
             }
             catch (Exception ex)
@@ -177,6 +182,27 @@ namespace BE_Healthcare.Services
                     Message = AppString.MESSAGE_SERVER_ERROR,
                 };
             }
+        }
+        
+        private StatisticalTableOfRatingModel GetTableOfRatings(Guid idDoctor)
+        {
+            var statisticalTable = new StatisticalTableOfRatingModel();
+            var listRating = GetListRatingByIdDoctor(idDoctor);
+            if (listRating == null)
+                return statisticalTable;
+            foreach( var rating in listRating)
+            {
+                switch (rating.RatingScore) 
+                {
+                    case 1: statisticalTable.one++; break;
+                    case 2: statisticalTable.two++; break;
+                    case 3: statisticalTable.three++; break;
+                    case 4: statisticalTable.four++; break;
+                    case 5: statisticalTable.five++; break;
+                    default: break;
+                }
+            }
+            return statisticalTable;
         }
     }
 }

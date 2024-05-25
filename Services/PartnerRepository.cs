@@ -248,6 +248,7 @@ namespace BE_Healthcare.Services
                 }
 
                 partner.StatusVerified = model.StatusVerified;
+                partner.User.idRole = AppNumber.ROLE_DOCTOR;
                 partner.IsVerifiedAt = DateTime.Now;
                 _context.Doctors.Update(partner);
                 _context.SaveChanges();

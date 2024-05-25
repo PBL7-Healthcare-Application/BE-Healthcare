@@ -16,7 +16,7 @@ namespace BE_Healthcare.Models
         public string? Address { get; set; } = null!;
         public int? YearExperience { get; set; }
         public double? RateAverage { get; set; }
-        public int? NumberOfComment { get; set; }
+        public int NumberOfComment { get; set; }
 
 
     }

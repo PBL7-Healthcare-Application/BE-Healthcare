@@ -96,6 +96,7 @@
         public static string MESSAGE_ADDMEDICALRECORD_SUCCESS = "Add Medical record successfully!";
 
         public static string MESSAGE_ERROR_MEDICALRECORD_NOTALLOWTOCREATE = "You are not allow to create this medical record!";
+        public static string MESSAGE_UPDATEPROFILEDOCTOR_SUCCESS = "Update Profile Doctor Successfully!";
 
     }
 }

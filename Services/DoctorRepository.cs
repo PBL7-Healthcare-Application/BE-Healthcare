@@ -278,6 +278,8 @@ namespace BE_Healthcare.Services
                 IsVerifiedInfoCertificate = Doctor.IsVerifiedInfoCertificate,
                 IsVerifiedInfoWorkingProcess = Doctor.IsVerifiedInfoWorkingProcess,
                 IsVerifiedInfoTrainingProcess = Doctor.IsVerifiedInfoTrainingProcess,
+                NumberOfComment = Doctor.NumberOfComment,
+                RateAverage = Doctor.RateAverage,
             };
 
             if (list != null)
