@@ -8,6 +8,7 @@ namespace BE_Healthcare.Services
         IQueryable<User> GetAll();
         ApiResponse GetAllUser(UserSearchCriteriaModel criteria);
         ApiResponse DisableAccount(DisableAccountModel model);
+        ApiResponse UnlockAccount(DisableAccountModel model);
 
     }
 }
