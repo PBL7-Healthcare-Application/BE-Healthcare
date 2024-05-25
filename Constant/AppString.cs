@@ -98,5 +98,7 @@
         public static string MESSAGE_ERROR_MEDICALRECORD_NOTALLOWTOCREATE = "You are not allow to create this medical record!";
         public static string MESSAGE_UPDATEPROFILEDOCTOR_SUCCESS = "Update Profile Doctor Successfully!";
 
+        public static string MESSAGE_ERROR_EDITWORKINGTIME_CONFLICTWITHAPPOINTMENT = "There is a conflict with some appointments: Appointments outside of working hours that you want to update. If you click confirm update, the system will cancel all those appointments and update the working time again";
+
     }
 }

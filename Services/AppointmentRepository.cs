@@ -92,7 +92,7 @@ namespace BE_Healthcare.Services
         //Check the time available within the working hours
         public ApiResponse? CheckTimeIsValid(TimeSpan startTime, TimeSpan WorkingTimeStart, TimeSpan WorkingTimeEnd)
         {
-            if (startTime < WorkingTimeStart && startTime >= WorkingTimeEnd)
+            if (startTime < WorkingTimeStart || startTime >= WorkingTimeEnd)
             {
                 return new ApiResponse
                 {
@@ -332,7 +332,6 @@ namespace BE_Healthcare.Services
         {
             try
             {
-                bool isUserCancel = false;
                 Guid? idReceiver = Guid.Empty;
                 var appointment = GetAppointmentByIdAppointment(model.idAppointment);
                 if(appointment == null)
@@ -355,7 +354,6 @@ namespace BE_Healthcare.Services
                     }
                     appointment.idUserCancel = idUserCancel;
                     idReceiver = appointment.IdDoctor;
-                    isUserCancel = true;
                 }
                 else if(idDoctorCancel != null)
                 {
@@ -541,62 +539,6 @@ namespace BE_Healthcare.Services
             {
                 Console.WriteLine(ex.ToString());
                 return null;
-            }
-        }
-
-        public ApiResponse SetupSchedule(Guid idDoctor, SetupScheduleModel model)
-        {
-            try
-            {
-                var doctor = _doctorRepository.GetDoctorById(idDoctor);
-                if (doctor == null)
-                {
-                    return new ApiResponse
-                    {
-                        StatusCode = StatusCode.FAILED,
-                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
-                    };
-                }
-                if (doctor.StatusVerified == AppNumber.APPROVED && doctor.WorkingTimeStart == null)     //Doctor setup schedule the first time
-                {
-                    if (model.StartTime == null || model.EndTime == null || model.DurationPerAppointment < 0)
-                    {
-                        return new ApiResponse
-                        {
-                            StatusCode = StatusCode.FAILED,
-                            Message = AppString.MESSAGE_ERROR_INVALID_INFOR_CREATION,
-                        };
-
-                    }
-                    //UPDATE
-                    doctor.WorkingTimeStart = model.StartTime;
-                    doctor.WorkingTimeEnd = model.EndTime;
-                    doctor.DurationPerAppointment = model.DurationPerAppointment;
-                    _context.Doctors.Update(doctor);
-                    _context.SaveChanges();
-                    return new ApiResponse
-                    {
-                        StatusCode = StatusCode.SUCCESS,
-                        Message = AppString.MESSAGE_SETUP_SCHEDULE_SUCCESS,
-                    };
-                }
-                else
-                {
-                    return new ApiResponse
-                    {
-                        StatusCode = StatusCode.FAILED,
-                        Message = AppString.MESSAGE_NOTALLOWED_SETUPSCHEDULE,
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return new ApiResponse
-                {
-                    StatusCode = StatusCode.FAILED,
-                    Message = AppString.MESSAGE_SERVER_ERROR,
-                };
             }
         }
 

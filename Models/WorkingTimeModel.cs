@@ -1,6 +1,6 @@
 ﻿namespace BE_Healthcare.Models
 {
-    public class SetupScheduleModel
+    public class WorkingTimeModel
     {
         public string StartTime { get; set; } = null!;
         public string EndTime { get; set; } = null!;

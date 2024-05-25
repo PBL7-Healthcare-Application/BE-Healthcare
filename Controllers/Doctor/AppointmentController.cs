@@ -37,25 +37,6 @@ namespace BE_Healthcare.Controllers.Doctor
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
-        [HttpPost("SetupSchedule")]
-        public IActionResult SetupSchedule(SetupScheduleModel model)
-        {
-            try
-            {
-                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
-                if (checkIdDoctor == null)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-                }
-
-                return Ok(_appointmentRepository.SetupSchedule(Guid.Parse(checkIdDoctor), model));
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
         [HttpPost("CancelAppointment")]
         public async Task<IActionResult> CancelAppointment(CancelAppointmentModel model)
         {
