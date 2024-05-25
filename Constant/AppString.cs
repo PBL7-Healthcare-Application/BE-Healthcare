@@ -99,6 +99,10 @@
         public static string MESSAGE_UPDATEPROFILEDOCTOR_SUCCESS = "Update Profile Doctor Successfully!";
 
         public static string MESSAGE_ERROR_EDITWORKINGTIME_CONFLICTWITHAPPOINTMENT = "There is a conflict with some appointments: Appointments outside of working hours that you want to update. If you click confirm update, the system will cancel all those appointments and update the working time again";
+        
+        public static string MESSAGE_ERROR_ACCOUNTNOTDISABLED = "This account has not been disabled, so you do not need to unlock it.";
+        public static string MESSAGE_ERROR_CANNOTUNLOCKACCOUNT_USERHADDISABLED = "You cannot unlock this account because the user has already disabled it!";
+
 
     }
 }

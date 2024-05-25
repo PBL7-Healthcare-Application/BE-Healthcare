@@ -148,5 +148,60 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+
+        private ApiResponse? CheckifTheAccountNotDisabled(User? user)
+        {
+            if (user == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_USER,
+                };
+            }
+
+            if (!user.IsAdminDisabled)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_ACCOUNTNOTDISABLED,
+                };
+            }
+            return null;
+        }
+        public ApiResponse UnlockAccount(DisableAccountModel model)
+        {
+            try
+            {
+                var user = _authRepository.getUserByEmail(model.Email);
+
+                var check = CheckifTheAccountNotDisabled(user);
+                if (check != null)
+                {
+                    return check;
+                }
+
+                user.IsLocked = false;
+                user.IsAdminDisabled = false;
+
+                _context.Update(user);
+                _context.SaveChanges();
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_UNLOCKACCOUNT_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
     }
 }

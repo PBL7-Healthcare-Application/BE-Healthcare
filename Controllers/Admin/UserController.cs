@@ -42,5 +42,18 @@ namespace BE_Healthcare.Controllers.Admin
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost("UnlockAccount")]
+        public IActionResult UnlockAccount(DisableAccountModel model)
+        {
+            try
+            {
+                return Ok(_userRepository.UnlockAccount(model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
