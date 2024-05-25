@@ -52,5 +52,62 @@ namespace BE_Healthcare.Controllers.Doctor
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost("SetupWorkingTime")]
+        public IActionResult SetupWorkingTime(WorkingTimeModel model)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok(_profileRepository.SetupWorkingTime(Guid.Parse(checkIdDoctor), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPut("EditWorkingTime")]
+        public IActionResult EditWorkingTime(WorkingTimeModel model)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok(_profileRepository.EditWorkingTime(Guid.Parse(checkIdDoctor), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("CancelAppointmentAndUpdateWorkingTime")]
+        public async Task<IActionResult> CancelAppointmentAndUpdateWorkingTime(CancelAppointmentAndUpdateWorkingTimeModel model)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok(await _profileRepository.CancelAppointmentAndUpdateWorkingTime(Guid.Parse(checkIdDoctor), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Extensions;
 using BE_Healthcare.Models;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -16,9 +17,13 @@ namespace BE_Healthcare.Services
         private readonly ICertificateRepository _certificateRepository;
         private readonly IWorkingProcessRepository _workingProcessRepository;
         private readonly ITrainingProcessRepository _trainingProcessRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly INotificationRepository _notificationRepository;
+
         public ProfileRepository(MyDbContext context, IAuthRepository authRepository, 
             IDoctorRepository doctorRepository, ICertificateRepository certificateRepository,
-            IWorkingProcessRepository workingProcessRepository, ITrainingProcessRepository trainingProcessRepository)
+            IWorkingProcessRepository workingProcessRepository, ITrainingProcessRepository trainingProcessRepository,
+            IAppointmentRepository appointmentRepository, INotificationRepository notificationRepository)
         {
             _context = context;
             _authRepository = authRepository;
@@ -26,6 +31,8 @@ namespace BE_Healthcare.Services
             _certificateRepository = certificateRepository;
             _workingProcessRepository = workingProcessRepository;
             _trainingProcessRepository = trainingProcessRepository;
+            _appointmentRepository = appointmentRepository;
+            _notificationRepository = notificationRepository;
         }
 
         public ApiResponse ChangePassword(string email, ChangePasswordModel model)
@@ -328,6 +335,241 @@ namespace BE_Healthcare.Services
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_UPDATEPROFILE_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        private void UpdateWorkingTime(Doctor doctor, WorkingTimeModel model)
+        {
+            doctor.WorkingTimeStart = model.StartTime;
+            doctor.WorkingTimeEnd = model.EndTime;
+            doctor.DurationPerAppointment = model.DurationPerAppointment;
+            _context.Doctors.Update(doctor);
+            _context.SaveChanges();
+        }
+
+        public ApiResponse SetupWorkingTime(Guid idDoctor, WorkingTimeModel model)
+        {
+            try
+            {
+                var doctor = _doctorRepository.GetDoctorById(idDoctor);
+                if (doctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                    };
+                }
+                if (doctor.StatusVerified == AppNumber.APPROVED && doctor.WorkingTimeStart == null)     //Doctor setup schedule the first time
+                {
+                    if (model.StartTime == null || model.EndTime == null || model.DurationPerAppointment < 0)
+                    {
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_ERROR_INVALID_INFOR_CREATION,
+                        };
+
+                    }
+                    //UPDATE
+                    UpdateWorkingTime(doctor, model);
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_SETUP_SCHEDULE_SUCCESS,
+                    };
+                }
+                else
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTALLOWED_SETUPSCHEDULE,
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+
+        public ApiResponse EditWorkingTime(Guid idDoctor, WorkingTimeModel model)
+        {
+            try
+            {
+                var doctor = _doctorRepository.GetDoctorById(idDoctor);
+                if (doctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                    };
+                }
+                if (doctor.StatusVerified != AppNumber.APPROVED )
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTALLOWED_SETUPSCHEDULE,
+                    };
+                }
+
+                if (model.DurationPerAppointment <= 0)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_ERROR_INVALID_INFOR_CREATION,
+                    };
+
+                }
+
+                //Check Appointment before Update Working Time
+                _appointmentRepository.UpdateStatusAppointment(idDoctor);
+
+                var listAppointment = _appointmentRepository.GetListAppointmentByIdDoctor(idDoctor);
+                if(listAppointment == null)
+                {
+                    UpdateWorkingTime(doctor, model);
+                }
+                else
+                {
+                    foreach (var appointment in listAppointment)
+                    {
+                        if (TimeSpan.Parse(appointment.StartTime) < TimeSpan.Parse(model.StartTime) || TimeSpan.Parse(appointment.StartTime) >= TimeSpan.Parse(model.EndTime))
+                        {
+                            return new ApiResponse
+                            {
+                                StatusCode = StatusCode.SUCCESS,
+                                Message = AppString.MESSAGE_ERROR_EDITWORKINGTIME_CONFLICTWITHAPPOINTMENT,
+                            };
+                        }
+                    }
+
+                    foreach (var appointment in listAppointment)
+                    {
+                        var newEndTime = TimeSpan.Parse(appointment.StartTime);
+                        appointment.EndTime = newEndTime.Add(TimeSpan.FromMinutes(model.DurationPerAppointment)).ToString("hh\\:mm");
+                    }
+                    _context.Appointments.UpdateRange(listAppointment);
+                    _context.SaveChanges();
+
+                }
+
+
+                //UPDATE
+                UpdateWorkingTime(doctor, model);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_SETUP_SCHEDULE_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public async Task<ApiResponse> CancelAppointmentAndUpdateWorkingTime(Guid idDoctor, CancelAppointmentAndUpdateWorkingTimeModel model)
+        {
+            try
+            {
+                var doctor = _doctorRepository.GetDoctorById(idDoctor);
+                if (doctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                    };
+                }
+                if (doctor.StatusVerified != AppNumber.APPROVED)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTALLOWED_SETUPSCHEDULE,
+                    };
+                }
+
+                if (model.DurationPerAppointment <= 0)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_ERROR_INVALID_INFOR_CREATION,
+                    };
+
+                }
+
+                //Check Appointment before Update Working Time
+                _appointmentRepository.UpdateStatusAppointment(idDoctor);
+
+                var listAppointment = _appointmentRepository.GetListAppointmentByIdDoctor(idDoctor);
+                if (listAppointment != null)
+                {
+                    foreach (var appointment in listAppointment)
+                    {
+                        if (TimeSpan.Parse(appointment.StartTime) < TimeSpan.Parse(model.StartTime) || TimeSpan.Parse(appointment.StartTime) >= TimeSpan.Parse(model.EndTime))
+                        {
+                            //Cancel appointment
+                            Guid? idReceiver = appointment.IdUser;
+                            appointment.idDoctorCancel = idDoctor;
+                            appointment.Reason = model.Reason;
+                            appointment.Status = 2;
+
+                            //Create Notification for cancellingappointment
+                            var cancelAppointmentModel = new CancelAppointmentModel
+                            {
+                                idAppointment = appointment.IdAppointment,
+                                Reason = model.Reason,
+                            };
+                            await _notificationRepository.CreateNotificationForCancellingAppointment(cancelAppointmentModel, appointment, idReceiver);
+                        }
+                        else
+                        {
+                            var newEndTime = TimeSpan.Parse(appointment.StartTime);
+                            appointment.EndTime = newEndTime.Add(TimeSpan.FromMinutes(model.DurationPerAppointment)).ToString("hh\\:mm");
+                        }
+                    }
+                    _context.Appointments.UpdateRange(listAppointment);
+                    _context.SaveChanges();
+
+                }
+
+
+                //UPDATE
+                UpdateWorkingTime(doctor, model);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_SETUP_SCHEDULE_SUCCESS,
                 };
             }
             catch (Exception ex)
