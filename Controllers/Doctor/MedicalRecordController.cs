@@ -55,5 +55,18 @@ namespace BE_Healthcare.Controllers.Doctor
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet("GetMedicalHistoryOfUser/{idUser}")]
+        public IActionResult GetMedicalHistoryOfUser(Guid idUser)
+        {
+            try
+            {
+                return Ok(_medicalRecordRepository.GetMedicaHistoryOfUserByIdUser(idUser));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
