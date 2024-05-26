@@ -123,5 +123,64 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+
+        public ApiResponse GetListExaminationByIdDoctor(Guid idDoctor, string? search = null)
+        {
+            try
+            {
+                _appointmentRepository.UpdateStatusAppointment(idDoctor);
+                var listAppointment = _appointmentRepository.GetListAppointmentByIdDoctor(idDoctor, AppNumber.APPOINTMENT_CONFIRMED,
+                    search);
+
+                //Sorting
+                if (listAppointment == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_LISTEXAMINATION_EMPTY,
+                    };
+                }
+
+                var res = listAppointment.Select(a => new ExaminationModel
+                {
+                    IdUser = a.IdUser,
+                    IdAppointment = a.IdAppointment,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    Date = a.Date,
+                    NamePatient = a.User.Name,
+                    PhoneNumber = a.User.PhoneNumber,
+                    Email = a.User.Email,
+                    Status = a.Status,
+                }).ToList();
+                foreach( var item in res )
+                {
+                    string dateOnly = item.Date.ToString("M/d/yyyy");
+                    string dateTimeString = $"{dateOnly} {item.StartTime}";
+                    DateTime TimeStartAppointment = DateTime.ParseExact(dateTimeString, "M/d/yyyy H:mm", null);
+                    item.StartTimeOfExamination = TimeStartAppointment;
+                }
+
+                res = res.OrderBy(e => e.StartTimeOfExamination).ToList();
+
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                    Data = res
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
     }
 }
