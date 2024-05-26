@@ -37,5 +37,23 @@ namespace BE_Healthcare.Controllers.Doctor
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet("GetListExaminationByIdDoctor")]
+        public IActionResult GetListExaminationByIdDoctor([FromQuery] string? search = null)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(_medicalRecordRepository.GetListExaminationByIdDoctor(Guid.Parse(checkIdDoctor), search));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

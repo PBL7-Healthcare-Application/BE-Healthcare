@@ -106,6 +106,7 @@
         public static string MESSAGE_ERROR_CANNOTUNLOCKACCOUNT_USERHADDISABLED = "You cannot unlock this account because the user has already disabled it!";
 
         public static string MESSAGE_UNLOCKACCOUNT_SUCCESS = "Unlock Account Successfully!";
+        public static string MESSAGE_LISTEXAMINATION_EMPTY = "There are no upcoming examinations.";
 
     }
 }
