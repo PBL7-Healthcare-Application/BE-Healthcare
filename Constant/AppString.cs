@@ -88,6 +88,8 @@
         public static string MESSAGE_ERROR_APPLYPARTNER = "You have registered to become our partner, please wait for admin to approve your information!";
         public static string MESSAGE_VERIFYINFPARTNER_SUCCESS = "Verify information of doctor successfully.";
         public static string MESSAGE_VERIFYCERTIFICATE_SUCCESS = "Verify information of certificate successfully.";
+        public static string MESSAGE_VERIFYWORKINGPROCESS_SUCCESS = "Verify information of working process successfully.";
+        public static string MESSAGE_VERIFYTRAININGPROCESS_SUCCESS = "Verify information of training process successfully.";
 
         public static string MESSAGE_ERROR_APPOINTMENT_ISEVALUATED = "This appointment has been evaluated!";
         public static string MESSAGE_EVALUATED_SUCCESS = "You have rated this doctor successfully!";
@@ -103,6 +105,7 @@
         public static string MESSAGE_ERROR_ACCOUNTNOTDISABLED = "This account has not been disabled, so you do not need to unlock it.";
         public static string MESSAGE_ERROR_CANNOTUNLOCKACCOUNT_USERHADDISABLED = "You cannot unlock this account because the user has already disabled it!";
 
+        public static string MESSAGE_UNLOCKACCOUNT_SUCCESS = "Unlock Account Successfully!";
 
     }
 }

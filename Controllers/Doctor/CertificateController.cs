@@ -8,6 +8,7 @@ namespace BE_Healthcare.Controllers.Doctor
 {
     [Route("api/Doctor/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Doctor")]
     public class CertificateController : ControllerBase
     {
         private readonly ICertificateRepository _certificateRepository;
@@ -18,7 +19,6 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpPost("AddCertificate")]
-        [Authorize(Roles = "Doctor")]
         public IActionResult AddCertificate(AddCertificateModel model)
         {
             try
@@ -40,7 +40,6 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpPost("AddListCertificate")]
-        [Authorize(Roles = "Doctor")]
         public IActionResult AddListCertificate(List<AddCertificateModel> model)
         {
             try

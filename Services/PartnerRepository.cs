@@ -303,12 +303,12 @@ namespace BE_Healthcare.Services
                 _workingProcessRepository.VerifyWorkingProcess(model);
 
                 //Check if there are any workingprocesses that have not been verified
-                _doctorRepository.UpdateFieldIsVerifiedInfoCertificate(model.IdDoctor);
+                _doctorRepository.UpdateFieldIsVerifiedInfoWorkingProcess(model.IdDoctor);
 
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
-                    Message = AppString.MESSAGE_VERIFYCERTIFICATE_SUCCESS,
+                    Message = AppString.MESSAGE_VERIFYWORKINGPROCESS_SUCCESS,
                 };
 
             }
@@ -329,12 +329,12 @@ namespace BE_Healthcare.Services
                 _trainingProcessRepository.VerifyTrainingProcess(model);
 
                 //Check if there are any working processes that have not been verified
-                _doctorRepository.UpdateFieldIsVerifiedInfoCertificate(model.IdDoctor);
+                _doctorRepository.UpdateFieldIsVerifiedInfoTrainingProcess(model.IdDoctor);
 
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
-                    Message = AppString.MESSAGE_VERIFYCERTIFICATE_SUCCESS,
+                    Message = AppString.MESSAGE_VERIFYTRAININGPROCESS_SUCCESS,
                 };
 
             }
