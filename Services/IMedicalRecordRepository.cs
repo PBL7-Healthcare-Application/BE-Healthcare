@@ -10,6 +10,7 @@ namespace BE_Healthcare.Services
         ApiResponse CreateMedicalRecord(MedicalRecordModel model);
         ApiResponse GetMedicalRecordByIdUser(Guid idUser);
         ApiResponse GetListExaminationByIdDoctor(Guid idDoctor, string? search = null);
+        ApiResponse GetMedicaHistoryOfUserByIdUser(Guid idUser);
 
     }
 }

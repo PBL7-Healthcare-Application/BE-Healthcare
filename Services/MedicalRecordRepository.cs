@@ -73,14 +73,17 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+        private IQueryable<MedicalRecord> GetListMedicalRecordByIdUser(Guid idUser)
+        {
+            return _context.MedicalRecords.Include(e => e.User).Include(d => d.Doctor)
+    .AsQueryable().Where(e => e.IdUser == idUser);
+        }
 
         public ApiResponse GetMedicalRecordByIdUser(Guid idUser)
         {
             try
             {
-
-                var listMedicalRecord = _context.MedicalRecords.Include(e => e.User).Include(d => d.Doctor)
-                    .AsQueryable().Where(e => e.IdUser == idUser);
+                var listMedicalRecord = GetListMedicalRecordByIdUser(idUser);
 
                 if (listMedicalRecord != null)
                 {
@@ -182,5 +185,55 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+        public ApiResponse GetMedicaHistoryOfUserByIdUser(Guid idUser)
+        {
+            try
+            {
+                var listMedicalRecord = GetListMedicalRecordByIdUser(idUser);
+
+                if (listMedicalRecord != null)
+                {
+                    var res = listMedicalRecord.Select(a => new DoctorViewMedicalRecordHistoryOfUserModel
+                    {
+                        IdDoctor = a.IdDoctor,
+                        IdUser = a.IdUser,
+                        IdAppointment = a.IdAppointment,
+                        Height = a.Height,
+                        Weight = a.Weight,
+                        Temperature = a.Temperature,
+                        Content = a.Content,
+                        Date = a.Date,
+                        Name = a.Doctor.User.Name,
+                        MedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
+                        NameUser = a.User.Name,
+                        PhoneNumberUser = a.User.PhoneNumber
+                    });
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                        Data = res
+                    };
+                }
+                else
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_LISTAPPOINTMENT_EMPTY,
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
     }
 }

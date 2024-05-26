@@ -250,6 +250,11 @@ namespace BE_Healthcare.Services
                     Price = model.Price
                 };
 
+                string dateOnly = _appointment.Date.ToString("M/d/yyyy");
+                string dateTimeString = $"{dateOnly} {_appointment.StartTime}";
+                DateTime TimeStartAppointment = DateTime.ParseExact(dateTimeString, "M/d/yyyy H:mm", null);
+                _appointment.StartTimeOfExamination = TimeStartAppointment;
+
                 _context.Appointments.Add(_appointment);
                 _context.SaveChanges();
                 return _appointment.IdAppointment;
@@ -431,7 +436,7 @@ namespace BE_Healthcare.Services
                     };
                 }
                 
-                listAppointment = listAppointment.OrderBy(e => e.IdAppointment).ToList();
+                listAppointment = listAppointment.OrderBy(e => e.StartTimeOfExamination).ToList();
                 int TotalItems = listAppointment.Count;
 
                 listAppointment = listAppointment.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
@@ -580,6 +585,7 @@ namespace BE_Healthcare.Services
                 }
                 var res = new AppointmentDetailOfDoctorModel
                 {
+                    IdUser = appointment.User.IdUser,
                     IdDoctor = (Guid)appointment.IdDoctor,
                     NameUser = appointment.User.Name,
                     AvatarUser = appointment.User.Avatar,

@@ -30,6 +30,7 @@ namespace BE_Healthcare.Data.Entities
         public Guid? idUserCancel { get; set; } = null!;
         public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public bool IsRating { get; set; } = false!;
+        public DateTime? StartTimeOfExamination { get; set; } = null!;
 
     }
 }
