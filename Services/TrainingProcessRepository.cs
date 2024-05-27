@@ -48,6 +48,7 @@ namespace BE_Healthcare.Services
                 AddTrainingProcess(idDoctor, trainingProcess);
             }
             Save();
+            UpdateIsVerifiedInfoTrainingProcess(idDoctor, false);
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -59,6 +60,7 @@ namespace BE_Healthcare.Services
         {
             AddTrainingProcess(idDoctor, trainingProcess);
             Save();
+            UpdateIsVerifiedInfoTrainingProcess(idDoctor, false);
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -129,7 +131,7 @@ namespace BE_Healthcare.Services
             {
                 if (model.SchoolName != null) trainingProcess.SchoolName = model.SchoolName;
                 if (model.StartYear != null) trainingProcess.StartYear = model.StartYear;
-                if (model.EndYear != null) trainingProcess.Major = model.Major;
+                if (model.EndYear != null) trainingProcess.EndYear = model.EndYear;
                 if (model.Major != null) trainingProcess.Major = model.Major;
                 trainingProcess.UpdatedAt = DateTime.Now;
                 trainingProcess.StatusVerified = AppNumber.PENDING;
@@ -141,9 +143,14 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
             }
         }
+        private Doctor? GetDoctorByIdDoctor(Guid idDoctor)
+        {
+            return _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+        }
+
         private void UpdateIsVerifiedInfoTrainingProcess(Guid idDoctor, bool IsVerified)
         {
-            var doctor = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+            var doctor = GetDoctorByIdDoctor(idDoctor);
 
             if (doctor != null)
             {
@@ -173,6 +180,77 @@ namespace BE_Healthcare.Services
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_UPDATETRAININGPROCESS_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+        private void DeleteTrainingProcess(TrainingProcess trainingProcess)
+        {
+            try
+            {
+                _context.TrainingProcesses.Remove(trainingProcess);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private void CheckListTrainingProcessRemainingIsVerified(Guid idDoctor)
+        {
+            var listTrainingProcess = GetTrainingProcess(idDoctor);
+            if (listTrainingProcess == null) UpdateIsVerifiedInfoTrainingProcess(idDoctor, true);
+            else
+            {
+                bool update = true;
+                foreach (var c in listTrainingProcess)
+                {
+                    if (c.StatusVerified == AppNumber.PENDING)
+                    {
+                        update = false;
+                        break;
+                    }
+                }
+                if (update) UpdateIsVerifiedInfoTrainingProcess(idDoctor, true);
+            }
+        }
+        public ApiResponse DeleteTrainingProcess(Guid idDoctor, int idTrainingProcess)
+        {
+            try
+            {
+                var trainingProcess = GetTrainingProcessOfDoctorByIdTrainingProcess(idDoctor, idTrainingProcess);
+                bool checkListTrainingProcessAgain = false;
+                if (trainingProcess == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_TRAININGPROCESS,
+                    };
+                }
+
+                if (trainingProcess.StatusVerified == AppNumber.PENDING) checkListTrainingProcessAgain = true;
+                DeleteTrainingProcess(trainingProcess);
+
+
+                //Check list Certificate of Doctor is Verified?
+                if (checkListTrainingProcessAgain)
+                {
+                    CheckListTrainingProcessRemainingIsVerified(idDoctor);
+                }
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_DELETETRAININGPROCESS_SUCCESS,
                 };
             }
             catch (Exception ex)

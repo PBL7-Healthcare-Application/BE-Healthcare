@@ -16,6 +16,7 @@ namespace BE_Healthcare.Services
         Certificate? GetCertificateOfDoctorByIdCertificate(Guid idDoctor, int idCertificate);
         void VerifyCertificate(VerifyCertificateModel model);
         ApiResponse UpdateCertificate(Guid idDoctor, UpdateCertificateModel model);
+        ApiResponse DeleteCertificate(Guid idDoctor, int idCertificate);
 
     }
 }

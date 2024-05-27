@@ -45,6 +45,7 @@ namespace BE_Healthcare.Services
         {
             AddWorkingProcess(idDoctor, workingprocess);
             Save();
+            UpdateIsVerifiedInfoWorkingProcess(idDoctor, false);
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -58,6 +59,7 @@ namespace BE_Healthcare.Services
                 AddWorkingProcess(idDoctor, workingprocess);
             }
             Save();
+            UpdateIsVerifiedInfoWorkingProcess(idDoctor, false);
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -138,9 +140,14 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
             }
         }
+        private Doctor? GetDoctorByIdDoctor(Guid idDoctor)
+        {
+            return _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+        }
+
         private void UpdateIsVerifiedInfoWorkingProcess(Guid idDoctor, bool IsVerified)
         {
-            var doctor = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+            var doctor = GetDoctorByIdDoctor(idDoctor);
 
             if (doctor != null)
             {
@@ -170,6 +177,77 @@ namespace BE_Healthcare.Services
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_UPDATEWORKINGPROCESS_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+        private void DeleteWorkingProcess(WorkingProcess workingProcess)
+        {
+            try
+            {
+                _context.WorkingProcesses.Remove(workingProcess);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private void CheckListWorkingProcessRemainingIsVerified(Guid idDoctor)
+        {
+            var listWorkingProcess = GetWorkingProcess(idDoctor);
+            if (listWorkingProcess == null) UpdateIsVerifiedInfoWorkingProcess(idDoctor, true);
+            else
+            {
+                bool update = true;
+                foreach (var c in listWorkingProcess)
+                {
+                    if (c.StatusVerified == AppNumber.PENDING)
+                    {
+                        update = false;
+                        break;
+                    }
+                }
+                if (update) UpdateIsVerifiedInfoWorkingProcess(idDoctor, true);
+            }
+        } 
+        public ApiResponse DeleteWorkingProcess(Guid idDoctor, int idWorkingProcess)
+        {
+            try
+            {
+                var workingProcess = GetWorkingProcessOfDoctorByIdWorkingProcess(idDoctor, idWorkingProcess);
+                bool checkListWorkingProcessAgain = false;
+                if (workingProcess == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_WORKINGPROCESS,
+                    };
+                }
+
+                if (workingProcess.StatusVerified == AppNumber.PENDING) checkListWorkingProcessAgain = true;
+                DeleteWorkingProcess(workingProcess);
+
+
+                //Check list Certificate of Doctor is Verified?
+                if (checkListWorkingProcessAgain)
+                {
+                    CheckListWorkingProcessRemainingIsVerified(idDoctor);
+                }
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_DELETEWORKINGPROCESS_SUCCESS,
                 };
             }
             catch (Exception ex)

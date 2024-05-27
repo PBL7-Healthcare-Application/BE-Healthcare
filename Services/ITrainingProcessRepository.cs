@@ -16,5 +16,6 @@ namespace BE_Healthcare.Services
         TrainingProcess? GetTrainingProcessOfDoctorByIdTrainingProcess(Guid idDoctor, int idTrainingProcess);
         void VerifyTrainingProcess(VerifyTrainingProcessModel model);
         ApiResponse UpdateTrainingProcess(Guid idDoctor, UpdateTrainingProcessModel model);
+        ApiResponse DeleteTrainingProcess(Guid idDoctor, int idTrainingProcess);
     }
 }
