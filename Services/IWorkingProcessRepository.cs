@@ -17,6 +17,7 @@ namespace BE_Healthcare.Services
         WorkingProcess? GetWorkingProcessOfDoctorByIdWorkingProcess(Guid idDoctor, int idWorkingProcess);
         void VerifyWorkingProcess(VerifyWorkingProcessModel model);
         ApiResponse UpdateWorkingProcess(Guid idDoctor, UpdateWorkingProcessModel model);
+        ApiResponse DeleteWorkingProcess(Guid idDoctor, int idWorkingProcess);
 
     }
 }

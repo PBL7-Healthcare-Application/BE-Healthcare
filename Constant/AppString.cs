@@ -114,5 +114,14 @@
         public static string MESSAGE_UPDATETRAININGPROCESS_SUCCESS = "Update Training Process Successfully!";
         public static string MESSAGE_UPDATEWORKINGPROCESS_SUCCESS = "Update Working Process Successfully!";
 
+        public static string MESSAGE_DELETECERTIFICATE_SUCCESS = "Delete Certificate Successfully!";
+        
+        
+        public static string MESSAGE_NOTFOUND_WORKINGPROCESS = "Working Process is not found!";
+        public static string MESSAGE_DELETEWORKINGPROCESS_SUCCESS = "Delete Working Process Successfully!";
+
+        public static string MESSAGE_NOTFOUND_TRAININGPROCESS = "Training Process is not found!";
+        public static string MESSAGE_DELETETRAININGPROCESS_SUCCESS = "Delete Training Process Successfully!";
+
     }
 }

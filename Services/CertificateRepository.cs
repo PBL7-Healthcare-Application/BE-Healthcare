@@ -42,6 +42,7 @@ namespace BE_Healthcare.Services
         {
             AddCertificate(idDoctor, certificate);
             Save();
+            UpdateIsVerifiedInfoCertificate(idDoctor, false);
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -55,6 +56,7 @@ namespace BE_Healthcare.Services
                 AddCertificate(idDoctor, certificate);
             }
             Save();
+            UpdateIsVerifiedInfoCertificate(idDoctor, false);
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -133,9 +135,13 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
             }
         }
+        private Doctor? GetDoctorByIdDoctor(Guid idDoctor)
+        {
+            return _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+        }
         private void UpdateIsVerifiedInfoCertificate(Guid idDoctor, bool IsVerified)
         {
-            var doctor = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+            var doctor = GetDoctorByIdDoctor(idDoctor);
 
             if (doctor != null)
             {
@@ -177,7 +183,77 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+        private void DeleteCertificate(Certificate certificate)
+        {
+            try
+            {
+                _context.Certificates.Remove(certificate);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private void CheckListCertificateRemainingIsVerified(Guid idDoctor)
+        {
+            var listCertificate = GetCertificate(idDoctor);
+            if (listCertificate == null) UpdateIsVerifiedInfoCertificate(idDoctor, true);
+            else
+            {
+                bool update = true;
+                foreach (var c in listCertificate)
+                {
+                    if (c.StatusVerified == AppNumber.PENDING)
+                    {
+                        update = false;
+                        break;
+                    }
+                }
+                if (update) UpdateIsVerifiedInfoCertificate(idDoctor, true);
+            }
+        }
+        public ApiResponse DeleteCertificate(Guid idDoctor, int idCertificate)
+        {
+            try
+            {
+                var certificate = GetCertificateOfDoctorByIdCertificate(idDoctor, idCertificate);
+                bool checkListCertificateAgain = false;
+                if (certificate == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_CERTIFICATE,
+                    };
+                }
+
+                if (certificate.StatusVerified == AppNumber.PENDING) checkListCertificateAgain = true;
+                DeleteCertificate(certificate);
 
 
+                //Check list Certificate of Doctor is Verified?
+                if(checkListCertificateAgain)
+                {
+                    CheckListCertificateRemainingIsVerified(idDoctor);
+                }
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_DELETECERTIFICATE_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
     }
+    
 }
