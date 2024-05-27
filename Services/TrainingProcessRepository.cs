@@ -3,6 +3,7 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.Partner;
+using BE_Healthcare.Models.TrainingProcess;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Ocsp;
 using Org.BouncyCastle.Tls;
@@ -82,9 +83,8 @@ namespace BE_Healthcare.Services
         }
         public TrainingProcess? GetTrainingProcessOfDoctorByIdTrainingProcess(Guid idDoctor, int idTrainingProcess)
         {
-            var list_TrainingProcess = GetTrainingProcess(idDoctor);
-            if (list_TrainingProcess == null) return null;
-            return list_TrainingProcess.FirstOrDefault(c => c.IdTrainingProcess == idTrainingProcess);
+            return _context.TrainingProcesses.Include(e => e.Doctor)
+            .AsQueryable().Where(e => e.IdDoctor == idDoctor).FirstOrDefault(c => c.IdTrainingProcess == idTrainingProcess);
         }
 
         public int GetNumberOfTrainingProcessWaitingForApproval(Guid idDoctor)
@@ -120,6 +120,69 @@ namespace BE_Healthcare.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void UpdateTrainingProcess(TrainingProcess trainingProcess, UpdateTrainingProcessModel model)
+        {
+            try
+            {
+                if (model.SchoolName != null) trainingProcess.SchoolName = model.SchoolName;
+                if (model.StartYear != null) trainingProcess.StartYear = model.StartYear;
+                if (model.EndYear != null) trainingProcess.Major = model.Major;
+                if (model.Major != null) trainingProcess.Major = model.Major;
+                trainingProcess.UpdatedAt = DateTime.Now;
+                trainingProcess.StatusVerified = AppNumber.PENDING;
+                _context.TrainingProcesses.Update(trainingProcess);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private void UpdateIsVerifiedInfoTrainingProcess(Guid idDoctor, bool IsVerified)
+        {
+            var doctor = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+
+            if (doctor != null)
+            {
+                doctor.IsVerifiedInfoTrainingProcess = IsVerified;
+                _context.Doctors.Update(doctor);
+                _context.SaveChanges();
+            }
+        }
+        public ApiResponse UpdateTrainingProcess(Guid idDoctor, UpdateTrainingProcessModel model)
+        {
+            try
+            {
+                var trainingProcess = GetTrainingProcessOfDoctorByIdTrainingProcess(idDoctor, model.IdTrainingProcess);
+                if (trainingProcess == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_CERTIFICATE,
+                    };
+                }
+
+                UpdateTrainingProcess(trainingProcess, model);
+                UpdateIsVerifiedInfoTrainingProcess(idDoctor, false);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_UPDATETRAININGPROCESS_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
             }
         }
     }

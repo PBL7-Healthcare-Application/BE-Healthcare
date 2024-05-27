@@ -1,6 +1,7 @@
 ﻿using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.Partner;
+using BE_Healthcare.Models.TrainingProcess;
 
 namespace BE_Healthcare.Services
 {
@@ -14,5 +15,6 @@ namespace BE_Healthcare.Services
         int GetNumberOfTrainingProcessWaitingForApproval(Guid idDoctor);
         TrainingProcess? GetTrainingProcessOfDoctorByIdTrainingProcess(Guid idDoctor, int idTrainingProcess);
         void VerifyTrainingProcess(VerifyTrainingProcessModel model);
+        ApiResponse UpdateTrainingProcess(Guid idDoctor, UpdateTrainingProcessModel model);
     }
 }

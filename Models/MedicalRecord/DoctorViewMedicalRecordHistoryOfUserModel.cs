@@ -1,9 +1,8 @@
 ﻿namespace BE_Healthcare.Models.MedicalRecord
 {
-    public class DoctorViewMedicalRecordHistoryOfUserModel : MedicalRecordHistoryModel
+    public class DoctorViewMedicalRecordHistoryOfUserModel
     {
-        public string NameUser { get; set; } = null!;
-        public string? PhoneNumberUser { get; set; } = null!;
-
+        public InfoUserOfMedicalRecordHistoryModel InfoUser { get; set; }
+        public List<MedicalRecordHistoryModel> MedicalRecordHistory { get; set; }
     }
 }

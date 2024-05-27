@@ -11,10 +11,13 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly IAppointmentRepository _appointmentRepository;
-        public MedicalRecordRepository(MyDbContext context, IAppointmentRepository appointmentRepository)
+        private readonly IAuthRepository _authRepository;
+
+        public MedicalRecordRepository(MyDbContext context, IAppointmentRepository appointmentRepository, IAuthRepository authRepository)
         {
             _context = context;
             _appointmentRepository = appointmentRepository;
+            _authRepository = authRepository;
         }
         public void AddMedicalRecord(MedicalRecordModel model)
         {
@@ -193,7 +196,7 @@ namespace BE_Healthcare.Services
 
                 if (listMedicalRecord != null)
                 {
-                    var res = listMedicalRecord.Select(a => new DoctorViewMedicalRecordHistoryOfUserModel
+                    var medicalRecordHistory = listMedicalRecord.Select(a => new MedicalRecordHistoryModel
                     {
                         IdDoctor = a.IdDoctor,
                         IdUser = a.IdUser,
@@ -204,10 +207,21 @@ namespace BE_Healthcare.Services
                         Content = a.Content,
                         Date = a.Date,
                         Name = a.Doctor.User.Name,
-                        MedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
-                        NameUser = a.User.Name,
-                        PhoneNumberUser = a.User.PhoneNumber
-                    });
+                        MedicalSpecialty = a.Doctor.MedicalSpecialty.Name
+                    }).ToList();
+                    var user = _authRepository.getUserById(idUser);
+                    var infoUser = new InfoUserOfMedicalRecordHistoryModel
+                    {
+                        IdUser = idUser,
+                        NameUser = user.Name,
+                        AvatarUser = user.Avatar,
+                        PhoneNumberUser = user.PhoneNumber
+                    };
+                    var res = new DoctorViewMedicalRecordHistoryOfUserModel
+                    {
+                        InfoUser = infoUser,
+                        MedicalRecordHistory = medicalRecordHistory
+                    };
                     return new ApiResponse
                     {
                         StatusCode = StatusCode.SUCCESS,

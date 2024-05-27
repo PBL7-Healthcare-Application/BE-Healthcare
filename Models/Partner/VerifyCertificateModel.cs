@@ -1,4 +1,6 @@
-﻿namespace BE_Healthcare.Models.Partner
+﻿using BE_Healthcare.Models.Certificate;
+
+namespace BE_Healthcare.Models.Partner
 {
     public class VerifyCertificateModel
     {

@@ -458,7 +458,7 @@ namespace BE_Healthcare.Services
                         {
                             return new ApiResponse
                             {
-                                StatusCode = StatusCode.SUCCESS,
+                                StatusCode = StatusCode.CONFLICT,
                                 Message = AppString.MESSAGE_ERROR_EDITWORKINGTIME_CONFLICTWITHAPPOINTMENT,
                             };
                         }
