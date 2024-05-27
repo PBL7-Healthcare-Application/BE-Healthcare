@@ -1,4 +1,8 @@
-﻿namespace BE_Healthcare.Models
+﻿using BE_Healthcare.Models.Certificate;
+using BE_Healthcare.Models.TrainingProcess;
+using BE_Healthcare.Models.WorkingProcess;
+
+namespace BE_Healthcare.Models
 {
     public class ProfileDoctorModel : ProfileModel
     {

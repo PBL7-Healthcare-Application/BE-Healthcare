@@ -2,6 +2,7 @@
 using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
+using BE_Healthcare.Models.Certificate;
 using BE_Healthcare.Models.Partner;
 using Microsoft.EntityFrameworkCore;
 
@@ -77,11 +78,9 @@ namespace BE_Healthcare.Services
         }
         public Certificate? GetCertificateOfDoctorByIdCertificate(Guid idDoctor, int idCertificate)
         {
-            var list_Certificate = GetCertificate(idDoctor);
-            if (list_Certificate == null) return null;
-            return list_Certificate.FirstOrDefault(c => c.IdCertificate == idCertificate);
+            return _context.Certificates.Include(e => e.Doctor)
+            .AsQueryable().Where(e => e.IdDoctor == idDoctor).FirstOrDefault(c => c.IdCertificate == idCertificate);
         }
-
         public int GetNumberOfCertificateWaitingForApproval(Guid idDoctor)
         {
             try
@@ -115,8 +114,70 @@ namespace BE_Healthcare.Services
             {
                 Console.WriteLine(ex.ToString());
             }
-
         }
+
+        private void UpdateCertificate(Certificate certificate, UpdateCertificateModel model)
+        {
+            try
+            {
+                if (model.Name != null) certificate.Name = model.Name;
+                if (model.Year != null) certificate.Year = model.Year;
+                if (model.Image != null) certificate.Image = model.Image;
+                certificate.UpdatedAt = DateTime.Now;
+                certificate.StatusVerified = AppNumber.PENDING;
+                _context.Certificates.Update(certificate);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private void UpdateIsVerifiedInfoCertificate(Guid idDoctor, bool IsVerified)
+        {
+            var doctor = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
+
+            if (doctor != null)
+            {
+                doctor.IsVerifiedInfoCertificate = IsVerified;
+                _context.Doctors.Update(doctor);
+                _context.SaveChanges();
+            }
+        }
+        public ApiResponse UpdateCertificate(Guid idDoctor, UpdateCertificateModel model)
+        {
+            try
+            {
+                var certificate = GetCertificateOfDoctorByIdCertificate(idDoctor, model.IdCertificate);
+                if (certificate == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_CERTIFICATE,
+                    };
+                }
+
+                UpdateCertificate(certificate, model);
+                UpdateIsVerifiedInfoCertificate(idDoctor, false);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_UPDATECERTIFICATE_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
 
     }
 }

@@ -1,14 +1,11 @@
 ﻿using BE_Healthcare.Data.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BE_Healthcare.Models
+namespace BE_Healthcare.Models.Certificate
 {
-    public class CertificateModel
+    public class CertificateModel : AddCertificateModel
     {
         public int IdCertificate { get; set; }
-        public string? Name { get; set; } = null!;
-        public int? Year { get; set; } = null;
-        public string? Image { get; set; } = null!;
         public int? StatusVerified { get; set; } //0: Pending - 1: Approved - 2: Rejected
 
     }

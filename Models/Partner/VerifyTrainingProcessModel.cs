@@ -1,4 +1,6 @@
-﻿namespace BE_Healthcare.Models.Partner
+﻿using BE_Healthcare.Models.TrainingProcess;
+
+namespace BE_Healthcare.Models.Partner
 {
     public class VerifyTrainingProcessModel
     {

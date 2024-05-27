@@ -3,6 +3,8 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.Partner;
+using BE_Healthcare.Models.TrainingProcess;
+using BE_Healthcare.Models.WorkingProcess;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Tls;
 
@@ -79,9 +81,8 @@ namespace BE_Healthcare.Services
         }
         public WorkingProcess? GetWorkingProcessOfDoctorByIdWorkingProcess(Guid idDoctor, int idWorkingProcess)
         {
-            var list_WorkingProcess = GetWorkingProcess(idDoctor);
-            if (list_WorkingProcess == null) return null;
-            return list_WorkingProcess.FirstOrDefault(c => c.IdWorkingProcess == idWorkingProcess);
+            return _context.WorkingProcesses.Include(e => e.Doctor)
+            .AsQueryable().Where(e => e.IdDoctor == idDoctor).FirstOrDefault(c => c.IdWorkingProcess == idWorkingProcess);
         }
 
         public int GetNumberOfWorkingProcessWaitingForApproval(Guid idDoctor)
@@ -119,8 +120,68 @@ namespace BE_Healthcare.Services
             }
 
         }
+        private void UpdateWorkingProcess(WorkingProcess workingProcess, UpdateWorkingProcessModel model)
+        {
+            try
+            {
+                if (model.Position != null) workingProcess.Position = model.Position;
+                if (model.StartYear != null) workingProcess.StartYear = model.StartYear;
+                if (model.EndYear != null) workingProcess.EndYear = model.EndYear;
+                if (model.Workplace != null) workingProcess.Workplace = model.Workplace;
+                workingProcess.UpdatedAt = DateTime.Now;
+                workingProcess.StatusVerified = AppNumber.PENDING;
+                _context.WorkingProcesses.Update(workingProcess);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private void UpdateIsVerifiedInfoWorkingProcess(Guid idDoctor, bool IsVerified)
+        {
+            var doctor = _context.Doctors.Include(p => p.User).Include(q => q.MedicalSpecialty).FirstOrDefault(e => e.IdDoctor == idDoctor);
 
+            if (doctor != null)
+            {
+                doctor.IsVerifiedInfoWorkingProcess = IsVerified;
+                _context.Doctors.Update(doctor);
+                _context.SaveChanges();
+            }
+        }
+        public ApiResponse UpdateWorkingProcess(Guid idDoctor, UpdateWorkingProcessModel model)
+        {
+            try
+            {
+                var workingProcess = GetWorkingProcessOfDoctorByIdWorkingProcess(idDoctor, model.IdWorkingProcess);
+                if (workingProcess == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_CERTIFICATE,
+                    };
+                }
 
+                UpdateWorkingProcess(workingProcess, model);
+                UpdateIsVerifiedInfoWorkingProcess(idDoctor, false);
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_UPDATEWORKINGPROCESS_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
     }
 
 }

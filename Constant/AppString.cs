@@ -107,6 +107,12 @@
 
         public static string MESSAGE_UNLOCKACCOUNT_SUCCESS = "Unlock Account Successfully!";
         public static string MESSAGE_LISTEXAMINATION_EMPTY = "There are no upcoming examinations.";
+        
+        public static string MESSAGE_NOTFOUND_CERTIFICATE = "Certificate is not found!";
+        public static string MESSAGE_ERROR_UPDATECERTIFICATE_NOTALLOWTOUPDATE = "This certificate is not yours. Therefore, you do not have permission to edit it!";
+        public static string MESSAGE_UPDATECERTIFICATE_SUCCESS = "Update Certificate Successfully!";
+        public static string MESSAGE_UPDATETRAININGPROCESS_SUCCESS = "Update Training Process Successfully!";
+        public static string MESSAGE_UPDATEWORKINGPROCESS_SUCCESS = "Update Working Process Successfully!";
 
     }
 }

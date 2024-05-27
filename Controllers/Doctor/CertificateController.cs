@@ -1,4 +1,4 @@
-﻿using BE_Healthcare.Models;
+﻿using BE_Healthcare.Models.Certificate;
 using BE_Healthcare.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -57,6 +57,24 @@ namespace BE_Healthcare.Controllers.Doctor
                 Console.WriteLine(ex.ToString());
                 return StatusCode(StatusCodes.Status500InternalServerError);
 
+            }
+        }
+
+        [HttpPut("UpdateCertificate")]
+        public IActionResult UpdateCertificate(UpdateCertificateModel model)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(_certificateRepository.UpdateCertificate(Guid.Parse(checkIdDoctor), model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }

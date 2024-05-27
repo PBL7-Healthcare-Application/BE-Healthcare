@@ -1,6 +1,7 @@
 ﻿using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.Partner;
+using BE_Healthcare.Models.TrainingProcess;
 
 namespace BE_Healthcare.Services
 {
