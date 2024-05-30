@@ -20,8 +20,9 @@ namespace BE_Healthcare.Services
         //Task<ApiResponse> SendNotification();
         void UpdateAppointment(Appointment appointment);
         void UpdateAppointmentCompleted(int idAppointment);
-        Task<ApiResponse> RescheduleAppointment(ReExaminationAppointmentModel model); 
+        Task<ApiResponse> RescheduleAppointment(ReExaminationAppointmentModel model);
 
+        ApiResponse GetAllAppointment(AdminSearchAppointmentCriteriaModel criteria);
 
 
 

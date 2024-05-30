@@ -9,6 +9,6 @@ namespace BE_Healthcare.Services
         ApiResponse GetAllUser(UserSearchCriteriaModel criteria);
         ApiResponse DisableAccount(DisableAccountModel model);
         ApiResponse UnlockAccount(DisableAccountModel model);
-
+        ApiResponse GetUserDetail(Guid idUser);
     }
 }

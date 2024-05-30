@@ -30,6 +30,19 @@ namespace BE_Healthcare.Controllers.Admin
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        [HttpGet("GetUserDetail/{idUser}")]
+        public IActionResult GetUserDetail(Guid idUser)
+        {
+            try
+            {
+
+                return Ok(_userRepository.GetUserDetail(idUser));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
         [HttpPost("DisableAccount")]
         public IActionResult DisableAccount(DisableAccountModel model)
         {

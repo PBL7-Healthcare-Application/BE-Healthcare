@@ -10,12 +10,16 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly IAuthRepository _authRepository;
+        private readonly IProfileRepository _profileRepository;
+        private readonly IDoctorRepository _doctorRepository;
 
-        public UserRepository(MyDbContext context, IAuthRepository authRepository)
+        public UserRepository(MyDbContext context, IAuthRepository authRepository, 
+            IProfileRepository profileRepository, IDoctorRepository doctorRepository)
         {
             _context = context;
             _authRepository = authRepository;
-
+            _profileRepository = profileRepository;
+            _doctorRepository = doctorRepository;
         }
         public IQueryable<User> GetAll()
         {
@@ -191,6 +195,68 @@ namespace BE_Healthcare.Services
                 {
                     StatusCode = StatusCode.SUCCESS,
                     Message = AppString.MESSAGE_UNLOCKACCOUNT_SUCCESS,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        public ApiResponse GetUserDetail(Guid idUser)
+        {
+            try
+            {
+                var user = _authRepository.getUserById(idUser);
+
+
+                if (user == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_USER,
+                    };
+                }
+                if(user.idRole == AppNumber.ROLE_USER)
+                {
+                    var res = _profileRepository.CreateProfileModel(user);
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                        Data = res
+                    };
+                }
+                if (user.idRole == AppNumber.ROLE_DOCTOR)
+                {
+                    var doctor = _doctorRepository.GetDoctorByIdUser(idUser);
+                    if (doctor == null)
+                    {
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                        };
+                    }
+                    var res = _profileRepository.CreateProfileDoctorModel(doctor);
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.SUCCESS,
+                        Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                        Data = res
+                    };
+
+                }
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_GETDETAIL_ADMIN,
                 };
             }
             catch (Exception ex)
