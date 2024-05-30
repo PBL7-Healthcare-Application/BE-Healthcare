@@ -122,6 +122,12 @@
 
         public static string MESSAGE_NOTFOUND_TRAININGPROCESS = "Training Process is not found!";
         public static string MESSAGE_DELETETRAININGPROCESS_SUCCESS = "Delete Training Process Successfully!";
+        
+        public static string MESSAGE_ERROR_IDDOCTOR_NOTNULL = "IdDoctor is not null!";
+        public static string MESSAGE_RESCHEDULE_APPOINTMENT = "Book a follow-up examination.";
 
+        public static string MESSAGE_RESCHEDULED_SUCCESSFUL = "Successfully rescheduled a medical examination!";
+        public static string TITLE_CREATEREEXAMINATIONAPPOINTMENT = "Re-examination appointment";
+        public static string BODY_CREATEREEXAMINATIONAPPOINTMENT = "You have a new re-examination medical appointment.";
     }
 }

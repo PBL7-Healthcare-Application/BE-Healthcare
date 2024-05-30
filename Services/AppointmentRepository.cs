@@ -102,21 +102,12 @@ namespace BE_Healthcare.Services
             }
             return null;
         }
-        public async Task<ApiResponse> CreateAppointment(Guid idUser, AppointmentModel model)
+        
+        private ApiResponse? ValidateAppointmentInformationInput(Doctor doctor, Guid idUser, AppointmentModel model)
         {
-            //1. Check idDoctor is null or not
-            var doctor = _doctorRepository.GetDoctorById(model.IdDoctor);
-            if (doctor == null)
-            {
-                return new ApiResponse
-                {
-                    StatusCode = StatusCode.FAILED,
-                    Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
-                };
-            }
 
             //2. Check idUser of doctor != idUser 
-            if(doctor.User.IdUser == idUser)
+            if (doctor.User.IdUser == idUser)
             {
                 return new ApiResponse
                 {
@@ -147,28 +138,28 @@ namespace BE_Healthcare.Services
 
             //4. Check Time Off of Doctor
             var date_book = model.Date;
-            var list_TimeOff = _doctorRepository.GetTimeOffByIdDoctor(model.IdDoctor);
+            var list_TimeOff = _doctorRepository.GetTimeOffByIdDoctor((Guid)model.IdDoctor);
 
             //Check TimeBusy of Doctor 
             var list_TimeOffBusy = list_TimeOff.Where(d => d.Date.ToShortDateString() == date_book.ToShortDateString()).ToList();
-            if(list_TimeOffBusy.Any())
+            if (list_TimeOffBusy.Any())
             {
                 var CheckOverlapTime = CheckOverlapTimeOff(startTime_Book, list_TimeOffBusy, AppString.MESSAGE_OVERLAP_TIMEOFF);
-                if(CheckOverlapTime != null) return CheckOverlapTime;
+                if (CheckOverlapTime != null) return CheckOverlapTime;
             }
 
             //Check TimeBreak of Doctor 
             var list_TimeOffBreak = list_TimeOff.Where(d => d.Status == AppNumber.BREAK).ToList();
-            if(list_TimeOffBreak.Any())
+            if (list_TimeOffBreak.Any())
             {
                 var CheckOverlapTime = CheckOverlapTimeOff(startTime_Book, list_TimeOffBreak, AppString.MESSAGE_OVERLAP_TIMEOFF_BREAK);
                 if (CheckOverlapTime != null) return CheckOverlapTime;
             }
             //5. Check List Appointment of Doctor
 
-            var list_appointment = GetListAppointmentByIdDoctor(model.IdDoctor).Where(e => e.Date.ToShortDateString() == date_book.ToShortDateString());
+            var list_appointment = GetListAppointmentByIdDoctor((Guid)model.IdDoctor).Where(e => e.Date.ToShortDateString() == date_book.ToShortDateString());
 
-            if(list_appointment != null)
+            if (list_appointment != null)
             {
                 foreach (var i in list_appointment)
                 {
@@ -184,8 +175,40 @@ namespace BE_Healthcare.Services
                     }
                 }
             }
-            model.Price = doctor.Price;
+
+            //PASS
+            return null;
+        }
+        public async Task<ApiResponse> CreateAppointment(Guid idUser, AppointmentModel model)
+        {
+            if(model.IdDoctor == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_IDDOCTOR_NOTNULL,
+                };
+            }
+            //1. Check idDoctor is null or not
+            var doctor = _doctorRepository.GetDoctorById((Guid)model.IdDoctor);
+            if (doctor == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                };
+            }
+
+            var validateAppointmentInformationInput = ValidateAppointmentInformationInput(doctor, idUser, model);
+            if(validateAppointmentInformationInput != null)
+            {
+                return validateAppointmentInformationInput;
+            }
+
+
             //check success
+            model.Price = doctor.Price;
             model.IdAppointment = AddAppointment(idUser, model);
 
 
@@ -632,5 +655,69 @@ namespace BE_Healthcare.Services
             }
         }
 
+        public async Task<ApiResponse> RescheduleAppointment(ReExaminationAppointmentModel model)
+        {
+            if (model.IdDoctor == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_ERROR_IDDOCTOR_NOTNULL,
+                };
+            }
+            //1. Check idDoctor is null or not
+            var doctor = _doctorRepository.GetDoctorById((Guid)model.IdDoctor);
+            if (doctor == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                };
+            }
+
+            var validateAppointmentInformationInput = ValidateAppointmentInformationInput(doctor, model.IdUser, model);
+            if (validateAppointmentInformationInput != null)
+            {
+                return validateAppointmentInformationInput;
+            }
+
+
+            //check success
+
+            var appointmentModel = new AppointmentModel
+            {
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
+                Date = model.Date,
+                Issue = AppString.MESSAGE_RESCHEDULE_APPOINTMENT,
+                Type = model.Type,
+                IdDoctor = model.IdDoctor,
+                Price = doctor.Price,
+            };
+
+            model.IdAppointment = AddAppointment(model.IdUser, appointmentModel);
+
+            var dataUser = _authRepository.getUserById(model.IdUser);
+            if (dataUser == null)
+            {
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_NOTFOUND_USER,
+                };
+            }
+
+            //Create Notification for creating new appointment
+            //await CreateNotification(model);
+            await _notificationRepository.CreateNotificationForReExaminationAppointment(model);
+
+
+            return new ApiResponse
+            {
+                StatusCode = StatusCode.SUCCESS,
+                Message = AppString.MESSAGE_RESCHEDULED_SUCCESSFUL,
+            };
+        }
     }
 }
