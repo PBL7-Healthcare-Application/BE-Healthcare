@@ -129,5 +129,8 @@
         public static string MESSAGE_RESCHEDULED_SUCCESSFUL = "Successfully rescheduled a medical examination!";
         public static string TITLE_CREATEREEXAMINATIONAPPOINTMENT = "Re-examination appointment";
         public static string BODY_CREATEREEXAMINATIONAPPOINTMENT = "You have a new re-examination medical appointment.";
+
+        public static string MESSAGE_ERROR_GETDETAIL_ADMIN = "Can't get infomation of admin!";
+
     }
 }

@@ -93,7 +93,7 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-        private ProfileModel CreateProfileModel(User u)
+        public ProfileModel CreateProfileModel(User u)
         {
             var res = new ProfileModel
             {
@@ -230,7 +230,7 @@ namespace BE_Healthcare.Services
             }
         }
 
-        private ProfileDoctorModel CreateProfileDoctorModel(Doctor u)
+        public ProfileDoctorModel CreateProfileDoctorModel(Doctor u)
         {
             var listCertificate = _certificateRepository.GetCertificateByIdDoctor(u.IdDoctor);
 

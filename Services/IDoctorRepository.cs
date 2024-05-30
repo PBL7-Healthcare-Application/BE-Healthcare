@@ -17,5 +17,7 @@ namespace BE_Healthcare.Services
         void UpdateFieldIsVerifiedInfoCertificate(Guid IdDoctor);
         void UpdateFieldIsVerifiedInfoWorkingProcess(Guid IdDoctor);
         void UpdateFieldIsVerifiedInfoTrainingProcess(Guid IdDoctor);
+        List<IdDoctorModel>? GetAllIdDoctor();
+
     }
 }

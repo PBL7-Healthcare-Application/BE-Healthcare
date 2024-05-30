@@ -16,5 +16,9 @@ namespace BE_Healthcare.Services
         ApiResponse SetupWorkingTime(Guid idDoctor, WorkingTimeModel model);
         ApiResponse EditWorkingTime(Guid idDoctor, WorkingTimeModel model);
         Task<ApiResponse> CancelAppointmentAndUpdateWorkingTime(Guid idDoctor, CancelAppointmentAndUpdateWorkingTimeModel model);
+        ProfileModel CreateProfileModel(User u);
+        ProfileDoctorModel CreateProfileDoctorModel(Doctor u);
+
+
     }
 }

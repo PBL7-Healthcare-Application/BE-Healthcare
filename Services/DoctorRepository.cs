@@ -105,6 +105,14 @@ namespace BE_Healthcare.Services
             }
             return outputList;
         }
+        public List<IdDoctorModel>? GetAllIdDoctor()
+        {
+            var listDoctor = _context.Doctors.AsQueryable();
+            var res = listDoctor.Select(p => new IdDoctorModel {
+                IdDoctor = p.IdDoctor
+            }).ToList();
+            return res;
+        }
 
         public ApiResponse GetAllDoctor(DoctorSearchCriteriaModel criteria)
         {

@@ -623,6 +623,9 @@ namespace BE_Healthcare.Services
                     Address = appointment.Doctor.User.Address,
                     NameClinic = appointment.Doctor.NameClinic,
                     Price = appointment.Price,
+
+                    NameDoctor = appointment.Doctor.User.Name,
+                    AvatarDoctor = appointment.Doctor.User.Avatar
                 };
 
                 return new ApiResponse
@@ -718,6 +721,76 @@ namespace BE_Healthcare.Services
                 StatusCode = StatusCode.SUCCESS,
                 Message = AppString.MESSAGE_RESCHEDULED_SUCCESSFUL,
             };
+        }
+
+
+        private IQueryable<Appointment> GetAll()
+        {
+            return _context.Appointments.Include(e => e.User).Include(d => d.Doctor).AsQueryable();
+        }
+        private IQueryable<Appointment> FilteringListAppointment(IQueryable<Appointment> list, int? Status = null, DateTime? date = null)
+        {
+            if (Status != null)
+            {
+                list = list.Where(d => d.Status == Status);
+            }
+            if (date != null)
+            {
+                list = list.Where(d => d.Date == date);
+            }
+            return list;
+        }
+        public ApiResponse GetAllAppointment(AdminSearchAppointmentCriteriaModel criteria)
+        {
+            try
+            {
+                var listIdDoctor = _doctorRepository.GetAllIdDoctor();
+                if (listIdDoctor != null)
+                {
+                    foreach (var idDoctor in listIdDoctor)
+                    {
+                        UpdateStatusAppointment(idDoctor.IdDoctor);
+                    }
+                }
+                var listAppointment = GetAll();
+
+                #region Filtering
+                listAppointment = FilteringListAppointment(listAppointment, criteria.Status, criteria.Date);
+                #endregion
+
+                #region Sorting
+
+                listAppointment = listAppointment.OrderByDescending(d => d.CreatedAt);
+                #endregion
+                int TotalItems = listAppointment.Count();
+
+                #region Paging
+                var res = listAppointment.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
+                #endregion
+
+                return new ApiResponseWithPaging
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_GETDATA_SUCCESS,
+                    Data = res,
+                    PagingInfo = new PagingInfoModel
+                    {
+                        TotalItems = TotalItems,
+                        CurrentPage = criteria.page,
+                        ItemsPerPage = AppNumber.PAGE_SIZE
+                    }
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
         }
     }
 }
