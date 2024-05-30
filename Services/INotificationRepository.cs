@@ -7,6 +7,7 @@ namespace BE_Healthcare.Services
     {
         Task CreateNotificationForCreatingAppointment(AppointmentModel model);
         Task CreateNotificationForCancellingAppointment(CancelAppointmentModel model, Appointment appointment, Guid? idReceiver);
+        Task CreateNotificationForReExaminationAppointment(ReExaminationAppointmentModel model);
 
 
     }

@@ -26,7 +26,7 @@ namespace BE_Healthcare.Services
                     Title = AppString.TITLE_CREATENEWAPPOINTMENT,
                     Body = AppString.BODY_CREATENEWAPPOINTMENT,
                     CreatedAt = DateTime.Now,
-                    IdDoctor = model.IdDoctor,
+                    IdDoctor = (Guid)model.IdDoctor,
                     IdAppointment = model.IdAppointment,
                     NotificationType = AppNumber.NOTIFICATIONTYPE_APPOINTMENT,
                     Date = model.Date.Date,
@@ -68,6 +68,35 @@ namespace BE_Healthcare.Services
 
                 // Save the notification to Firestore
                 await _firestoreService.AddDocumentAsync("notifications",null, notif);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task CreateNotificationForReExaminationAppointment(ReExaminationAppointmentModel model)
+        {
+            try
+            {
+                // Notification for creating new appointment
+                // Send notification to doctor
+                var notice = new NotificationReschedulingForUserModel
+                {
+                    Title = AppString.TITLE_CREATEREEXAMINATIONAPPOINTMENT,
+                    Body = AppString.BODY_CREATEREEXAMINATIONAPPOINTMENT,
+                    CreatedAt = DateTime.Now,
+                    IdUser = model.IdUser,
+                    IdAppointment = model.IdAppointment,
+                    NotificationType = AppNumber.NOTIFICATIONTYPE_APPOINTMENT,
+                    Date = model.Date.Date,
+                    StartTime = model.StartTime,
+                    EndTime = model.EndTime
+                };
+
+                // Save the notification to Firestore
+                await _firestoreService.AddDocumentAsync("notifications", null, null, notice);
             }
             catch (Exception ex)
             {

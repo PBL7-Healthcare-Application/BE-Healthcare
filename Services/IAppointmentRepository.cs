@@ -6,7 +6,7 @@ namespace BE_Healthcare.Services
     public interface IAppointmentRepository
     {
         List<Appointment>? GetListAppointmentByIdDoctor(Guid idDoctor, int? Status = 1, string? search = null);
-        Task<ApiResponse> CreateAppointment(Guid idUser, AppointmentModel model);
+        Task<ApiResponse> CreateAppointment(Guid idUser, AppointmentModel model); 
         int AddAppointment(Guid idUser, AppointmentModel model);
         //public int CalculateFreeSlot(Guid idDoctor);
         ApiResponse GetAppointmentByIdUser(Guid idUser, int? Status = null);
@@ -20,6 +20,8 @@ namespace BE_Healthcare.Services
         //Task<ApiResponse> SendNotification();
         void UpdateAppointment(Appointment appointment);
         void UpdateAppointmentCompleted(int idAppointment);
+        Task<ApiResponse> RescheduleAppointment(ReExaminationAppointmentModel model); 
+
 
 
 

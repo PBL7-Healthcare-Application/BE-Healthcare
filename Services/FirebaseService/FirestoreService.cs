@@ -18,7 +18,8 @@ namespace BE_Healthcare.Services
         }
 
         //public async Task AddDocumentAsync(string collectionId, string name, AppointmentModel model)
-        public async Task AddDocumentAsync(string collectionId, NotificationForDoctorModel? notification = null, NotificationCancelAppointmentModel? notifCancel = null  )
+        public async Task AddDocumentAsync(string collectionId, NotificationForDoctorModel? notification = null, 
+            NotificationCancelAppointmentModel? notifCancel = null, NotificationReschedulingForUserModel? noticeRescheduling = null)
         {
             try
             {
@@ -92,10 +93,28 @@ namespace BE_Healthcare.Services
                     
                 }
 
+                if (noticeRescheduling != null)
+                {
+                    notificationData = new Dictionary<string, object>
+                    {
+                        { "title",  noticeRescheduling.Title },
+                        { "body",  noticeRescheduling.Body},
+                        { "isRead", noticeRescheduling.IsRead},
+                        { "createAt", noticeRescheduling.CreatedAt.ToString()},
+                        { "idAppointment", noticeRescheduling.IdAppointment },
+                        { "notificationType", noticeRescheduling.NotificationType },
+                        { "idUser",  noticeRescheduling.IdUser.ToString() },
+                        { "dayOfExamination",  noticeRescheduling.Date.ToString() },
+                        { "startTime",  noticeRescheduling.StartTime.ToString() },
+                        { "endTime",  noticeRescheduling.EndTime.ToString() },
 
 
-                //DocumentReference docRef = collectionRef.Document();
-                //await docRef.SetAsync(notificationData);
+                        { "timestamp", Timestamp.GetCurrentTimestamp()},
+                    };
+                    CollectionReference collectionRef = _db.Collection(collectionId);
+                    await collectionRef.AddAsync(notificationData);
+                }
+
             }
             catch (Exception ex)
             {
