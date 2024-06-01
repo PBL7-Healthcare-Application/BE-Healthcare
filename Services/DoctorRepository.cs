@@ -183,7 +183,8 @@ namespace BE_Healthcare.Services
                     YearExperience = d.YearExperience,
                     RateAverage = d.RateAverage,
                     NumberOfComment = d.NumberOfComment,
-                    Avatar = d.User.Avatar
+                    Avatar = d.User.Avatar,
+                    NameClinic = d.NameClinic
                 });
 
                 return new ApiResponseWithPaging

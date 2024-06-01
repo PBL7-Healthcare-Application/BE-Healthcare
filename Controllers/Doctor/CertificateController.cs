@@ -40,7 +40,7 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpPost("AddListCertificate")]
-        public IActionResult AddListCertificate(List<AddCertificateModel> model)
+        public async Task<IActionResult> AddListCertificate(List<AddCertificateModel> model)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace BE_Healthcare.Controllers.Doctor
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_certificateRepository.AddListCertificate(Guid.Parse(checkIdDoctor), model));
+                return Ok(await _certificateRepository.AddListCertificate(Guid.Parse(checkIdDoctor), model));
 
             }
             catch (Exception ex)

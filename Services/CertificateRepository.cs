@@ -12,11 +12,13 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly INotificationRepository _notificationRepository;
+        private readonly IAuthRepository _authRepository;
 
-        public CertificateRepository(MyDbContext context, INotificationRepository notificationRepository)
+        public CertificateRepository(MyDbContext context, INotificationRepository notificationRepository, IAuthRepository  authRepository)
         {
             _context = context;
             _notificationRepository = notificationRepository;
+            _authRepository = authRepository;
         }
         private IQueryable<Certificate>? GetCertificate(Guid id)
         {
@@ -51,7 +53,7 @@ namespace BE_Healthcare.Services
                 Message = AppString.MESSAGE_ADDCERTIFICATE_SUCCESS,
             };
         }
-        public ApiResponse AddListCertificate(Guid idDoctor, List<AddCertificateModel> certificates)
+        public async Task<ApiResponse> AddListCertificate(Guid idDoctor, List<AddCertificateModel> certificates)
         {
             foreach (var certificate in certificates)
             {
@@ -59,6 +61,10 @@ namespace BE_Healthcare.Services
             }
             Save();
             UpdateIsVerifiedInfoCertificate(idDoctor, false);
+            
+            var doctor = _context.Doctors.Include(p => p.User).FirstOrDefault(q =>q.IdDoctor == idDoctor);
+            await _notificationRepository.CreateNotificationDoctorAddNewInfo(idDoctor, doctor.User.Name);
+
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,

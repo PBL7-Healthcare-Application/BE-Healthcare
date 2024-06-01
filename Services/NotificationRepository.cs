@@ -183,5 +183,10 @@ namespace BE_Healthcare.Services
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
+        public Task CreateNotificationDoctorAddNewInfo(Guid idDoctor, string nameDoctor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -29,6 +29,10 @@
 
         public static int TYPEPARTNER_PARTNER_REGISTRATIONFORM = 1;
         public static int TYPEPARTNER_DOCTOR_INFORMATION_PENDING_APPROVAL = 2;
-
+        
+        public static int TYPEMAILHTML_FOR_BOOKING_SUCCESSFULLY = 1;
+        public static int TYPEMAILHTML_FOR_CANCELLING_APPOINTMENT = 2;
+        public static int TYPEMAILHTML_FOR_APPROVED_APPLICATION = 3;
+        
     }
 }
