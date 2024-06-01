@@ -11,10 +11,12 @@ namespace BE_Healthcare.Services
     public class CertificateRepository : ICertificateRepository
     {
         private readonly MyDbContext _context;
+        private readonly INotificationRepository _notificationRepository;
 
-        public CertificateRepository(MyDbContext context)
+        public CertificateRepository(MyDbContext context, INotificationRepository notificationRepository)
         {
             _context = context;
+            _notificationRepository = notificationRepository;
         }
         private IQueryable<Certificate>? GetCertificate(Guid id)
         {

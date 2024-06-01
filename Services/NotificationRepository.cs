@@ -3,6 +3,7 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models.Notification;
 using BE_Healthcare.Models;
+using BE_Healthcare.Models.Partner;
 
 namespace BE_Healthcare.Services
 {
@@ -97,6 +98,84 @@ namespace BE_Healthcare.Services
 
                 // Save the notification to Firestore
                 await _firestoreService.AddDocumentAsync("notifications", null, null, notice);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task CreateNotificationForRegisteringDoctor(Guid idAdmin, Guid idDoctor, string nameDoctor)
+        {
+            try
+            {
+                // Notification for creating new appointment
+                // Send notification to doctor
+                var notice = new NotificationRegisteringDoctorModel
+                {
+                    Title = AppString.TITLE_NEW_REGISTRATION_APPLICATION,
+                    Body = AppString.BODY_NEW_REGISTRATION_APPLICATION,
+                    CreatedAt = DateTime.Now,
+                    IdAdmin = idAdmin,
+                    IdDoctor = idDoctor,
+                    NameDoctor = nameDoctor,
+
+                    NotificationType = AppNumber.NOTIFICATIONTYPE_APPLYINGDOCTOR,
+
+                };
+
+                // Save the notification to Firestore
+                await _firestoreService.AddDocumentAsync("notifications", null, null, null, notice);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task CreateNotificationForVerifyingDoctor(int StatusVerified, Guid idDoctor, bool VerifyAdditionalInformation = false)
+        {
+            try
+            {
+                string title;
+                string body;
+                // Notification for confirming approval of the application
+                // Send notification to doctor
+                if (VerifyAdditionalInformation)
+                {
+                    title = AppString.TITLE_APPROVED_INFORMATION;
+                    body = AppString.BODY_APPROVED_INFORMATION;
+                }
+                else
+                {
+                    if (StatusVerified == AppNumber.APPROVED)
+                    {
+                        title = AppString.TITLE_REGISTRATION_APPLICATION_APPROVED;
+                        body = AppString.BODY_REGISTRATION_APPLICATION_APPROVED;
+                    }
+                    else
+                    {
+                        title = AppString.TITLE_REGISTRATION_APPLICATION_REJECTED;
+                        body = AppString.BODY_REGISTRATION_APPLICATION_REJECTED;
+                    }
+                }
+
+
+                var notice = new NotificationVerifyingDoctorModel
+                {
+                    Title = title,
+                    Body = body,
+                    CreatedAt = DateTime.Now,
+                    IdDoctor = idDoctor,
+
+                    NotificationType = AppNumber.NOTIFICATIONTYPE_APPLYINGDOCTOR,
+
+                };
+
+                // Save the notification to Firestore
+                await _firestoreService.AddDocumentAsync("notifications", null, null, null, null, notice);
             }
             catch (Exception ex)
             {

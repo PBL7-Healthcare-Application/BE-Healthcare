@@ -51,11 +51,11 @@ namespace BE_Healthcare.Controllers.Admin
         }
 
         [HttpPost("VerifyInfoPartner")]
-        public IActionResult VerifyInfoPartner(VerifyPartnerModel model)
+        public async Task<IActionResult> VerifyInfoPartner(VerifyPartnerModel model)
         {
             try
             {
-                return Ok(_partnerRepository.VerifyInfoPartner(model));
+                return Ok( await _partnerRepository.VerifyInfoPartner(model));
             }
             catch
             {
@@ -64,11 +64,11 @@ namespace BE_Healthcare.Controllers.Admin
         }
 
         [HttpPost("VerifyCertificate")]
-        public IActionResult VerifyCertificate(VerifyCertificateModel model)
+        public async Task<IActionResult> VerifyCertificate(VerifyCertificateModel model)
         {
             try
             {
-                return Ok(_partnerRepository.VerifyCertificate(model));
+                return Ok(await _partnerRepository.VerifyCertificate(model));
             }
             catch
             {
@@ -76,11 +76,11 @@ namespace BE_Healthcare.Controllers.Admin
             }
         }
         [HttpPost("VerifyWorkingProcess")]
-        public IActionResult VerifyWorkingProcess(VerifyWorkingProcessModel model)
+        public async Task<IActionResult> VerifyWorkingProcess(VerifyWorkingProcessModel model)
         {
             try
             {
-                return Ok(_partnerRepository.VerifyWorkingProcess(model));
+                return Ok(await _partnerRepository.VerifyWorkingProcess(model));
             }
             catch
             {
@@ -88,11 +88,11 @@ namespace BE_Healthcare.Controllers.Admin
             }
         }
         [HttpPost("VerifyTrainingProcess")]
-        public IActionResult VerifyTrainingProcess(VerifyTrainingProcessModel model)
+        public async Task<IActionResult> VerifyTrainingProcess(VerifyTrainingProcessModel model)
         {
             try
             {
-                return Ok(_partnerRepository.VerifyTrainingProcess(model));
+                return Ok(await _partnerRepository.VerifyTrainingProcess(model));
             }
             catch
             {

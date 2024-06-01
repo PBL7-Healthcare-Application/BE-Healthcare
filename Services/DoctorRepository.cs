@@ -183,6 +183,7 @@ namespace BE_Healthcare.Services
                     YearExperience = d.YearExperience,
                     RateAverage = d.RateAverage,
                     NumberOfComment = d.NumberOfComment,
+                    Avatar = d.User.Avatar
                 });
 
                 return new ApiResponseWithPaging
@@ -288,6 +289,8 @@ namespace BE_Healthcare.Services
                 IsVerifiedInfoTrainingProcess = Doctor.IsVerifiedInfoTrainingProcess,
                 NumberOfComment = Doctor.NumberOfComment,
                 RateAverage = Doctor.RateAverage,
+                BusinessLicense = Doctor.BusinessLicense,
+                StatusVerified = Doctor.StatusVerified
             };
 
             if (list != null)

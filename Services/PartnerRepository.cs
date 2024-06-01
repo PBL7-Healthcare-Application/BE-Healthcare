@@ -14,22 +14,23 @@ namespace BE_Healthcare.Services
         private readonly IWorkingProcessRepository _workingProcessRepository;
         private readonly ITrainingProcessRepository _trainingProcessRepository;
         private readonly IDoctorRepository _doctorRepository;
-
+        private readonly INotificationRepository _notificationRepository;
+        private readonly IAuthRepository _authRepository;
 
         public PartnerRepository(MyDbContext context, ICertificateRepository certificateRepository, 
             IWorkingProcessRepository workingProcessRepository, ITrainingProcessRepository trainingProcessRepository,
-            IDoctorRepository doctorRepository)
+            IDoctorRepository doctorRepository, INotificationRepository notificationRepository, IAuthRepository authRepository)
         {
             _context = context;
             _certificateRepository = certificateRepository;
             _workingProcessRepository = workingProcessRepository;
             _trainingProcessRepository = trainingProcessRepository;
             _doctorRepository = doctorRepository;
-
-
+            _notificationRepository = notificationRepository;
+            _authRepository = authRepository;
         }
 
-        public ApiResponse RegisterAsDoctor(Guid idUser, RegistrationFormDoctorModel model)
+        public async Task<ApiResponse> RegisterAsDoctor(Guid idUser, RegistrationFormDoctorModel model)
         {
             try
             {
@@ -72,6 +73,11 @@ namespace BE_Healthcare.Services
                 _context.Doctors.Update(newDoctor);
                 _context.SaveChanges();
 
+                //Create Notification for creating new appointment
+                //await CreateNotification(model);
+                var idAdmin = _authRepository.GetIdAdmin();
+                if(idAdmin != null)
+                    await _notificationRepository.CreateNotificationForRegisteringDoctor((Guid)idAdmin, newDoctor.IdDoctor, newDoctor.User.Name );
 
                 return new ApiResponse
                 {
@@ -233,7 +239,7 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public ApiResponse VerifyInfoPartner(VerifyPartnerModel model)
+        public async Task<ApiResponse> VerifyInfoPartner(VerifyPartnerModel model)
         {
             try
             {
@@ -248,10 +254,17 @@ namespace BE_Healthcare.Services
                 }
 
                 partner.StatusVerified = model.StatusVerified;
-                partner.User.idRole = AppNumber.ROLE_DOCTOR;
                 partner.IsVerifiedAt = DateTime.Now;
+                if (partner.StatusVerified == AppNumber.APPROVED)
+                {
+                    partner.User.idRole = AppNumber.ROLE_DOCTOR;
+
+                }
                 _context.Doctors.Update(partner);
                 _context.SaveChanges();
+                
+                //Create Notification
+                await _notificationRepository.CreateNotificationForVerifyingDoctor((int)model.StatusVerified, model.IdDoctor);
 
                 return new ApiResponse
                 {
@@ -271,14 +284,15 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public ApiResponse VerifyCertificate(VerifyCertificateModel model)
+        public async Task<ApiResponse> VerifyCertificate(VerifyCertificateModel model)
         {
             try
             {
                 _certificateRepository.VerifyCertificate(model);
+                await _notificationRepository.CreateNotificationForVerifyingDoctor(0, model.IdDoctor, true);
 
                 //Check if there are any cetificate that have not been verified
-                 _doctorRepository.UpdateFieldIsVerifiedInfoCertificate(model.IdDoctor);
+                _doctorRepository.UpdateFieldIsVerifiedInfoCertificate(model.IdDoctor);
 
                 return new ApiResponse
                 {
@@ -296,11 +310,13 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-        public ApiResponse VerifyWorkingProcess(VerifyWorkingProcessModel model)
+        public async Task<ApiResponse> VerifyWorkingProcess(VerifyWorkingProcessModel model)
         {
             try
             {
                 _workingProcessRepository.VerifyWorkingProcess(model);
+                await _notificationRepository.CreateNotificationForVerifyingDoctor(0, model.IdDoctor, true);
+
 
                 //Check if there are any workingprocesses that have not been verified
                 _doctorRepository.UpdateFieldIsVerifiedInfoWorkingProcess(model.IdDoctor);
@@ -322,11 +338,12 @@ namespace BE_Healthcare.Services
                 };
             }
         }
-        public ApiResponse VerifyTrainingProcess(VerifyTrainingProcessModel model)
+        public async Task<ApiResponse> VerifyTrainingProcess(VerifyTrainingProcessModel model)
         {
             try
             {
                 _trainingProcessRepository.VerifyTrainingProcess(model);
+                await _notificationRepository.CreateNotificationForVerifyingDoctor(0, model.IdDoctor, true);
 
                 //Check if there are any working processes that have not been verified
                 _doctorRepository.UpdateFieldIsVerifiedInfoTrainingProcess(model.IdDoctor);

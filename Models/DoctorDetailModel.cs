@@ -21,6 +21,8 @@ namespace BE_Healthcare.Models
         public bool? IsVerifiedInfoWorkingProcess { get; set; } = null!;
         public bool? IsVerifiedInfoTrainingProcess { get; set; } = null!;
         public List<SlotAppointmentModel>? SlotAppointments { get; set; } = null!;
+        public string? BusinessLicense { get; set; } = null!;
+        public int? StatusVerified { get; set; } 
 
     }
 }

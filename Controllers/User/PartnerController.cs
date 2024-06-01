@@ -20,7 +20,7 @@ namespace BE_Healthcare.Controllers.User
 
         [HttpPost("StartDoctoring")]
         [Authorize(Roles = "User")]
-        public IActionResult StartDoctoring(RegistrationFormDoctorModel model)
+        public async Task<IActionResult> StartDoctoring(RegistrationFormDoctorModel model)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace BE_Healthcare.Controllers.User
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
 
-                return Ok(_partnerRepository.RegisterAsDoctor(Guid.Parse(checkIdUser), model));
+                return Ok( await _partnerRepository.RegisterAsDoctor(Guid.Parse(checkIdUser), model));
             }
             catch
             {

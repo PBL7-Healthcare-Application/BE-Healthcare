@@ -18,8 +18,12 @@ namespace BE_Healthcare.Services
         }
 
         //public async Task AddDocumentAsync(string collectionId, string name, AppointmentModel model)
-        public async Task AddDocumentAsync(string collectionId, NotificationForDoctorModel? notification = null, 
-            NotificationCancelAppointmentModel? notifCancel = null, NotificationReschedulingForUserModel? noticeRescheduling = null)
+        public async Task AddDocumentAsync(string collectionId, 
+            NotificationForDoctorModel? notification = null, 
+            NotificationCancelAppointmentModel? notifCancel = null, 
+            NotificationReschedulingForUserModel? noticeRescheduling = null,
+            NotificationRegisteringDoctorModel? noticeRegisteringDoctor = null,
+            NotificationVerifyingDoctorModel? notificationVerifyingDoctorModel= null)
         {
             try
             {
@@ -109,6 +113,40 @@ namespace BE_Healthcare.Services
                         { "endTime",  noticeRescheduling.EndTime.ToString() },
 
 
+                        { "timestamp", Timestamp.GetCurrentTimestamp()},
+                    };
+                    CollectionReference collectionRef = _db.Collection(collectionId);
+                    await collectionRef.AddAsync(notificationData);
+                }
+
+                if (noticeRegisteringDoctor != null)
+                {
+                    notificationData = new Dictionary<string, object>
+                    {
+                        { "title",  noticeRegisteringDoctor.Title },
+                        { "body",  noticeRegisteringDoctor.Body},
+                        { "isRead", noticeRegisteringDoctor.IsRead},
+                        { "createAt", noticeRegisteringDoctor.CreatedAt.ToString()},
+                        { "notificationType", noticeRegisteringDoctor.NotificationType },
+                        { "idDoctor",  noticeRegisteringDoctor.IdDoctor.ToString() },
+                        { "NameDoctor",  noticeRegisteringDoctor.NameDoctor.ToString() },
+                        { "idAdmin",  noticeRegisteringDoctor.IdAdmin.ToString() },
+                        { "timestamp", Timestamp.GetCurrentTimestamp()},
+                    };
+                    CollectionReference collectionRef = _db.Collection(collectionId);
+                    await collectionRef.AddAsync(notificationData);
+                }
+
+                if (notificationVerifyingDoctorModel != null)
+                {
+                    notificationData = new Dictionary<string, object>
+                    {
+                        { "title",  notificationVerifyingDoctorModel.Title },
+                        { "body",  notificationVerifyingDoctorModel.Body},
+                        { "isRead", notificationVerifyingDoctorModel.IsRead},
+                        { "createAt", notificationVerifyingDoctorModel.CreatedAt.ToString()},
+                        { "notificationType", notificationVerifyingDoctorModel.NotificationType },
+                        { "idDoctor",  notificationVerifyingDoctorModel.IdDoctor.ToString() },
                         { "timestamp", Timestamp.GetCurrentTimestamp()},
                     };
                     CollectionReference collectionRef = _db.Collection(collectionId);
