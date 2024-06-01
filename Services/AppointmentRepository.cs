@@ -3,14 +3,17 @@ using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
 using BE_Healthcare.Models.Authentication.SignUp;
+using BE_Healthcare.Models.EmailModel;
 using BE_Healthcare.Models.Notification;
 using FirebaseAdmin;
 using FirebaseAdmin.Messaging;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
 using System;
 using System.Data;
+using System.Net.Mail;
 using System.Numerics;
 
 namespace BE_Healthcare.Services
@@ -22,12 +25,14 @@ namespace BE_Healthcare.Services
         private readonly IAuthRepository _authRepository;
         private readonly INotificationRepository _notificationRepository;
         private readonly IMedicalSpecialtyRepository _medicalSpecialtyRepository;
+        private readonly IEmailService _emailService;
 
         private readonly FirestoreService _firestoreService;
 
         public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository, 
             IAuthRepository authRepository, INotificationRepository notificationRepository, 
-            FirestoreService firestoreService, IMedicalSpecialtyRepository medicalSpecialtyRepository)
+            FirestoreService firestoreService, IMedicalSpecialtyRepository medicalSpecialtyRepository,
+            IEmailService emailService)
         {
             _context = context;
             _doctorRepository = doctorRepository;
@@ -35,6 +40,7 @@ namespace BE_Healthcare.Services
             _notificationRepository = notificationRepository;
             _firestoreService = firestoreService;
             _medicalSpecialtyRepository = medicalSpecialtyRepository;
+            _emailService = emailService;
         }
         public void UpdateAppointment(Appointment appointment)
         {
@@ -247,8 +253,12 @@ namespace BE_Healthcare.Services
                 NameClinic = doctor.NameClinic,
                 NameMedicalSpecialty = doctor.MedicalSpecialty.Name,
                 IdAppointment = model.IdAppointment,
+                EmailDoctor = doctor.User.Email
 
             };
+
+            SendEmail("Your Appointment Confirmation", res);
+
 
             return new ApiResponse
             {
@@ -256,6 +266,29 @@ namespace BE_Healthcare.Services
                 Message = AppString.MESSAGE_SCHEDULED_SUCCESSFUL,
                 Data = res
             };
+        }
+
+        private void SendEmail(string subject, ScheduleAppointmentSuccessfulModel model)
+        {
+            var message = new MessageHTMLForBookingSuccessfullyModel(
+                subject,
+                new string[] { model.EmailUser! }, 
+                model.NameUser,
+                model.IdAppointment,
+                model.StartTime,
+                model.EndTime,
+                model.Date.Date,
+                model.Address,
+                model.NameDoctor,
+                (double)model.Price,
+                model.Issue,
+                model.EmailUser,
+                model.EmailDoctor,
+                model.NameClinic
+                
+                );
+
+            _emailService.SendEmailHTML(AppNumber.TYPEMAILHTML_FOR_BOOKING_SUCCESSFULLY, message);
         }
 
         public int AddAppointment(Guid idUser, AppointmentModel model)
@@ -403,10 +436,13 @@ namespace BE_Healthcare.Services
                 appointment.Status = 2;
 
                 _context.Update(appointment);
-                _context.SaveChanges();
+                //_context.SaveChanges();
 
                 //Create Notification for cancellingappointment
-                await _notificationRepository.CreateNotificationForCancellingAppointment(model, appointment, idReceiver);
+                //await _notificationRepository.CreateNotificationForCancellingAppointment(model, appointment, idReceiver);
+
+                SendEmailCancelling("Cancellation of Appointment", appointment);
+
 
                 return new ApiResponse
                 {
@@ -424,7 +460,26 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+        private void SendEmailCancelling(string subject, Appointment appointment)
+        {
+            var message = new MessageHTMLForCancellingAppointmentModel(
+                subject,
+                new string[] { appointment.User.Email! },
+                appointment.User.Name,
+                appointment.IdAppointment,
+                appointment.StartTime,
+                appointment.EndTime,
+                appointment.Date.Date,
+                appointment.Doctor.User.Address,
+                appointment.Doctor.User.Name,
+                appointment.Reason,
+                appointment.User.Email,
+                appointment.Doctor.NameClinic
 
+                );
+
+            _emailService.SendEmailHTML(AppNumber.TYPEMAILHTML_FOR_CANCELLING_APPOINTMENT, null, message);
+        }
         public ApiResponse GetAppointmentByIdDoctor(Guid idDoctor, AppointmentSearchCriteriaModel criteria) // Default APPOINTMENT_CONFIRMED
         {
             try
@@ -794,6 +849,7 @@ namespace BE_Healthcare.Services
                     NameClinic = a.Doctor.NameClinic,
                     NameMedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
                     IdAppointment = a.IdAppointment,
+                    Status = a.Status,
 
                 }).ToList();
                 #endregion

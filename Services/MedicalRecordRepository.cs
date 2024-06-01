@@ -102,6 +102,7 @@ namespace BE_Healthcare.Services
                         Date = a.Date,
                         Name = a.Doctor.User.Name,
                         MedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
+                        AvatarDoctor = a.Doctor.User.Avatar
                     });
                     return new ApiResponse
                     {

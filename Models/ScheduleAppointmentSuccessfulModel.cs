@@ -4,6 +4,7 @@
     {
         public string NameDoctor { get; set; } = null!;
         public string? AvatarDoctor { get; set; } = null!;
+        public string? EmailDoctor { get; set; } = null!;
 
         public Guid IdUser { get; set; }
         public string NameUser { get; set; } = null!;

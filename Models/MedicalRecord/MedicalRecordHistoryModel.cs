@@ -5,5 +5,6 @@
         public string Name { get; set; } = null!;
 
         public string MedicalSpecialty { get; set; } = null!;
+        public string? AvatarDoctor { get; set; } = null!;
     }
 }

@@ -18,6 +18,7 @@ namespace BE_Healthcare.Models
         public double? RateAverage { get; set; }
         public int NumberOfComment { get; set; }
 
+        public string? NameClinic { get; set; } = null!;
 
     }
 }

@@ -11,6 +11,7 @@ namespace BE_Healthcare.Services
         Task CreateNotificationForReExaminationAppointment(ReExaminationAppointmentModel model);
         Task CreateNotificationForRegisteringDoctor(Guid idAdmin, Guid idDoctor, string nameDoctor);
         Task CreateNotificationForVerifyingDoctor(int StatusVerified, Guid idDoctor, bool VerifyAdditionalInformation = false);
+        Task CreateNotificationDoctorAddNewInfo(Guid idDoctor, string nameDoctor);
 
 
     }

@@ -2,6 +2,7 @@
 using BE_Healthcare.Data;
 using BE_Healthcare.Data.Entities;
 using BE_Healthcare.Models;
+using BE_Healthcare.Models.EmailModel;
 using BE_Healthcare.Models.Partner;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,10 +17,11 @@ namespace BE_Healthcare.Services
         private readonly IDoctorRepository _doctorRepository;
         private readonly INotificationRepository _notificationRepository;
         private readonly IAuthRepository _authRepository;
+        private readonly IEmailService _emailService;
 
         public PartnerRepository(MyDbContext context, ICertificateRepository certificateRepository, 
             IWorkingProcessRepository workingProcessRepository, ITrainingProcessRepository trainingProcessRepository,
-            IDoctorRepository doctorRepository, INotificationRepository notificationRepository, IAuthRepository authRepository)
+            IDoctorRepository doctorRepository, INotificationRepository notificationRepository, IAuthRepository authRepository, IEmailService emailService)
         {
             _context = context;
             _certificateRepository = certificateRepository;
@@ -28,6 +30,7 @@ namespace BE_Healthcare.Services
             _doctorRepository = doctorRepository;
             _notificationRepository = notificationRepository;
             _authRepository = authRepository;
+            _emailService = emailService;
         }
 
         public async Task<ApiResponse> RegisterAsDoctor(Guid idUser, RegistrationFormDoctorModel model)
@@ -238,7 +241,17 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+        private void SendEmailApprovedApplication(string subject, Doctor doctor)
+        {
+            var message = new MessageHTMLForApprovedApplicationModel(
+                subject,
+                new string[] { doctor.User.Email! },
+                doctor.User.Name,
+                doctor.User.Email
+                );
 
+            _emailService.SendEmailHTML(AppNumber.TYPEMAILHTML_FOR_APPROVED_APPLICATION, null, null, message);
+        }
         public async Task<ApiResponse> VerifyInfoPartner(VerifyPartnerModel model)
         {
             try
@@ -258,6 +271,8 @@ namespace BE_Healthcare.Services
                 if (partner.StatusVerified == AppNumber.APPROVED)
                 {
                     partner.User.idRole = AppNumber.ROLE_DOCTOR;
+
+                    SendEmailApprovedApplication("Approved Application", partner);
 
                 }
                 _context.Doctors.Update(partner);
