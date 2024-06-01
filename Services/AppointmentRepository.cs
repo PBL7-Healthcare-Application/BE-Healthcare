@@ -21,18 +21,20 @@ namespace BE_Healthcare.Services
         private readonly IDoctorRepository _doctorRepository;
         private readonly IAuthRepository _authRepository;
         private readonly INotificationRepository _notificationRepository;
+        private readonly IMedicalSpecialtyRepository _medicalSpecialtyRepository;
 
         private readonly FirestoreService _firestoreService;
 
         public AppointmentRepository(MyDbContext context, IDoctorRepository doctorRepository, 
             IAuthRepository authRepository, INotificationRepository notificationRepository, 
-            FirestoreService firestoreService)
+            FirestoreService firestoreService, IMedicalSpecialtyRepository medicalSpecialtyRepository)
         {
             _context = context;
             _doctorRepository = doctorRepository;
             _authRepository = authRepository;
             _notificationRepository = notificationRepository;
             _firestoreService = firestoreService;
+            _medicalSpecialtyRepository = medicalSpecialtyRepository;
         }
         public void UpdateAppointment(Appointment appointment)
         {
@@ -315,7 +317,7 @@ namespace BE_Healthcare.Services
                         IdDoctor = (Guid)a.IdDoctor,
                         NameDoctor = a.Doctor.User.Name,
                         MedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
-                        AvatarDoctor = a.User.Avatar,
+                        AvatarDoctor = a.Doctor.User.Avatar,
                         IdAppointment = a.IdAppointment,
                         StartTime = a.StartTime,
                         EndTime = a.EndTime,
@@ -597,7 +599,6 @@ namespace BE_Healthcare.Services
             try
             {
                 var appointment = GetAppointmentByIdAppointment(id);
-
                 if (appointment == null)
                 {
                     return new ApiResponse
@@ -606,6 +607,8 @@ namespace BE_Healthcare.Services
                         Message = AppString.MESSAGE_NOTFOUND_APPOINTMENT,
                     };
                 }
+                var medicalSpecialtyName = _medicalSpecialtyRepository.GetMedicalSpecialtyByIdSpecialty(appointment.Doctor.IdSpecialty);
+
                 var res = new AppointmentDetailOfDoctorModel
                 {
                     IdUser = appointment.User.IdUser,
@@ -625,7 +628,8 @@ namespace BE_Healthcare.Services
                     Price = appointment.Price,
 
                     NameDoctor = appointment.Doctor.User.Name,
-                    AvatarDoctor = appointment.Doctor.User.Avatar
+                    AvatarDoctor = appointment.Doctor.User.Avatar,
+                    MedicalSpecialty = medicalSpecialtyName
                 };
 
                 return new ApiResponse
@@ -728,15 +732,19 @@ namespace BE_Healthcare.Services
         {
             return _context.Appointments.Include(e => e.User).Include(d => d.Doctor).AsQueryable();
         }
-        private IQueryable<Appointment> FilteringListAppointment(IQueryable<Appointment> list, int? Status = null, DateTime? date = null)
+        private IQueryable<Appointment> FilteringListAppointment(IQueryable<Appointment> list, int? Status = null, DateTime? date = null, string? search = null)
         {
-            if (Status != null)
+            if (Status != null && Status > 0 && Status <= 3)
             {
                 list = list.Where(d => d.Status == Status);
             }
             if (date != null)
             {
                 list = list.Where(d => d.Date == date);
+            }
+            if (search != null)
+            {
+                list = list.Where(p => p.User.Name.Contains(search) || p.Doctor.User.Name.Contains(search));
             }
             return list;
         }
@@ -755,7 +763,7 @@ namespace BE_Healthcare.Services
                 var listAppointment = GetAll();
 
                 #region Filtering
-                listAppointment = FilteringListAppointment(listAppointment, criteria.Status, criteria.Date);
+                listAppointment = FilteringListAppointment(listAppointment, criteria.Status, criteria.Date, criteria.search);
                 #endregion
 
                 #region Sorting
@@ -765,7 +773,29 @@ namespace BE_Healthcare.Services
                 int TotalItems = listAppointment.Count();
 
                 #region Paging
-                var res = listAppointment.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE).ToList();
+                listAppointment = listAppointment.Skip((criteria.page - 1) * AppNumber.PAGE_SIZE).Take(AppNumber.PAGE_SIZE);
+
+                var res = listAppointment.Select(a => new ScheduleAppointmentSuccessfulModel
+                {
+                    IdDoctor = a.IdDoctor,
+                    NameDoctor = a.Doctor.User.Name,
+                    Address = a.Doctor.User.Address,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    Date = a.Date,
+                    Issue = a.Issue,
+                    Type = a.Type,
+                    Price = a.Doctor.Price,
+                    AvatarDoctor = a.Doctor.User.Avatar,
+                    IdUser = (Guid)a.IdUser,
+                    NameUser = a.User.Name,
+                    AvatarUser = a.User.Avatar,
+                    EmailUser = a.User.Email,
+                    NameClinic = a.Doctor.NameClinic,
+                    NameMedicalSpecialty = a.Doctor.MedicalSpecialty.Name,
+                    IdAppointment = a.IdAppointment,
+
+                }).ToList();
                 #endregion
 
                 return new ApiResponseWithPaging

@@ -30,5 +30,6 @@ namespace BE_Healthcare.Services
 
         void RemoveRefreshToken(Guid id);
 
+        Guid? GetIdAdmin();
     }
 }

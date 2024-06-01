@@ -53,5 +53,16 @@ namespace BE_Healthcare.Services
                 };
             }
         }
+
+        public string? GetMedicalSpecialtyByIdSpecialty(int? id) 
+        {
+            if(id == null) return null;
+            var medicalSpecialtyName =  _context.MedicalSpecialties.AsQueryable().FirstOrDefault( p => p.IdSpecialty == id);
+            if(medicalSpecialtyName == null)
+            {
+                return null;
+            }
+            return medicalSpecialtyName.Name;
+        }
     }
 }

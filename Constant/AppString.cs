@@ -132,5 +132,16 @@
 
         public static string MESSAGE_ERROR_GETDETAIL_ADMIN = "Can't get infomation of admin!";
 
+        public static string TITLE_NEW_REGISTRATION_APPLICATION = "New Registration Application";
+        public static string BODY_NEW_REGISTRATION_APPLICATION = "There is a new registration application.";
+
+        public static string TITLE_REGISTRATION_APPLICATION_APPROVED = "Approval of Application";
+        public static string BODY_REGISTRATION_APPLICATION_APPROVED = "Admin has approved your profile.";
+
+        public static string TITLE_REGISTRATION_APPLICATION_REJECTED = "Approval of Application";
+        public static string BODY_REGISTRATION_APPLICATION_REJECTED = "Admin has rejected your profile. Please check your information again!";
+
+        public static string TITLE_APPROVED_INFORMATION = "Approval of Information";
+        public static string BODY_APPROVED_INFORMATION = "Admin has has approved your information.";
     }
 }

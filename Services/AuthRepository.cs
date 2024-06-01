@@ -729,5 +729,14 @@ namespace BE_Healthcare.Services
                 _context.SaveChanges();
             }
         }
+
+        public Guid? GetIdAdmin()
+        {
+            var admin = _context.Users.Include(p => p.Role).SingleOrDefault(x => x.idRole == AppNumber.ROLE_ADMIN);
+            if (admin == null)
+                return null;
+            return admin.IdUser;
+
+        }
     }
 }
