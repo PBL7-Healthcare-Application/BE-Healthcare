@@ -19,7 +19,7 @@ namespace BE_Healthcare.Controllers.User
 
         [HttpPost("CreateRating")]
         [Authorize(Roles = "User")]
-        public IActionResult CreateRating(CreateRatingModel model)
+        public async Task<IActionResult> CreateRating(CreateRatingModel model)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace BE_Healthcare.Controllers.User
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
 
-                return Ok( _ratingRepository.CreateRating(Guid.Parse(checkIdUser), model));
+                return Ok(await  _ratingRepository.CreateRating(Guid.Parse(checkIdUser), model));
             }
             catch
             {

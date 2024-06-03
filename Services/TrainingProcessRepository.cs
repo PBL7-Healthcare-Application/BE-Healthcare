@@ -13,10 +13,12 @@ namespace BE_Healthcare.Services
     public class TrainingProcessRepository : ITrainingProcessRepository
     {
         private readonly MyDbContext _context;
+        private readonly INotificationRepository _notificationRepository;
 
-        public TrainingProcessRepository(MyDbContext context)
+        public TrainingProcessRepository(MyDbContext context, INotificationRepository notificationRepository)
         {
             _context = context;
+            _notificationRepository = notificationRepository;
         }
         private IQueryable<TrainingProcess>? GetTrainingProcess(Guid id)
         {
@@ -41,7 +43,7 @@ namespace BE_Healthcare.Services
         {
             _context.SaveChanges();
         }
-        public ApiResponse AddListTrainingProcess(Guid idDoctor, List<AddTrainingProcessModel> trainingProcesses)
+        public async Task<ApiResponse> AddListTrainingProcess(Guid idDoctor, List<AddTrainingProcessModel> trainingProcesses)
         {
             foreach (var trainingProcess in trainingProcesses)
             {
@@ -49,6 +51,13 @@ namespace BE_Healthcare.Services
             }
             Save();
             UpdateIsVerifiedInfoTrainingProcess(idDoctor, false);
+
+            var doctor = _context.Doctors.Include(p => p.User).FirstOrDefault(q => q.IdDoctor == idDoctor);
+
+            var admin = _context.Users.Include(p => p.Role).FirstOrDefault(x => x.idRole == AppNumber.ROLE_ADMIN);
+            if (admin != null && doctor != null)
+                await _notificationRepository.CreateNotificationDoctorAddNewInfo(admin.IdUser, idDoctor, doctor.User.Name);
+
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -159,7 +168,7 @@ namespace BE_Healthcare.Services
                 _context.SaveChanges();
             }
         }
-        public ApiResponse UpdateTrainingProcess(Guid idDoctor, UpdateTrainingProcessModel model)
+        public async Task<ApiResponse> UpdateTrainingProcess(Guid idDoctor, UpdateTrainingProcessModel model)
         {
             try
             {
@@ -175,6 +184,12 @@ namespace BE_Healthcare.Services
 
                 UpdateTrainingProcess(trainingProcess, model);
                 UpdateIsVerifiedInfoTrainingProcess(idDoctor, false);
+
+                var doctor = _context.Doctors.Include(p => p.User).FirstOrDefault(q => q.IdDoctor == idDoctor);
+
+                var admin = _context.Users.Include(p => p.Role).FirstOrDefault(x => x.idRole == AppNumber.ROLE_ADMIN);
+                if (admin != null && doctor != null)
+                    await _notificationRepository.CreateNotificationDoctorAddNewInfo(admin.IdUser, idDoctor, doctor.User.Name);
 
                 return new ApiResponse
                 {

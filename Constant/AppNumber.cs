@@ -25,6 +25,7 @@
 
         public static int NOTIFICATIONTYPE_APPOINTMENT = 1;
         public static int NOTIFICATIONTYPE_APPLYINGDOCTOR = 2;
+        public static int NOTIFICATIONTYPE_RATING= 3;
 
 
         public static int TYPEPARTNER_PARTNER_REGISTRATIONFORM = 1;

@@ -4,5 +4,8 @@
     {
         public Guid IdDoctor { get; set; }
         public int IdAppointment { get; set; }
+        public string? NameUser { get; set; } = null!;
+
+
     }
 }

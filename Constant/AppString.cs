@@ -143,5 +143,11 @@
 
         public static string TITLE_APPROVED_INFORMATION = "Approval of Information";
         public static string BODY_APPROVED_INFORMATION = "Admin has has approved your information.";
+
+        public static string TITLE_NEW_RATING = "New Rating";
+        public static string BODY_NEW_RATING = "You have new rating from ";
+
+        public static string TITLE_NEW_INFO_NEED_VERIFIED = "New information needs to be verified";
+        public static string BODY_NEW_INFO_NEED_VERIFIED = "There is new information that needs to be verified.";
     }
 }

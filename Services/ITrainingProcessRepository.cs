@@ -7,7 +7,7 @@ namespace BE_Healthcare.Services
 {
     public interface ITrainingProcessRepository
     {
-        ApiResponse AddListTrainingProcess(Guid idDoctor, List<AddTrainingProcessModel> trainingProcesses);
+        Task<ApiResponse> AddListTrainingProcess(Guid idDoctor, List<AddTrainingProcessModel> trainingProcesses);
         void AddTrainingProcess(Guid idDoctor, AddTrainingProcessModel trainingProcess);
         void Save();
         ApiResponse AddOneTrainingProcess(Guid idDoctor, AddTrainingProcessModel trainingProcess);
@@ -15,7 +15,7 @@ namespace BE_Healthcare.Services
         int GetNumberOfTrainingProcessWaitingForApproval(Guid idDoctor);
         TrainingProcess? GetTrainingProcessOfDoctorByIdTrainingProcess(Guid idDoctor, int idTrainingProcess);
         void VerifyTrainingProcess(VerifyTrainingProcessModel model);
-        ApiResponse UpdateTrainingProcess(Guid idDoctor, UpdateTrainingProcessModel model);
+        Task<ApiResponse> UpdateTrainingProcess(Guid idDoctor, UpdateTrainingProcessModel model);
         ApiResponse DeleteTrainingProcess(Guid idDoctor, int idTrainingProcess);
     }
 }

@@ -9,6 +9,8 @@
         public string? PhoneNumber { get; set; } = null!;
 
         public string? Address { get; set; } = null!;
+        public string? Latitude { get; set; } = null!;
+        public string? Longtitude { get; set; } = null!;
 
         public string? Avatar { get; set; } = null!;
 
