@@ -20,7 +20,7 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpPost("AddListWorkingProcess")]
-        public IActionResult AddListWorkingProcess(List<AddWorkingProcessModel> model)
+        public async Task<IActionResult> AddListWorkingProcess(List<AddWorkingProcessModel> model)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace BE_Healthcare.Controllers.Doctor
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_workingProcessRepository.AddListWorkingProcess(Guid.Parse(checkIdDoctor), model));
+                return Ok(await _workingProcessRepository.AddListWorkingProcess(Guid.Parse(checkIdDoctor), model));
 
             }
             catch (Exception ex)
@@ -40,7 +40,7 @@ namespace BE_Healthcare.Controllers.Doctor
             }
         }
         [HttpPut("UpdateWorkingProcess")]
-        public IActionResult UpdateWorkingProcess(UpdateWorkingProcessModel model)
+        public async Task<IActionResult> UpdateWorkingProcess(UpdateWorkingProcessModel model)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace BE_Healthcare.Controllers.Doctor
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_workingProcessRepository.UpdateWorkingProcess(Guid.Parse(checkIdDoctor), model));
+                return Ok(await _workingProcessRepository.UpdateWorkingProcess(Guid.Parse(checkIdDoctor), model));
             }
             catch
             {

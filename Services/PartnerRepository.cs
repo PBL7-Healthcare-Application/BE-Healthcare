@@ -60,7 +60,7 @@ namespace BE_Healthcare.Services
                 if (model.Certificates != null)
                 {
                     newDoctor.IsVerifiedInfoCertificate = false;
-                    _certificateRepository.AddListCertificate(newDoctor.IdDoctor, model.Certificates);
+                    await _certificateRepository.AddListCertificate(newDoctor.IdDoctor, model.Certificates);
                 }
                 if(model.WorkingProcesses != null)
                 {

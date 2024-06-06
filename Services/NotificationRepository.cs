@@ -184,9 +184,59 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public Task CreateNotificationDoctorAddNewInfo(Guid idDoctor, string nameDoctor)
+        public async Task CreateNotificationDoctorAddNewInfo(Guid idAdmin, Guid idDoctor, string nameDoctor)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Send notification to doctor
+                var notice = new NotificationDoctorAddOrEditInfoModel
+                {
+                    Title = AppString.TITLE_NEW_INFO_NEED_VERIFIED,
+                    Body = AppString.BODY_NEW_INFO_NEED_VERIFIED,
+                    CreatedAt = DateTime.Now,
+                    IdAdmin = idAdmin,
+                    IdDoctor = idDoctor,
+                    NameDoctor = nameDoctor,
+
+                    NotificationType = AppNumber.NOTIFICATIONTYPE_APPLYINGDOCTOR,
+                };
+
+                // Save the notification to Firestore
+                await _firestoreService.AddDocumentAsync("notifications", null, null, null, null, null, null, notice);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task CreateNotificationForNewRating(Guid idDoctor, string nameUser)
+        {
+            try
+            {
+                // Notification for new rating
+                // Send notification to doctor
+                var notice = new NotificationForNewRatingModel
+                {
+                    Title = AppString.TITLE_NEW_RATING,
+                    Body = AppString.BODY_NEW_RATING + nameUser,
+                    CreatedAt = DateTime.Now,
+                    IdDoctor = idDoctor,
+                    NameUser = nameUser,
+
+                    NotificationType = AppNumber.NOTIFICATIONTYPE_RATING,
+
+                };
+
+                // Save the notification to Firestore
+                await _firestoreService.AddDocumentAsync("notifications", null, null, null, null, null, notice);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
     }
 }

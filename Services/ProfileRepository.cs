@@ -167,6 +167,8 @@ namespace BE_Healthcare.Services
                 if (model.DOB != null) user.DOB = model.DOB;
                 if (model.PhoneNumber != null) user.PhoneNumber = model.PhoneNumber;
                 if (model.Address != null) user.Address = model.Address;
+                if (model.Latitude != null) user.latitude = model.Latitude;
+                if (model.Longtitude != null) user.longtitude = model.Longtitude;
                 if (model.Avatar != null) user.Avatar = model.Avatar;
                 if (model.Gender != null) user.Gender = model.Gender;
                 user.UpdatedAt = DateTime.Now;
@@ -318,6 +320,8 @@ namespace BE_Healthcare.Services
                 if (model.DOB != null) doctor.User.DOB = model.DOB;
                 if (model.PhoneNumber != null) doctor.User.PhoneNumber = model.PhoneNumber;
                 if (model.Address != null) doctor.User.Address = model.Address;
+                if (model.Latitude != null) doctor.User.latitude = model.Latitude;
+                if (model.Longtitude != null) doctor.User.longtitude = model.Longtitude;
                 if (model.Avatar != null) doctor.User.Avatar = model.Avatar;
                 if (model.Gender != null) doctor.User.Gender = model.Gender;
 

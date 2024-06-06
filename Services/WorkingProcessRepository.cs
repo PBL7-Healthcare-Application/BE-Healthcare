@@ -13,10 +13,12 @@ namespace BE_Healthcare.Services
     public class WorkingProcessRepository : IWorkingProcessRepository
     {
         private readonly MyDbContext _context;
+        private readonly INotificationRepository _notificationRepository;
 
-        public WorkingProcessRepository(MyDbContext context)
+        public WorkingProcessRepository(MyDbContext context, INotificationRepository notificationRepository)
         {
             _context = context;
+            _notificationRepository = notificationRepository;
         }
         private IQueryable<WorkingProcess>? GetWorkingProcess(Guid id)
         {
@@ -52,7 +54,7 @@ namespace BE_Healthcare.Services
                 Message = AppString.MESSAGE_ADDWORKINGPROCESS_SUCCESS,
             };
         }
-        public ApiResponse AddListWorkingProcess(Guid idDoctor, List<AddWorkingProcessModel> workingprocesses)
+        public async Task<ApiResponse> AddListWorkingProcess(Guid idDoctor, List<AddWorkingProcessModel> workingprocesses)
         {
             foreach (var workingprocess in workingprocesses)
             {
@@ -60,6 +62,13 @@ namespace BE_Healthcare.Services
             }
             Save();
             UpdateIsVerifiedInfoWorkingProcess(idDoctor, false);
+
+            var doctor = _context.Doctors.Include(p => p.User).FirstOrDefault(q => q.IdDoctor == idDoctor);
+
+            var admin = _context.Users.Include(p => p.Role).FirstOrDefault(x => x.idRole == AppNumber.ROLE_ADMIN);
+            if (admin != null && doctor != null)
+                await _notificationRepository.CreateNotificationDoctorAddNewInfo(admin.IdUser, idDoctor, doctor.User.Name);
+
             return new ApiResponse
             {
                 StatusCode = StatusCode.SUCCESS,
@@ -156,7 +165,7 @@ namespace BE_Healthcare.Services
                 _context.SaveChanges();
             }
         }
-        public ApiResponse UpdateWorkingProcess(Guid idDoctor, UpdateWorkingProcessModel model)
+        public async Task<ApiResponse> UpdateWorkingProcess(Guid idDoctor, UpdateWorkingProcessModel model)
         {
             try
             {
@@ -172,6 +181,12 @@ namespace BE_Healthcare.Services
 
                 UpdateWorkingProcess(workingProcess, model);
                 UpdateIsVerifiedInfoWorkingProcess(idDoctor, false);
+
+                var doctor = _context.Doctors.Include(p => p.User).FirstOrDefault(q => q.IdDoctor == idDoctor);
+
+                var admin = _context.Users.Include(p => p.Role).FirstOrDefault(x => x.idRole == AppNumber.ROLE_ADMIN);
+                if (admin != null && doctor != null)
+                    await _notificationRepository.CreateNotificationDoctorAddNewInfo(admin.IdUser, idDoctor, doctor.User.Name);
 
                 return new ApiResponse
                 {

@@ -12,13 +12,11 @@ namespace BE_Healthcare.Services
     {
         private readonly MyDbContext _context;
         private readonly INotificationRepository _notificationRepository;
-        private readonly IAuthRepository _authRepository;
 
-        public CertificateRepository(MyDbContext context, INotificationRepository notificationRepository, IAuthRepository  authRepository)
+        public CertificateRepository(MyDbContext context, INotificationRepository notificationRepository)
         {
             _context = context;
             _notificationRepository = notificationRepository;
-            _authRepository = authRepository;
         }
         private IQueryable<Certificate>? GetCertificate(Guid id)
         {
@@ -63,7 +61,10 @@ namespace BE_Healthcare.Services
             UpdateIsVerifiedInfoCertificate(idDoctor, false);
             
             var doctor = _context.Doctors.Include(p => p.User).FirstOrDefault(q =>q.IdDoctor == idDoctor);
-            await _notificationRepository.CreateNotificationDoctorAddNewInfo(idDoctor, doctor.User.Name);
+
+            var admin = _context.Users.Include(p => p.Role).FirstOrDefault(x => x.idRole == AppNumber.ROLE_ADMIN);
+            if (admin != null && doctor != null)
+                await _notificationRepository.CreateNotificationDoctorAddNewInfo(admin.IdUser, idDoctor, doctor.User.Name);
 
             return new ApiResponse
             {
@@ -158,7 +159,7 @@ namespace BE_Healthcare.Services
                 _context.SaveChanges();
             }
         }
-        public ApiResponse UpdateCertificate(Guid idDoctor, UpdateCertificateModel model)
+        public async Task<ApiResponse> UpdateCertificate(Guid idDoctor, UpdateCertificateModel model)
         {
             try
             {
@@ -174,6 +175,12 @@ namespace BE_Healthcare.Services
 
                 UpdateCertificate(certificate, model);
                 UpdateIsVerifiedInfoCertificate(idDoctor, false);
+
+                var doctor = _context.Doctors.Include(p => p.User).FirstOrDefault(q => q.IdDoctor == idDoctor);
+
+                var admin = _context.Users.Include(p => p.Role).FirstOrDefault(x => x.idRole == AppNumber.ROLE_ADMIN);
+                if (admin != null && doctor != null)
+                    await _notificationRepository.CreateNotificationDoctorAddNewInfo(admin.IdUser, idDoctor, doctor.User.Name);
 
                 return new ApiResponse
                 {

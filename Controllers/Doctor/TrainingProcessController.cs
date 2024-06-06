@@ -19,7 +19,7 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpPost("AddListTrainingProcess")]
-        public IActionResult AddListTrainingProcess(List<AddTrainingProcessModel> model)
+        public async Task<IActionResult> AddListTrainingProcess(List<AddTrainingProcessModel> model)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace BE_Healthcare.Controllers.Doctor
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_trainingProcessRepository.AddListTrainingProcess(Guid.Parse(checkIdDoctor), model));
+                return Ok(await _trainingProcessRepository.AddListTrainingProcess(Guid.Parse(checkIdDoctor), model));
 
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace BE_Healthcare.Controllers.Doctor
             }
         }
         [HttpPut("UpdateTrainingProcess")]
-        public IActionResult UpdateTrainingProcess(UpdateTrainingProcessModel model)
+        public async Task<IActionResult> UpdateTrainingProcess(UpdateTrainingProcessModel model)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace BE_Healthcare.Controllers.Doctor
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_trainingProcessRepository.UpdateTrainingProcess(Guid.Parse(checkIdDoctor), model));
+                return Ok(await _trainingProcessRepository.UpdateTrainingProcess(Guid.Parse(checkIdDoctor), model));
             }
             catch
             {

@@ -13,12 +13,15 @@ namespace BE_Healthcare.Services
         private readonly MyDbContext _context;
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly INotificationRepository _notificationRepository;
 
-        public RatingRepository(MyDbContext context, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository)
+        public RatingRepository(MyDbContext context, IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository, 
+            INotificationRepository notificationRepository)
         {
             _context = context;
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
+            _notificationRepository = notificationRepository;
         }
         private IQueryable<Rating> GetListRatingByIdDoctor(Guid idDoctor)
         {
@@ -83,7 +86,7 @@ namespace BE_Healthcare.Services
                 Console.WriteLine(ex.ToString());
             }
         }
-        public ApiResponse CreateRating(Guid IdUser, CreateRatingModel model)
+        public async Task<ApiResponse> CreateRating(Guid IdUser, CreateRatingModel model)
         {
             try
             {
@@ -116,6 +119,10 @@ namespace BE_Healthcare.Services
                 {
                     UpdateRatingScoreOfDoctor((Guid)appointment.IdDoctor, model.RatingScore);
                 }
+
+                //Send notification to Doctor
+                await _notificationRepository.CreateNotificationForNewRating((Guid)appointment.IdDoctor, model.NameUser);
+
 
                 return new ApiResponse
                 {

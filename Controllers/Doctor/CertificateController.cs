@@ -61,7 +61,7 @@ namespace BE_Healthcare.Controllers.Doctor
         }
 
         [HttpPut("UpdateCertificate")]
-        public IActionResult UpdateCertificate(UpdateCertificateModel model)
+        public async Task<IActionResult> UpdateCertificate(UpdateCertificateModel model)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace BE_Healthcare.Controllers.Doctor
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-                return Ok(_certificateRepository.UpdateCertificate(Guid.Parse(checkIdDoctor), model));
+                return Ok(await _certificateRepository.UpdateCertificate(Guid.Parse(checkIdDoctor), model));
             }
             catch
             {

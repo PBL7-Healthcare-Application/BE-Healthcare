@@ -10,13 +10,13 @@ namespace BE_Healthcare.Services
     {
         void AddWorkingProcess(Guid idDoctor, AddWorkingProcessModel workingprocess);
         ApiResponse AddOneWorkingProcess(Guid idDoctor, AddWorkingProcessModel workingprocess);
-        ApiResponse AddListWorkingProcess(Guid idDoctor, List<AddWorkingProcessModel> workingprocesses);
+        Task<ApiResponse> AddListWorkingProcess(Guid idDoctor, List<AddWorkingProcessModel> workingprocesses);
         List<WorkingProcessModel>? GetWorkingProcessByIdDoctor(Guid id);
 
         int GetNumberOfWorkingProcessWaitingForApproval(Guid idDoctor);
         WorkingProcess? GetWorkingProcessOfDoctorByIdWorkingProcess(Guid idDoctor, int idWorkingProcess);
         void VerifyWorkingProcess(VerifyWorkingProcessModel model);
-        ApiResponse UpdateWorkingProcess(Guid idDoctor, UpdateWorkingProcessModel model);
+        Task<ApiResponse> UpdateWorkingProcess(Guid idDoctor, UpdateWorkingProcessModel model);
         ApiResponse DeleteWorkingProcess(Guid idDoctor, int idWorkingProcess);
 
     }

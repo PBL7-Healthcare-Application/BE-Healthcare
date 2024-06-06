@@ -4,7 +4,7 @@ namespace BE_Healthcare.Services
 {
     public interface IRatingRepository
     {
-        ApiResponse CreateRating(Guid IdUser, CreateRatingModel model);
+        Task<ApiResponse> CreateRating(Guid IdUser, CreateRatingModel model);
         ApiResponse GetRatingByIdDoctor(GetRatingCriteriaModel model);
     }
 }
