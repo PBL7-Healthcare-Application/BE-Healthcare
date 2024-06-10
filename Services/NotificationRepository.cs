@@ -77,16 +77,16 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public async Task CreateNotificationForReExaminationAppointment(ReExaminationAppointmentModel model)
+        public async Task CreateNotificationForSchedulingFollowupAppointment(ScheduleFollowupAppointmentModel model)
         {
             try
             {
                 // Notification for creating new appointment
                 // Send notification to doctor
-                var notice = new NotificationReschedulingForUserModel
+                var notice = new NotificationSchedulingFollowupAppointmentForUserModel
                 {
-                    Title = AppString.TITLE_CREATEREEXAMINATIONAPPOINTMENT,
-                    Body = AppString.BODY_CREATEREEXAMINATIONAPPOINTMENT,
+                    Title = AppString.TITLE_SCHEDULING_FOLLOWUP_APPOINTMENT,
+                    Body = AppString.BODY_SCHEDULING_FOLLOWUP_APPOINTMENT,
                     CreatedAt = DateTime.Now,
                     IdUser = model.IdUser,
                     IdAppointment = model.IdAppointment,
@@ -231,6 +231,35 @@ namespace BE_Healthcare.Services
 
                 // Save the notification to Firestore
                 await _firestoreService.AddDocumentAsync("notifications", null, null, null, null, null, notice);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task CreateNotificationForReschedulingAppointment(UpdateAppointmentModel model, Guid idUser)
+        {
+            try
+            {
+                // Notification for creating new appointment
+                // Send notification to doctor
+                var notice = new NotificationReschedulingAppointmentForUserModel
+                {
+                    Title = AppString.TITLE_RESCHEDULED_SUCCESSFUL,
+                    Body = AppString.BODY_RESCHEDULED_SUCCESSFUL,
+                    CreatedAt = DateTime.Now,
+                    IdUser = idUser,
+                    IdAppointment = model.IdAppointment,
+                    NotificationType = AppNumber.NOTIFICATIONTYPE_APPOINTMENT,
+                    Date = model.Date.Date,
+                    StartTime = model.StartTime,
+                    EndTime = model.EndTime
+                };
+
+                // Save the notification to Firestore
+                await _firestoreService.AddDocumentAsync("notifications", null, null, null, null, null, null, null, notice);
             }
             catch (Exception ex)
             {

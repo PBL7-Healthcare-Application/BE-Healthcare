@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Appointment Confirmation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .container {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 5px;
+            line-height: 1.6;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+            .header a {
+                font-size: 1.4em;
+                color: #405175;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+        .content {
+            background-color: #F7F9FC;
+            padding: 20px;
+            border-radius: 5px;
+            line-height: 1.8;
+        }
+
+        .otp {
+            background: linear-gradient(to right, #00bc69 0, #00bc88 50%, #00bca8 100%);
+            margin: 0 auto;
+            width: max-content;
+            padding: 0 10px;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .footer {
+            color: #aaa;
+            font-size: 0.8em;
+            line-height: 1;
+            font-weight: 300;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .email-info {
+            color: #666666;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 18px;
+            padding-bottom: 6px;
+            text-align: center;
+        }
+
+            .email-info a {
+                text-decoration: none;
+                color: #00bc69;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a>Reschedule appointment at [[${nameClinic}]] at [[${startTime}]], [[${formattedDate}]]</a>
+        </div>
+        <p style="color: #000000;">Hello, [[${nameUser}]]</p>
+        <p style="color: #000000;">
+            Your appointment time has been changed. Please check the infomation below.
+        </p>
+        <div class="content">
+            <p style="color: #000000;"><strong>Appointment Id:</strong> [[${idAppointment}]]</p>
+            <p style="color: #000000;"><strong>Date & time:</strong> [[${startTime}]] - [[${endTime}]], [[${date}]] </p>
+            <p style="color: #000000;"><strong>Address:</strong> [[${address}]]</p>
+            <p style="color: #000000;"><strong>Doctor:</strong> [[${nameDoctor}]] </p>
+            <p style="color: #000000;"><strong>Email Doctor:</strong> [[${emailDoctor}]]</p>
+            <p style="color: #000000;"><strong>Price:</strong> Total payment VND [[${price}]] </p>
+            <p style="color: #000000;"><strong>Payment method:</strong> COD (Unpaid)</p>
+        </div>
+        <hr style="border: none; border-top: 1px solid #eee;" />
+        <div class="footer">
+            <p>This email can't receive replies.</p>
+            <p>For more information about your appointment, visit <a href="mailto:enclinicapplication@gmail.com">enclinicapplication@gmail.com</a></p>
+        </div>
+        <div class="email-info">
+            <span>This email was sent to <a href="mailto:[[${emailUser}]]">[[${emailUser}]]</a></span>
+        </div>
+        <div class="email-info">
+            [[${nameClinic}]] | [[${address}]]
+        </div>
+        <div class="email-info">
+            &copy; 2024 Enclinic Healthcare. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

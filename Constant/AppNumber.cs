@@ -16,7 +16,8 @@
         public static int APPOINTMENT_CONFIRMED = 1;
         public static int APPOINTMENT_CANCELED = 2;
         public static int APPOINTMENT_COMPLETED = 3;
-        
+        public static int APPOINTMENT_WAITING = 4;
+
         public static int PAGE_SIZE = 10;
 
         public static int STATUS_ALL = -1;
@@ -34,6 +35,7 @@
         public static int TYPEMAILHTML_FOR_BOOKING_SUCCESSFULLY = 1;
         public static int TYPEMAILHTML_FOR_CANCELLING_APPOINTMENT = 2;
         public static int TYPEMAILHTML_FOR_APPROVED_APPLICATION = 3;
-        
+        public static int TYPEMAILHTML_FOR_RESCHEDULING_APPOINTMENT = 4;
+
     }
 }

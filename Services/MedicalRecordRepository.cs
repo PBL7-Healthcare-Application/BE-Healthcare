@@ -136,7 +136,7 @@ namespace BE_Healthcare.Services
             try
             {
                 _appointmentRepository.UpdateStatusAppointment(idDoctor);
-                var listAppointment = _appointmentRepository.GetListAppointmentByIdDoctor(idDoctor, AppNumber.APPOINTMENT_CONFIRMED,
+                var listAppointment = _appointmentRepository.GetListAppointmentByIdDoctor(idDoctor, AppNumber.APPOINTMENT_WAITING,
                     search);
 
                 //Sorting

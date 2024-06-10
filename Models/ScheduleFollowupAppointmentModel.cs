@@ -1,6 +1,6 @@
 ﻿namespace BE_Healthcare.Models
 {
-    public class ReExaminationAppointmentModel : AppointmentModel
+    public class ScheduleFollowupAppointmentModel : AppointmentModel
     {
         public Guid IdUser { get; set; }
 
