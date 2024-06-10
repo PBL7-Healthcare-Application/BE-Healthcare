@@ -5,9 +5,11 @@ namespace BE_Healthcare.Services
     public interface IEmailService
     {
         void SendEmail(MessageModel message);
-        void SendEmailHTML(int TypeMailHTML, MessageHTMLForBookingSuccessfullyModel? messageBookSuccessfully = null,
+        void SendEmailHTML(int TypeMailHTML, 
+            MessageHTMLForBookingSuccessfullyModel? messageBookSuccessfully = null,
             MessageHTMLForCancellingAppointmentModel? messageCancelAppointment = null,
-            MessageHTMLForApprovedApplicationModel? messageApprovedApplication = null);
+            MessageHTMLForApprovedApplicationModel? messageApprovedApplication = null,
+            MessageHTMLForReschedulingAppointmentModel? messageRescheduleAppointment = null);
 
     }
 }

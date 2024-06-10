@@ -21,11 +21,12 @@ namespace BE_Healthcare.Services
         public async Task AddDocumentAsync(string collectionId, 
             NotificationForDoctorModel? notification = null, 
             NotificationCancelAppointmentModel? notifCancel = null, 
-            NotificationReschedulingForUserModel? noticeRescheduling = null,
+            NotificationSchedulingFollowupAppointmentForUserModel? noticeSchedulingFollowup = null,
             NotificationRegisteringDoctorModel? noticeRegisteringDoctor = null,
             NotificationVerifyingDoctorModel? notificationVerifyingDoctorModel= null,
             NotificationForNewRatingModel? notificationForNewRatingModel = null,
-            NotificationDoctorAddOrEditInfoModel? notificationDoctorAddOrEditInfo = null)
+            NotificationDoctorAddOrEditInfoModel? notificationDoctorAddOrEditInfo = null,
+            NotificationReschedulingAppointmentForUserModel? noticeReschedulingAppointment = null)
         {
             try
             {
@@ -99,20 +100,20 @@ namespace BE_Healthcare.Services
                     
                 }
 
-                if (noticeRescheduling != null)
+                if (noticeSchedulingFollowup != null)
                 {
                     notificationData = new Dictionary<string, object>
                     {
-                        { "title",  noticeRescheduling.Title },
-                        { "body",  noticeRescheduling.Body},
-                        { "isRead", noticeRescheduling.IsRead},
-                        { "createAt", noticeRescheduling.CreatedAt.ToString()},
-                        { "idAppointment", noticeRescheduling.IdAppointment },
-                        { "notificationType", noticeRescheduling.NotificationType },
-                        { "idUser",  noticeRescheduling.IdUser.ToString() },
-                        { "dayOfExamination",  noticeRescheduling.Date.ToString() },
-                        { "startTime",  noticeRescheduling.StartTime.ToString() },
-                        { "endTime",  noticeRescheduling.EndTime.ToString() },
+                        { "title",  noticeSchedulingFollowup.Title },
+                        { "body",  noticeSchedulingFollowup.Body},
+                        { "isRead", noticeSchedulingFollowup.IsRead},
+                        { "createAt", noticeSchedulingFollowup.CreatedAt.ToString()},
+                        { "idAppointment", noticeSchedulingFollowup.IdAppointment },
+                        { "notificationType", noticeSchedulingFollowup.NotificationType },
+                        { "idUser",  noticeSchedulingFollowup.IdUser.ToString() },
+                        { "dayOfExamination",  noticeSchedulingFollowup.Date.ToString() },
+                        { "startTime",  noticeSchedulingFollowup.StartTime.ToString() },
+                        { "endTime",  noticeSchedulingFollowup.EndTime.ToString() },
 
 
                         { "timestamp", Timestamp.GetCurrentTimestamp()},
@@ -184,6 +185,28 @@ namespace BE_Healthcare.Services
                         { "idDoctor",  notificationDoctorAddOrEditInfo.IdDoctor.ToString() },
                         { "NameDoctor",  notificationDoctorAddOrEditInfo.NameDoctor.ToString() },
                         { "idAdmin",  notificationDoctorAddOrEditInfo.IdAdmin.ToString() },
+                        { "timestamp", Timestamp.GetCurrentTimestamp()},
+                    };
+                    CollectionReference collectionRef = _db.Collection(collectionId);
+                    await collectionRef.AddAsync(notificationData);
+                }
+
+                if (noticeReschedulingAppointment != null)
+                {
+                    notificationData = new Dictionary<string, object>
+                    {
+                        { "title",  noticeReschedulingAppointment.Title },
+                        { "body",  noticeReschedulingAppointment.Body},
+                        { "isRead", noticeReschedulingAppointment.IsRead},
+                        { "createAt", noticeReschedulingAppointment.CreatedAt.ToString()},
+                        { "idAppointment", noticeReschedulingAppointment.IdAppointment },
+                        { "notificationType", noticeReschedulingAppointment.NotificationType },
+                        { "idUser",  noticeReschedulingAppointment.IdUser.ToString() },
+                        { "dayOfExamination",  noticeReschedulingAppointment.Date.ToString() },
+                        { "startTime",  noticeReschedulingAppointment.StartTime.ToString() },
+                        { "endTime",  noticeReschedulingAppointment.EndTime.ToString() },
+
+
                         { "timestamp", Timestamp.GetCurrentTimestamp()},
                     };
                     CollectionReference collectionRef = _db.Collection(collectionId);

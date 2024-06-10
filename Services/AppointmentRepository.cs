@@ -54,7 +54,7 @@ namespace BE_Healthcare.Services
             {
                 var listAppointment = _context.Appointments.Include(e => e.User).Include(d => d.Doctor)
                     .Where(e => e.IdDoctor == idDoctor);
-                if(Status > 0 && Status <= 3)
+                if(Status > 0 && Status <= 4)
                 {
                     listAppointment = listAppointment.Where(e => e.Status == Status);
                 }
@@ -436,10 +436,10 @@ namespace BE_Healthcare.Services
                 appointment.Status = 2;
 
                 _context.Update(appointment);
-                //_context.SaveChanges();
+                _context.SaveChanges();
 
                 //Create Notification for cancellingappointment
-                //await _notificationRepository.CreateNotificationForCancellingAppointment(model, appointment, idReceiver);
+                await _notificationRepository.CreateNotificationForCancellingAppointment(model, appointment, idReceiver);
 
                 SendEmailCancelling("Cancellation of Appointment", appointment);
 
@@ -577,30 +577,30 @@ namespace BE_Healthcare.Services
             //    .Where(e => e.IdDoctor == idDoctor && e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED ).ToList();
 
             //var listAppointmentCompleted = listAppointment.Where(e => e.Date <= DateTime.UtcNow.Date && e.Status == AppNumber.APPROVED);
-            var listAppointmentCompleted = GetListAppointmentNotUpdate(idDoctor, idUser);
-            if (listAppointmentCompleted != null)
+            var listAppointmentWaiting = GetListAppointmentNotUpdate(idDoctor, idUser);
+            if (listAppointmentWaiting != null)
             {
-                foreach (var item in listAppointmentCompleted)
+                foreach (var item in listAppointmentWaiting)
                 {
-                    if (item.Date == DateTime.UtcNow.Date && !IsTimeAppointmentCompleted(item.Date.Date, item.EndTime))   //The present day
+                    if (item.Date == DateTime.UtcNow.Date && !IsTimeAppointmentStart(item.Date.Date, item.StartTime))   //The present day
                     {
                         continue;
                     }
-                    item.Status = AppNumber.APPOINTMENT_COMPLETED;
+                    item.Status = AppNumber.APPOINTMENT_WAITING;
                 }
-                _context.Appointments.UpdateRange(listAppointmentCompleted);
+                _context.Appointments.UpdateRange(listAppointmentWaiting);
                 _context.SaveChanges();
             }
         }
-        private bool IsTimeAppointmentCompleted (DateTime date, string timeEnd)
+        private bool IsTimeAppointmentStart(DateTime date, string timeStart)
         {
             string dateOnly = date.ToString("M/d/yyyy");
-            string dateTimeString = $"{dateOnly} {timeEnd}";
+            string dateTimeString = $"{dateOnly} {timeStart}";
 
-            DateTime TimeEndAppointment = DateTime.ParseExact(dateTimeString, "M/d/yyyy H:mm", null);
+            DateTime TimeStartAppointment = DateTime.ParseExact(dateTimeString, "M/d/yyyy H:mm", null);
 
             // So sánh với thời điểm hiện tại
-            if (TimeEndAppointment >= DateTime.Now)
+            if (TimeStartAppointment > DateTime.Now)
             {
                 return false;
             }
@@ -717,69 +717,80 @@ namespace BE_Healthcare.Services
             }
         }
 
-        public async Task<ApiResponse> RescheduleAppointment(ReExaminationAppointmentModel model)
+        public async Task<ApiResponse> ScheduleFollowupAppointment(ScheduleFollowupAppointmentModel model)
         {
-            if (model.IdDoctor == null)
+            try
             {
+                if (model.IdDoctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_ERROR_IDDOCTOR_NOTNULL,
+                    };
+                }
+                //1. Check idDoctor is null or not
+                var doctor = _doctorRepository.GetDoctorById((Guid)model.IdDoctor);
+                if (doctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
+                    };
+                }
+
+                var validateAppointmentInformationInput = ValidateAppointmentInformationInput(doctor, model.IdUser, model);
+                if (validateAppointmentInformationInput != null)
+                {
+                    return validateAppointmentInformationInput;
+                }
+
+
+                //check success
+
+                var appointmentModel = new AppointmentModel
+                {
+                    StartTime = model.StartTime,
+                    EndTime = model.EndTime,
+                    Date = model.Date,
+                    Issue = AppString.MESSAGE_RESCHEDULE_APPOINTMENT,
+                    Type = model.Type,
+                    IdDoctor = model.IdDoctor,
+                    Price = doctor.Price,
+                };
+
+                model.IdAppointment = AddAppointment(model.IdUser, appointmentModel);
+
+                var dataUser = _authRepository.getUserById(model.IdUser);
+                if (dataUser == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_USER,
+                    };
+                }
+
+                //Create Notification for creating new appointment
+                //await CreateNotification(model);
+                await _notificationRepository.CreateNotificationForSchedulingFollowupAppointment(model);
+                    
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_RESCHEDULED_SUCCESSFUL,
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.FAILED,
-                    Message = AppString.MESSAGE_ERROR_IDDOCTOR_NOTNULL,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
                 };
             }
-            //1. Check idDoctor is null or not
-            var doctor = _doctorRepository.GetDoctorById((Guid)model.IdDoctor);
-            if (doctor == null)
-            {
-                return new ApiResponse
-                {
-                    StatusCode = StatusCode.FAILED,
-                    Message = AppString.MESSAGE_NOTFOUND_DOCTOR,
-                };
-            }
-
-            var validateAppointmentInformationInput = ValidateAppointmentInformationInput(doctor, model.IdUser, model);
-            if (validateAppointmentInformationInput != null)
-            {
-                return validateAppointmentInformationInput;
-            }
-
-
-            //check success
-
-            var appointmentModel = new AppointmentModel
-            {
-                StartTime = model.StartTime,
-                EndTime = model.EndTime,
-                Date = model.Date,
-                Issue = AppString.MESSAGE_RESCHEDULE_APPOINTMENT,
-                Type = model.Type,
-                IdDoctor = model.IdDoctor,
-                Price = doctor.Price,
-            };
-
-            model.IdAppointment = AddAppointment(model.IdUser, appointmentModel);
-
-            var dataUser = _authRepository.getUserById(model.IdUser);
-            if (dataUser == null)
-            {
-                return new ApiResponse
-                {
-                    StatusCode = StatusCode.FAILED,
-                    Message = AppString.MESSAGE_NOTFOUND_USER,
-                };
-            }
-
-            //Create Notification for creating new appointment
-            //await CreateNotification(model);
-            await _notificationRepository.CreateNotificationForReExaminationAppointment(model);
-
-
-            return new ApiResponse
-            {
-                StatusCode = StatusCode.SUCCESS,
-                Message = AppString.MESSAGE_RESCHEDULED_SUCCESSFUL,
-            };
         }
 
 
@@ -865,6 +876,78 @@ namespace BE_Healthcare.Services
                         CurrentPage = criteria.page,
                         ItemsPerPage = AppNumber.PAGE_SIZE
                     }
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+
+        private void SendEmailRescheduling(string subject, Appointment appointment)
+        {
+            var message = new MessageHTMLForReschedulingAppointmentModel(
+                subject,
+                new string[] { appointment.User.Email! },
+                appointment.User.Name,
+                appointment.IdAppointment,
+                appointment.StartTime,
+                appointment.EndTime,
+                appointment.Date.Date,
+                appointment.Doctor.User.Address,
+                appointment.Doctor.User.Name,
+                (double)appointment.Price,
+                appointment.Issue,
+                appointment.User.Email,
+                appointment.Doctor.User.Email,
+                appointment.Doctor.NameClinic
+
+                );
+
+            _emailService.SendEmailHTML(AppNumber.TYPEMAILHTML_FOR_RESCHEDULING_APPOINTMENT, null, null, null, message);
+        }
+
+        public async Task<ApiResponse> UpdateAppointment(UpdateAppointmentModel model)
+        {
+            try
+            {
+                var appointment = GetAppointmentByIdAppointment(model.IdAppointment);
+                if (appointment == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFOUND_APPOINTMENT,
+                    };
+                }
+
+                if (model.StartTime != null) appointment.StartTime = model.StartTime;
+                if (model.EndTime!= null) appointment.EndTime = model.EndTime;
+                appointment.Date = model.Date;
+
+
+                appointment.UpdatedAt = DateTime.Now;
+                appointment.Status = AppNumber.APPROVED;
+                _context.Appointments.Update(appointment);
+                _context.SaveChanges();
+
+
+                //Create Notification for cancellingappointment
+                await _notificationRepository.CreateNotificationForReschedulingAppointment(model, (Guid)appointment.IdUser);
+
+                SendEmailRescheduling("Reschedule Appointment", appointment);
+
+
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_UPDATE_APPOINTMENT_SUCCESS,
                 };
 
             }

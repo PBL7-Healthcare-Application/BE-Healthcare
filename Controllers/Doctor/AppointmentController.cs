@@ -67,8 +67,8 @@ namespace BE_Healthcare.Controllers.Doctor
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpPost("RescheduleAppointment")]
-        public async Task<IActionResult> RescheduleAppointment(ReExaminationAppointmentModel model)
+        [HttpPost("ScheduleFollowupAppointment")]
+        public async Task<IActionResult> ScheduleFollowupAppointment(ScheduleFollowupAppointmentModel model)
         {
             try
             {
@@ -78,7 +78,25 @@ namespace BE_Healthcare.Controllers.Doctor
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
                 model.IdDoctor = Guid.Parse(checkIdDoctor) ;
-                return Ok(await _appointmentRepository.RescheduleAppointment(model));
+                return Ok(await _appointmentRepository.ScheduleFollowupAppointment(model));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+        [HttpPut("UpdateAppointment")]
+        public async Task<IActionResult> UpdateAppointment(UpdateAppointmentModel model)
+        {
+            try
+            {
+                var checkIdDoctor = User.Claims.FirstOrDefault(u => u.Type == "IdDoctor")?.Value;
+                if (checkIdDoctor == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+                return Ok(await _appointmentRepository.UpdateAppointment(model));
+
             }
             catch
             {

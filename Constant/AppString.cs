@@ -126,9 +126,9 @@
         public static string MESSAGE_ERROR_IDDOCTOR_NOTNULL = "IdDoctor is not null!";
         public static string MESSAGE_RESCHEDULE_APPOINTMENT = "Book a follow-up examination.";
 
-        public static string MESSAGE_RESCHEDULED_SUCCESSFUL = "Successfully rescheduled a medical examination!";
-        public static string TITLE_CREATEREEXAMINATIONAPPOINTMENT = "Re-examination appointment";
-        public static string BODY_CREATEREEXAMINATIONAPPOINTMENT = "You have a new re-examination medical appointment.";
+        public static string MESSAGE_SCHEDULING_FOLLOWUP_APPOINTMENT = "Successfully scheduling a follow-up appointment!";
+        public static string TITLE_SCHEDULING_FOLLOWUP_APPOINTMENT = "Schedule a follow-up appointment";
+        public static string BODY_SCHEDULING_FOLLOWUP_APPOINTMENT = "You have a new follow-up appointment.";
 
         public static string MESSAGE_ERROR_GETDETAIL_ADMIN = "Can't get infomation of admin!";
 
@@ -149,5 +149,13 @@
 
         public static string TITLE_NEW_INFO_NEED_VERIFIED = "New information needs to be verified";
         public static string BODY_NEW_INFO_NEED_VERIFIED = "There is new information that needs to be verified.";
+
+        public static string MESSAGE_UPDATE_APPOINTMENT_SUCCESS = "Update Appointment Successfully!";
+
+        public static string MESSAGE_RESCHEDULED_SUCCESSFUL = "Successfully rescheduled appointment!";
+        public static string TITLE_RESCHEDULED_SUCCESSFUL = "Reschedule appointment";
+        public static string BODY_RESCHEDULED_SUCCESSFUL = "Your appointment has been rescheduled for another time. Please check appointment information.";
+
+        //CreateNotificationForReschedulingAppointment
     }
 }

@@ -31,6 +31,6 @@ namespace BE_Healthcare.Data.Entities
         public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public bool IsRating { get; set; } = false!;
         public DateTime? StartTimeOfExamination { get; set; } = null!;
-
+        public DateTime? UpdatedAt { get; set; } = null!;
     }
 }
