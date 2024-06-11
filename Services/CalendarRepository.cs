@@ -39,7 +39,8 @@ namespace BE_Healthcare.Services
                 StartTime = c.StartTime,
                 EndTime = c.EndTime,
                 Status = c.Status,
-                Reason = c.Reason
+                Reason = c.Reason,
+                IsFixed = c.IsFixed,
             }).ToList();
             return result_timeOff;
         }
@@ -111,6 +112,7 @@ namespace BE_Healthcare.Services
                 IdDoctor = idDoctor,
                 Status = info.Status,
                 Reason = info.Reason,
+                IsFixed = info.IsFixed,
             };
             _context.TimeOffs.Add(timeoff);
         }
@@ -163,7 +165,56 @@ namespace BE_Healthcare.Services
                 var list = GetTimeOff(id);
                 if(list != null)
                 {
-                    foreach(var TimeOff in listCreateTimeOff)
+                    //Check Fixed Time Off
+                    var fixedTimeOff = list.Where(p => p.IsFixed == true).ToList();
+                    if (fixedTimeOff != null)
+                    {
+                        foreach (var TimeOff in listCreateTimeOff)
+                        {
+                            TimeSpan startTime_TimeOff = TimeSpan.Parse(TimeOff.StartTime);
+                            TimeSpan endTime_TimeOff = TimeSpan.Parse(TimeOff.EndTime);
+                            string dayName = TimeOff.Date.DayOfWeek.ToString();
+
+                            foreach (var item in fixedTimeOff)
+                            {
+                                if (item.Date.DayOfWeek.ToString() == dayName && TimeSpan.Parse(item.StartTime) == startTime_TimeOff &&
+                                TimeSpan.Parse(item.EndTime) == endTime_TimeOff)
+                                {
+                                    return new ApiResponse
+                                    {
+                                        StatusCode = StatusCode.FAILED,
+                                        Message = AppString.MESSAGE_ERROR_FIXED_TIMELINE_OVERLAPED,
+                                    };
+                                }
+                            }
+                        }
+
+                    }
+
+
+                    //Check Appointment if this time off is fixed
+                    var listAppointment = _appointmentRepository.GetListAppointmentByIdDoctor(id);
+                    if (listAppointment != null)
+                    {
+                        foreach (var TimeOff in listCreateTimeOff)
+                        {
+                            foreach (var appointment in listAppointment.Where(d => d.Date.Date == TimeOff.Date.Date))
+                            {
+                                if (TimeSpan.Parse(appointment.StartTime) == TimeSpan.Parse(TimeOff.StartTime) && 
+                                    TimeSpan.Parse(appointment.EndTime) == TimeSpan.Parse(TimeOff.EndTime))
+                                {
+                                    return new ApiResponse
+                                    {
+                                        StatusCode = StatusCode.CONFLICT,
+                                        Message = AppString.MESSAGE_ERROR_CREATE_TIMEOFF_OVERLAPED_WITHAPPOINTMENT,
+                                    };
+                                }
+                            }
+                        }                    
+                    }
+
+
+                    foreach (var TimeOff in listCreateTimeOff)
                     {
                         TimeSpan startTime_TimeOff = TimeSpan.Parse(TimeOff.StartTime);
                         TimeSpan endTime_TimeOff = TimeSpan.Parse(TimeOff.EndTime);

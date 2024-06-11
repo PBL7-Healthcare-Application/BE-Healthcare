@@ -143,10 +143,28 @@ namespace BE_Healthcare.Services
                 };
             }
 
-
             //4. Check Time Off of Doctor
             var date_book = model.Date;
             var list_TimeOff = _doctorRepository.GetTimeOffByIdDoctor((Guid)model.IdDoctor);
+
+            //Check Fixed Time Off
+            var list_TimeOffFixed = list_TimeOff.Where(p => p.IsFixed == true).ToList();
+            if(list_TimeOffFixed.Any())
+            {
+                string dayName = model.Date.DayOfWeek.ToString();
+                foreach (var item in list_TimeOffFixed)
+                {
+                    if(item.Date.DayOfWeek.ToString() == dayName && TimeSpan.Parse(item.StartTime) == startTime_Book 
+                        && TimeSpan.Parse(item.EndTime) == endTime_Book)
+                    {
+                        return new ApiResponse
+                        {
+                            StatusCode = StatusCode.FAILED,
+                            Message = AppString.MESSAGE_OVERLAP_TIMEOFF,
+                        };
+                    }
+                }
+            }
 
             //Check TimeBusy of Doctor 
             var list_TimeOffBusy = list_TimeOff.Where(d => d.Date.ToShortDateString() == date_book.ToShortDateString()).ToList();

@@ -156,6 +156,8 @@
         public static string TITLE_RESCHEDULED_SUCCESSFUL = "Reschedule appointment";
         public static string BODY_RESCHEDULED_SUCCESSFUL = "Your appointment has been rescheduled for another time. Please check appointment information.";
 
-        //CreateNotificationForReschedulingAppointment
+        public static string MESSAGE_ERROR_FIXED_TIMELINE_OVERLAPED = "This timeline overlaps with the fixed timeline!";
+        public static string MESSAGE_ERROR_CREATE_TIMEOFF_OVERLAPED_WITHAPPOINTMENT = "Time off overlaped with time of appointment ";
+
     }
 }
