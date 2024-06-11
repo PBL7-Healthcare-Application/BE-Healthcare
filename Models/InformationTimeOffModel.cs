@@ -7,5 +7,7 @@
         public string EndTime { get; set; } = null!;
         public int? Status { get; set; }
         public string? Reason { get; set; } = null!;
+        public bool IsFixed { get; set; } = false;
+
     }
 }

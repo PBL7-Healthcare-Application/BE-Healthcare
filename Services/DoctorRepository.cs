@@ -225,7 +225,8 @@ namespace BE_Healthcare.Services
                 StartTime = c.StartTime,
                 EndTime = c.EndTime,
                 Status = c.Status,
-                Reason = c.Reason
+                Reason = c.Reason,
+                IsFixed = c.IsFixed,
             }).ToList();
             return result_timeOff;
         }

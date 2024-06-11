@@ -19,6 +19,7 @@ namespace BE_Healthcare.Data.Entities
         public int? Status { get; set; }
         public string? Reason { get; set; } = null;
         public DateTime? CreatedAt { get; set; } = DateTime.Now;
+        public bool IsFixed{ get; set; } = false;
 
 
     }
