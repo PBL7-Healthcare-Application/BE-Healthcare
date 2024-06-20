@@ -18,6 +18,26 @@ namespace BE_Healthcare.Controllers.User
             _partnerRepository = partnerRepository;
         }
 
+        [HttpGet("Register")]
+        [Authorize(Roles = "User")]
+        public IActionResult GetFormPartner()
+        {
+            try
+            {
+                var checkIdUser = User.Claims.FirstOrDefault(u => u.Type == "IdUser")?.Value;
+                if (checkIdUser == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok( _partnerRepository.GetFilledForm(Guid.Parse(checkIdUser)));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpPost("StartDoctoring")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> StartDoctoring(RegistrationFormDoctorModel model)

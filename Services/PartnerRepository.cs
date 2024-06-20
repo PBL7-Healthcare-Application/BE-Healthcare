@@ -65,12 +65,12 @@ namespace BE_Healthcare.Services
                 if(model.WorkingProcesses != null)
                 {
                     newDoctor.IsVerifiedInfoWorkingProcess = false;
-                    _workingProcessRepository.AddListWorkingProcess(newDoctor.IdDoctor, model.WorkingProcesses);
+                    await _workingProcessRepository.AddListWorkingProcess(newDoctor.IdDoctor, model.WorkingProcesses);
                 }
                 if(model.TrainingProcesses != null)
                 {
                     newDoctor.IsVerifiedInfoTrainingProcess = false;
-                    _trainingProcessRepository.AddListTrainingProcess(newDoctor.IdDoctor, model.TrainingProcesses);
+                    await _trainingProcessRepository.AddListTrainingProcess(newDoctor.IdDoctor, model.TrainingProcesses);
                 }
 
                 _context.Doctors.Update(newDoctor);
@@ -82,10 +82,56 @@ namespace BE_Healthcare.Services
                 if(idAdmin != null)
                     await _notificationRepository.CreateNotificationForRegisteringDoctor((Guid)idAdmin, newDoctor.IdDoctor, newDoctor.User.Name );
 
+
                 return new ApiResponse
                 {
                     StatusCode = StatusCode.SUCCESS,
-                    Message = AppString.MESSAGE_REGISTERDOCTOR_SUCCESS
+                    Message = AppString.MESSAGE_REGISTERDOCTOR_SUCCESS,
+                    Data = model
+                };
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.FAILED,
+                    Message = AppString.MESSAGE_SERVER_ERROR,
+                };
+            }
+        }
+        public ApiResponse GetFilledForm(Guid idUser)
+        {
+            try
+            {
+                var doctor = _doctorRepository.GetDoctorByIdUser(idUser);
+                if (doctor == null)
+                {
+                    return new ApiResponse
+                    {
+                        StatusCode = StatusCode.FAILED,
+                        Message = AppString.MESSAGE_NOTFILLOUT_FORM,
+                    };
+                }
+
+
+                var form = new FilledRegistrationForm
+                {
+                    MedicalSpecialty = doctor.MedicalSpecialty.Name,
+                    IdSpecialty = doctor.MedicalSpecialty.IdSpecialty,
+                    StatusVerified = doctor.StatusVerified,
+                    BusinessLicense = doctor.BusinessLicense,
+                    NameClinic = doctor.NameClinic,
+                    Certificates = _certificateRepository.GetCertificateByIdDoctor(doctor.IdDoctor),
+                    WorkingProcesses = _workingProcessRepository.GetWorkingProcessByIdDoctor(doctor.IdDoctor),
+                    TrainingProcesses = _trainingProcessRepository.GetTrainingProcessByIdDoctor(doctor.IdDoctor),
+                };
+                return new ApiResponse
+                {
+                    StatusCode = StatusCode.SUCCESS,
+                    Message = AppString.MESSAGE_GETFILLEDREGISTRATIONFORM_SUCCESSFUL,
+                    Data = form
                 };
 
             }

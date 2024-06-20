@@ -159,5 +159,8 @@
         public static string MESSAGE_ERROR_FIXED_TIMELINE_OVERLAPED = "This timeline overlaps with the fixed timeline!";
         public static string MESSAGE_ERROR_CREATE_TIMEOFF_OVERLAPED_WITHAPPOINTMENT = "Time off overlaped with time of appointment ";
 
+        public static string MESSAGE_NOTFILLOUT_FORM = "The user has not filled out the form!";
+        public static string MESSAGE_GETFILLEDREGISTRATIONFORM_SUCCESSFUL = "Get filled registration form successful!";
+
     }
 }

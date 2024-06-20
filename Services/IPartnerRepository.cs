@@ -11,6 +11,7 @@ namespace BE_Healthcare.Services
         Task<ApiResponse> VerifyCertificate(VerifyCertificateModel model);
         Task<ApiResponse> VerifyWorkingProcess(VerifyWorkingProcessModel model);
         Task<ApiResponse> VerifyTrainingProcess(VerifyTrainingProcessModel model);
+        ApiResponse GetFilledForm(Guid idUser);
 
 
     }
