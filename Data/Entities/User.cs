@@ -52,7 +52,7 @@ namespace BE_Healthcare.Data.Entities
         public string? longtitude { get; set; } = null!;
         public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; } = null!;
-
+        
 
     }
 }

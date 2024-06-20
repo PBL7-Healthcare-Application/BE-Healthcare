@@ -19,6 +19,7 @@ namespace BE_Healthcare.Models
         public int NumberOfComment { get; set; }
 
         public string? NameClinic { get; set; } = null!;
-
+        public string? latitude { get; set; } = null!;
+        public string? longtitude { get; set; } = null!;
     }
 }

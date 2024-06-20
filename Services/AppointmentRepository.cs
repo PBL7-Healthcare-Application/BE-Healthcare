@@ -380,7 +380,7 @@ namespace BE_Healthcare.Services
                         NameClinic = a.Doctor.NameClinic,
                         Price = a.Price,
                         IsRating = a.IsRating,
-
+                        Reason = a.Reason,
                     });
                     return new ApiResponse
                     {
@@ -702,7 +702,8 @@ namespace BE_Healthcare.Services
 
                     NameDoctor = appointment.Doctor.User.Name,
                     AvatarDoctor = appointment.Doctor.User.Avatar,
-                    MedicalSpecialty = medicalSpecialtyName
+                    MedicalSpecialty = medicalSpecialtyName,
+                    Reason = appointment.Reason,
                 };
 
                 return new ApiResponse

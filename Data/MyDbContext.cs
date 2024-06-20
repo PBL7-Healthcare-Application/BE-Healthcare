@@ -171,7 +171,7 @@ namespace BE_Healthcare.Data
                     IdUser = Guid.Parse("6d2fc8cc-cbfa-401d-aef5-2d1588751d32"),
                     WorkingTimeStart = "08:00",
                     WorkingTimeEnd = "17:00",
-                    DurationPerAppointment = 1,
+                    DurationPerAppointment = 60,
                     Description = "Bác sĩ Chuyên khoa I Trần Thị Hoài Hương nguyên là Phó Trưởng khoa Lâm sàng" +
                     " 1 tại Bệnh viện Da liễu TP.HCM.\r\n\r\nVề chuyên môn, bác sĩ chuyên thăm khám và điều trị các" +
                     " vấn đề bệnh lý chuyên sâu về da, bệnh da ở trẻ cũng như các phương pháp thẩm mỹ da liễu." +
@@ -191,7 +191,7 @@ namespace BE_Healthcare.Data
                     IdUser = Guid.Parse("9f12c430-de83-4910-92ac-704bffefaab2"),
                     WorkingTimeStart = "07:00",
                     WorkingTimeEnd = "17:00",
-                    DurationPerAppointment = 1,
+                    DurationPerAppointment = 60,
                     Description = "Tiến sĩ - Bác sĩ Vũ Thái Hà có gần 20 năm kinh nghiệm trong việc tư vấn và điều trị" +
                     " các vấn đề về da liễu như nám, mụn, lão hóa da,…\r\n\r\nVề quá trình đào tạo, bác sĩ tốt nghiệp " +
                     "Bác sĩ nội trú Da liễu, tốt nghiệp bậc Thạc sĩ tại trường Đại học Y Hà Nội. Sau đó, bác sĩ có khoảng" +
@@ -215,7 +215,7 @@ namespace BE_Healthcare.Data
                     IdUser = Guid.Parse("efaaf180-4211-45d1-9b08-f085f19cb451"),
                     WorkingTimeStart = "08:00",
                     WorkingTimeEnd = "18:00",
-                    DurationPerAppointment = 1,
+                    DurationPerAppointment = 60,
                     Description = "Tiến sĩ - Bác sĩ Trần Thịnh có gần 40 năm kinh nghiệm thăm khám và điều trị các vấn đề Da liễu." +
                     " Tiến sĩ nguyên là Trưởng khoa Da liễu - Bệnh viện Da liễu TP.HCM và hiện đang là người điều hành phòng khám" +
                     " Chuyên khoa Da liễu Trần Thịnh.\r\n\r\nVề quá trình đào tạo, tiến sĩ tốt nghiệp chuyên ngành Da liễu tại " +

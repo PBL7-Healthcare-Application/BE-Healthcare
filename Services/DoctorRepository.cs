@@ -292,7 +292,9 @@ namespace BE_Healthcare.Services
                 NumberOfComment = Doctor.NumberOfComment,
                 RateAverage = Doctor.RateAverage,
                 BusinessLicense = Doctor.BusinessLicense,
-                StatusVerified = Doctor.StatusVerified
+                StatusVerified = Doctor.StatusVerified,
+                longtitude = Doctor.User.longtitude,
+                latitude = Doctor.User.latitude
             };
 
             if (list != null)

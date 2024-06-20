@@ -661,7 +661,7 @@ namespace BE_Healthcare.Services
             const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string lowerChars = "abcdefghijklmnopqrstuvwxyz";
             const string digitChars = "0123456789";
-            const string specialChars = "!@#$%^&()_+";
+            const string specialChars = "@#_";
 
             var random = new Random();
             var result = new StringBuilder(length);

@@ -11,6 +11,7 @@ namespace BE_Healthcare.Models
         public double? Price { get; set; }
         public string? Address { get; set; } = null!;
         public string? NameClinic { get; set; } = null!;
+        public string? Reason { get; set; } = null;
 
         public int IdAppointment { get; set; }
         public int? Status { get; set; } = null!;    //Status: 1 - Approved; 2 - Reject; 3 - Completed
