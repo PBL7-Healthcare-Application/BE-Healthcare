@@ -36,6 +36,7 @@
         public static int TYPEMAILHTML_FOR_CANCELLING_APPOINTMENT = 2;
         public static int TYPEMAILHTML_FOR_APPROVED_APPLICATION = 3;
         public static int TYPEMAILHTML_FOR_RESCHEDULING_APPOINTMENT = 4;
+        public static int OTP = 5;
 
     }
 }

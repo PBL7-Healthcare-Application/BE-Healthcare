@@ -9,7 +9,8 @@ namespace BE_Healthcare.Services
             MessageHTMLForBookingSuccessfullyModel? messageBookSuccessfully = null,
             MessageHTMLForCancellingAppointmentModel? messageCancelAppointment = null,
             MessageHTMLForApprovedApplicationModel? messageApprovedApplication = null,
-            MessageHTMLForReschedulingAppointmentModel? messageRescheduleAppointment = null);
+            MessageHTMLForReschedulingAppointmentModel? messageRescheduleAppointment = null,
+            MessageModel? messageModel = null);
 
     }
 }
