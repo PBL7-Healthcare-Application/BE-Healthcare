@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Appointment Confirmation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .container {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 5px;
+            line-height: 1.6;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+            .header a {
+                font-size: 1.4em;
+                color: #405175;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+        .content {
+            background-color: #F7F9FC;
+            padding: 20px;
+            border-radius: 5px;
+            line-height: 1.8;
+            text-align: center; /* Center-align the content */
+        }
+
+        .button {
+            background-color: #00bc69;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .otp {
+            background: linear-gradient(to right, #00bc69 0, #00bc88 50%, #00bca8 100%);
+            margin: 0 auto;
+            width: max-content;
+            padding: 0 10px;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .footer {
+            color: #aaa;
+            font-size: 0.8em;
+            line-height: 1;
+            font-weight: 300;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .email-info {
+            color: #666666;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 18px;
+            padding-bottom: 6px;
+            text-align: center;
+        }
+
+            .email-info a {
+                text-decoration: none;
+                color: #00bc69;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a>Email Verification</a>
+        </div>
+        <p style="color: #000000;">
+        <p style="color: #000000; font-weight:600">Dear Sir/Madam</p>
+        For security purposes, please verify your identity by providing the following One-Time Password (OTP).OTP is valid for 2 minutes.</p>
+        <div class="content">
+            <p style="color: #000000; font-weight:600">Your One-Time Password (OTP) for verification is:</p>
+            <div class="otp">
+                <p>[[${otp}]]</p>
+            </div>
+        </div>
+        <hr style="border: none; border-top: 1px solid #eee;" />
+        <div class="footer">
+            <p>For more information about your appointment, visit <a href="mailto:enclinicapplication@gmail.com">enclinicapplication@gmail.com</a></p>
+        </div>
+        <div class="email-info">
+            <span></span>
+        </div>
+        <div class="email-info">
+            &copy; 2024 Enclinic Healthcare. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>
