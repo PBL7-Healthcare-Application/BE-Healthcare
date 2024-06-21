@@ -445,8 +445,10 @@ namespace BE_Healthcare.Services
         }
         private void SendOTPToEmail(string subject, string email, string token, string content)
         {
-            var message = new MessageModel(new string[] { email! }, subject, token + content);
-            _emailService.SendEmail(message);
+            
+            var message = new MessageModel(new string[] { email! }, subject, token);
+            _emailService.SendEmailHTML(AppNumber.OTP,null,null,null,null, message);
+            //_emailService.SendEmail(message);
         }
         private void SendRandomPassToEmail(string subject, string email, string pass, string content)
         {

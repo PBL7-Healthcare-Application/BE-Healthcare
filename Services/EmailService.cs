@@ -53,7 +53,8 @@ namespace BE_Healthcare.Services
             MessageHTMLForBookingSuccessfullyModel? messageBookSuccessfully = null, 
             MessageHTMLForCancellingAppointmentModel? messageCancelAppointment = null,
              MessageHTMLForApprovedApplicationModel? messageApprovedApplication = null,
-             MessageHTMLForReschedulingAppointmentModel? messageRescheduleAppointment = null)
+             MessageHTMLForReschedulingAppointmentModel? messageRescheduleAppointment = null,
+             MessageModel? messageModel = null)
         {
             //ForBookingSuccessfully
             if(TypeMailHTML == AppNumber.TYPEMAILHTML_FOR_BOOKING_SUCCESSFULLY && messageBookSuccessfully != null)
@@ -137,17 +138,37 @@ namespace BE_Healthcare.Services
                 return _message;
 
             }
+            if (TypeMailHTML == AppNumber.OTP && messageModel != null)
+            {
+                MailMessage _message = new MailMessage
+                {
+                    From = new MailAddress(_emailConfig.From),
+                    Subject = messageModel.Subject,
+                    IsBodyHtml = true
+                };
+
+                foreach (var toAddress in messageModel.To)
+                {
+                    _message.To.Add(new MailAddress(toAddress.Address));
+                }
+                string htmlContent = LoadHtmlTemplate("Template//OTP.html");
+                _message.Body = ReplacePlaceholdersForOTP(htmlContent, messageModel);
+
+                return _message;
+
+            }
 
             return null;
         }
-        public void SendEmailHTML(int TypeMailHTML, 
-            MessageHTMLForBookingSuccessfullyModel? messageBookSuccessfully = null, 
+        public void SendEmailHTML(int TypeMailHTML,
+            MessageHTMLForBookingSuccessfullyModel? messageBookSuccessfully = null,
             MessageHTMLForCancellingAppointmentModel? messageCancelAppointment = null,
             MessageHTMLForApprovedApplicationModel? messageApprovedApplication = null,
-            MessageHTMLForReschedulingAppointmentModel? messageRescheduleAppointment = null)
+            MessageHTMLForReschedulingAppointmentModel? messageRescheduleAppointment = null,
+            MessageModel? messageModel = null)
         {
             var emailMessage = CreateEmailMessageHTML(TypeMailHTML, messageBookSuccessfully, messageCancelAppointment, messageApprovedApplication,
-                messageRescheduleAppointment);
+                messageRescheduleAppointment,messageModel);
 
             using ( var smtpClient = new SmtpClient("smtp.gmail.com")) //config smtp client
             {
@@ -209,6 +230,11 @@ namespace BE_Healthcare.Services
             template = template.Replace("[[${nameUser}]]", message.NameUser.ToString());
             template = template.Replace("[[${emailUser}]]", message.EmailUser.ToString());
 
+            return template;
+        }
+        private string ReplacePlaceholdersForOTP(string template, MessageModel message)
+        {
+            template = template.Replace("[[${otp}]]", message.Content.ToString());
             return template;
         }
         private string ReplacePlaceholdersForReschedulingAppointment(string template, MessageHTMLForReschedulingAppointmentModel message)
