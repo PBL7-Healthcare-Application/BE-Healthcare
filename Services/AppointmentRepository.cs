@@ -819,7 +819,7 @@ namespace BE_Healthcare.Services
         }
         private IQueryable<Appointment> FilteringListAppointment(IQueryable<Appointment> list, int? Status = null, DateTime? date = null, string? search = null)
         {
-            if (Status != null && Status > 0 && Status <= 3)
+            if (Status != null && Status > 0 && Status <= 4)
             {
                 list = list.Where(d => d.Status == Status);
             }
@@ -853,7 +853,7 @@ namespace BE_Healthcare.Services
 
                 #region Sorting
 
-                listAppointment = listAppointment.OrderByDescending(d => d.CreatedAt);
+                listAppointment = listAppointment.OrderByDescending(d => d.Date);
                 #endregion
                 int TotalItems = listAppointment.Count();
 

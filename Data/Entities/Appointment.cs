@@ -12,7 +12,7 @@ namespace BE_Healthcare.Data.Entities
         [Column(TypeName = "Date")]
         public DateTime Date { get; set; }
         public string? Issue { get; set; } = null;
-        public int? Status { get; set; }    //Status: 1 - Approved; 2 - Cancels; 3 - Completed
+        public int? Status { get; set; }    //Status: 1 - Approved; 2 - Cancels; 3 - Completed; 4 - Waiting
         public bool Type { get; set; } = false!;    //False - Offline; True - Online
 
         public Guid? IdDoctor { get; set; }
