@@ -326,7 +326,8 @@ namespace BE_Healthcare.Services
                     if (timeNow >= endTime) return 0;
 
                     TimeSpan totalHours = endTime - timeNow;
-                    availableTimeSlots = (int)totalHours.TotalHours / DurationPerAppointment;
+                    
+                    availableTimeSlots = (int)totalHours.TotalHours / (DurationPerAppointment/60);
 
                 }
                 else
@@ -334,7 +335,7 @@ namespace BE_Healthcare.Services
                     TimeSpan startTime = TimeSpan.Parse(WorkingTimeStart);
                     TimeSpan endTime = TimeSpan.Parse(WorkingTimeEnd);
                     TimeSpan totalHours = endTime - startTime;
-                    availableTimeSlots = (int)totalHours.TotalHours / DurationPerAppointment;
+                    availableTimeSlots = (int)totalHours.TotalHours / (DurationPerAppointment / 60) ;
 
                 }
 
@@ -359,7 +360,7 @@ namespace BE_Healthcare.Services
                                 if (TimeSpan.Parse(i.StartTime) > timeNow)
                                 {
                                     TimeSpan Hours_Busy = TimeSpan.Parse(i.EndTime) - TimeSpan.Parse(i.StartTime);
-                                    int SlotBusy = (int)Hours_Busy.TotalHours / DurationPerAppointment;
+                                    int SlotBusy = (int)Hours_Busy.TotalHours / (DurationPerAppointment/60);
                                     TimeBusy += SlotBusy;
                                 }
                             }
@@ -369,7 +370,7 @@ namespace BE_Healthcare.Services
                             foreach (var i in listTimeOffBusy)
                             {
                                 TimeSpan Hours_Busy = TimeSpan.Parse(i.EndTime) - TimeSpan.Parse(i.StartTime);
-                                int SlotBusy = (int)Hours_Busy.TotalHours / DurationPerAppointment;
+                                int SlotBusy = (int)Hours_Busy.TotalHours / (DurationPerAppointment / 60);
                                 TimeBusy += SlotBusy;
                             }
                         }
@@ -391,20 +392,20 @@ namespace BE_Healthcare.Services
                             if (TimeSpan.Parse(TimeOffBreak.StartTime) > timeNow)
                             {
                                 TimeSpan Hours_Break = TimeSpan.Parse(TimeOffBreak.EndTime) - TimeSpan.Parse(TimeOffBreak.StartTime);
-                                int SlotBreak = (int)Hours_Break.TotalHours / DurationPerAppointment;
+                                int SlotBreak = (int)Hours_Break.TotalHours / (DurationPerAppointment / 60);
                                 TimeBreak += SlotBreak;
                             }
                             else if(TimeSpan.Parse(TimeOffBreak.StartTime) <= timeNow && TimeSpan.Parse(TimeOffBreak.EndTime) > timeNow)
                             {
                                 TimeSpan Hours_Break = TimeSpan.Parse(TimeOffBreak.EndTime) - timeNow;
-                                int SlotBreak = (int)Hours_Break.TotalHours / DurationPerAppointment;
+                                int SlotBreak = (int)Hours_Break.TotalHours / (DurationPerAppointment / 60);
                                 TimeBreak += SlotBreak;
                             }
                         }
                         else
                         {
                             TimeSpan Hours_Break = TimeSpan.Parse(TimeOffBreak.EndTime) - TimeSpan.Parse(TimeOffBreak.StartTime);
-                            int SlotBreak = (int)Hours_Break.TotalHours / DurationPerAppointment;
+                            int SlotBreak = (int)Hours_Break.TotalHours / (DurationPerAppointment / 60) ;
                             TimeBreak += SlotBreak;
                         }
                         availableTimeSlots -= TimeBreak;

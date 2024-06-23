@@ -60,7 +60,7 @@ namespace BE_Healthcare.Services
                     IdUser = p.IdUser,
                     Name = p.Name,
                     Email = p.Email,
-                    CreatedDate = p.CreatedDate,
+                    CreatedAt = p.CreatedAt,
                     Role = p.Role.Name,
                     IsLocked = p.IsLocked,
                 });

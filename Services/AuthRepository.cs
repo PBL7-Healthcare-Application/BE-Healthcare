@@ -474,7 +474,7 @@ namespace BE_Healthcare.Services
                     OTPCreatedAt = DateTime.UtcNow,
                     IsVerified = false,
                     idRole = 1,
-                    CreatedDate = DateTime.UtcNow,
+                    CreatedAt = DateTime.UtcNow,
 
                 };
                 _context.Users.Add(_user);
