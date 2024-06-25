@@ -3,6 +3,7 @@ using System;
 using BE_Healthcare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BE_Healthcare.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623191100_Collect_Data_v4__MedicalRecord")]
+    partial class Collect_Data_v4__MedicalRecord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +90,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 1,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2414),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(727),
                             Date = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "16:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -104,7 +107,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 2,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2423),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(736),
                             Date = new DateTime(2024, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "16:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -119,7 +122,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 3,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2427),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(741),
                             Date = new DateTime(2024, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "10:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -134,7 +137,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 4,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2431),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(745),
                             Date = new DateTime(2024, 6, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "10:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -149,7 +152,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 5,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2435),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(749),
                             Date = new DateTime(2024, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "10:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c986"),
@@ -164,7 +167,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 6,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2439),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(753),
                             Date = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "11:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -179,7 +182,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 7,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2442),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(757),
                             Date = new DateTime(2024, 6, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "10:00",
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
@@ -194,7 +197,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 8,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2445),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(761),
                             Date = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "10:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -209,7 +212,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 9,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2449),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(765),
                             Date = new DateTime(2024, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "09:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -224,7 +227,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 10,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2453),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(769),
                             Date = new DateTime(2024, 6, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "14:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -239,7 +242,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdAppointment = 11,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2457),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(773),
                             Date = new DateTime(2024, 6, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "15:00",
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
@@ -292,7 +295,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 32,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2028),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(329),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c996"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070466/lxlatebu64hmwutdth6b.png",
                             Name = "Was awarded the title of Professor",
@@ -302,7 +305,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 1,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2034),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(334),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -312,7 +315,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 2,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2036),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(337),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -322,7 +325,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 31,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2038),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(339),
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070466/lxlatebu64hmwutdth6b.png",
                             Name = "recognized the title of Associate Professor of Medicine",
@@ -332,7 +335,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 3,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2040),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(342),
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -342,7 +345,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 4,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2043),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(345),
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -352,7 +355,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 5,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2045),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(347),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -362,7 +365,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 6,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2047),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(350),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -372,7 +375,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 7,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2049),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(352),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -382,7 +385,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 8,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2051),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(355),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -392,7 +395,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 9,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2120),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(359),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -402,7 +405,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 10,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2123),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(362),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -412,7 +415,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 11,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2125),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(364),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c986"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -422,7 +425,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 12,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2127),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(367),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c986"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -432,7 +435,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 13,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2129),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(371),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c987"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -442,7 +445,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 14,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2132),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(373),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c987"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -452,7 +455,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 15,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2134),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(376),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c988"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -462,7 +465,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 16,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2137),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(378),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c988"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -472,7 +475,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 17,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2139),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(445),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c989"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -482,7 +485,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 18,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2141),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(449),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c989"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -492,7 +495,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 19,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2143),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(451),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c990"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -502,7 +505,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 20,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2146),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(454),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c990"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -512,7 +515,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 21,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2148),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(456),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c991"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -522,7 +525,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 22,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2150),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(458),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c991"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -532,7 +535,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 23,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2152),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(461),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c992"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -542,7 +545,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 24,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2156),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(464),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c992"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -552,7 +555,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 25,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2158),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(466),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c993"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -562,7 +565,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 26,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2160),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(469),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c993"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -572,7 +575,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 27,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2163),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(471),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c994"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -582,7 +585,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 28,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2165),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(474),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c994"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -592,7 +595,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 29,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2167),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(476),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c995"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070512/f2ntd2nq4nlbesvsvc17.png",
                             Name = "Was awarded the title of Professor",
@@ -602,7 +605,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdCertificate = 30,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2169),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(479),
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c995"),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070549/memekjg2ebtn91gxsib2.png",
                             Name = "Medical Practice License",
@@ -688,12 +691,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979241/gmdzkgdzwsdzvhawwn9a.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1903),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(198),
                             Description = "Dr. John Smith is a seasoned Dentistry specialist with a wealth of experience in oral health care. Formerly the Deputy Head of Clinical Department at a prominent dentistry Hospital in Ho Chi Minh City, Dr. Smith is renowned for his expertise in diagnosing and treating complex dental conditions, particularly in pediatric dentistry and various cosmetic dentistry procedures.\n\nDr. Smith is a familiar face at dentistry conferences and seminars, contributing significantly to the field with over 20 years of professional experience. Known for his compassionate and dedicated approach, he is always available to advise and support patients on their medical concerns tailored to individual needs",
                             DurationPerAppointment = 60,
                             IdSpecialty = 7,
                             IdUser = new Guid("6d2fc8cc-cbfa-401d-aef5-2d1588751d32"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1918),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(213),
                             IsVerifiedInfoCertificate = false,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -710,12 +713,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979279/d5cf4lohbymvfftgopmo.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1925),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(216),
                             Description = "Emily Johnson, M.D. is a graduate of De La Salle Medical & Health Sciences Institute, Doctor of Medicine. He had his Pediatric residency training at De La Salle University Medical Center. During his residency training, he wrote an award-winning case report and research. He also became the department`s Chief Resident. Dr. Macapinlac is now a General Pediatrician and the doctor behind “Pedia On-The-Go” Facebook page",
                             DurationPerAppointment = 60,
                             IdSpecialty = 5,
                             IdUser = new Guid("9f12c430-de83-4910-92ac-704bffefaab2"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1929),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(220),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -732,12 +735,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979325/gyr3max086lrfcy8ej7u.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1930),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(222),
                             Description = "Dr. Michael Brown has always been fascinated by technology involved in radiotherapy. After graduating from the University of the Philippines Manila, he spent his internship at the Philippine General Hospital, where he was recognized as the most outstanding intern in orthopedics and outstanding intern in neurosurgery. He then moved to four years of residency training in one of the Philippines` biggest hospitals, the Makati Medical Center. After residency, he served as Chief Resident of Radiation Oncology for a year before heading to Davao Doctors Hospital.He currently is a Philippine Medical Association Member, fellow of the Philippine College of Radiology Member, and diplomate of the Philippine Radiation Oncology Society.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 1,
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb451"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1934),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(226),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -754,12 +757,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979241/gmdzkgdzwsdzvhawwn9a.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1935),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(228),
                             Description = "Sarah Davis earned her Doctor of Medicine and Master in Business Administration (MD-MBA) double degree and her Bachelor of Science in Health Sciences degree from the Ateneo de Manila University where she currently serves as a professor for global health and health policy.She leads both Alaga Health Inc. and Experto PlayLabs International Consultancy Inc. as Chief Operating Officer.  As a research consultant, she has previously worked with Health Care Without Harm - Asia, Mark Johnston Hospital, Global Center for Good Governance in Tobacco Control, Epimetrics, the Ateneo Center for Health Evidence, Action & Leadership (A-HEALS), the Department of Health (DOH), United States Agency for International Development (USAID), and the University of the Philippines",
                             DurationPerAppointment = 60,
                             IdSpecialty = 10,
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb452"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1939),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(232),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -775,12 +778,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979279/d5cf4lohbymvfftgopmo.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1940),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(233),
                             Description = "David Wilson was formerly Chief Medical Officer, Calamba Medical Center, serving from Jan 2018 to 2022. She`s also the founding board member of the Philippine Infectious Diseases Society of Obstetrics and Gynecology. She earned her post-doctoral Fellowship on HIV/OB-GYN Infections from The Miriam Hospital-Brown University, Providence RI under the Fogarty Grant Training (NIH) scholarship. She graduated with a medical degree from the UP College of Medicine and completed her residency training in Obstetrics and Gynecology at the Philippine General Hospital (UP-PGH). She also completed her MBA in Health at the Ateneo Graduate School of Business.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 6,
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb453"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1944),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(238),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -797,12 +800,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c986"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979325/gyr3max086lrfcy8ej7u.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1945),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(239),
                             Description = "Laura Martinez graduated with a Bachelor of Science degree in Human Biology and obtained her medical degree from the De La Salle Health Sciences Institute. She is currently taking up her residency training as an Internal Medicine doctor at the Chinese General Hospital and Medical Center.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 6,
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb454"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1949),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(243),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -819,12 +822,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c987"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979241/gmdzkgdzwsdzvhawwn9a.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1950),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(245),
                             Description = "Robert Taylor is a graduate of the University of the Philippines College of Medicine. He completed his residency training in Internal Medicine at the Philippine General Hospital. He is a diplomate of the Philippine College of Physicians and a fellow of the Philippine Society of Endocrinology, Diabetes, and Metabolism. He is currently a consultant at the Makati Medical Center and the Asian Hospital and Medical Center. He is also a faculty member of the Ateneo School of Medicine and Public Health. He is a member of the Philippine Medical Association, the Philippine Society of Endocrinology, Diabetes, and Metabolism, and the American Association of Clinical Endocrinologists. He is also a member of the Philippine Society of General Internal Medicine and the Philippine Society of Parenteral and Enteral Nutrition",
                             DurationPerAppointment = 60,
                             IdSpecialty = 6,
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb455"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1954),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(250),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -840,12 +843,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c988"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979279/d5cf4lohbymvfftgopmo.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1954),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(251),
                             Description = "Jessica Moore graduated from the University of Sto. Tomas with a degree in Doctor of Medicine. For her undergraduate studies, she pursued BS in Psychology at the same university. he is currently a diplomate of the Philippine Heart Association and a fellow of the Philippine College of Physicians.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 6,
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb456"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1959),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(256),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -861,12 +864,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c989"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979325/gyr3max086lrfcy8ej7u.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1960),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(257),
                             Description = "Dr. Alice Morgan has always been fascinated by advancements in dermatological technology. After graduating from the University of the Philippines Manila, she completed her internship at the Philippine General Hospital, where she was recognized as the most outstanding intern in dermatology and outstanding intern in internal medicine. She then pursued four years of residency training at one of the Philippines` largest hospitals, the Makati Medical Center. After her residency, she served as Chief Resident of Dermatology for a year before joining Davao Doctors Hospital. She is currently a member of the Philippine Medical Association, a fellow of the Philippine Dermatological Society, and a diplomate of the Philippine Board of Dermatology.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 6,
                             IdUser = new Guid("e4a0f9d1-f914-4d85-bfe1-1dc5c4507a6f"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1964),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(261),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -882,12 +885,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c990"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979241/gmdzkgdzwsdzvhawwn9a.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1964),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(262),
                             Description = "Dr. Oliver White was formerly Chief Medical Officer at Calamba Medical Center, serving from January 2018 to 2022. He is also a founding board member of the Philippine Society of Internal Medicine. He earned his post-doctoral Fellowship in Infectious Diseases from The Miriam Hospital-Brown University, Providence RI, under the Fogarty Grant Training (NIH) scholarship. He graduated with a medical degree from the UP College of Medicine and completed his residency training in Internal Medicine at the Philippine General Hospital (UP-PGH). He also completed his MBA in Health at the Ateneo Graduate School of Business.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 1,
                             IdUser = new Guid("b2d5a7d6-dab1-489a-8db5-2c9483a7d948"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1968),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(267),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -903,12 +906,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c991"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979279/d5cf4lohbymvfftgopmo.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1969),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(268),
                             Description = "Dr. Sophie Harris graduated with a Bachelor of Science degree in Human Biology and obtained her medical degree from the De La Salle Health Sciences Institute. She is currently taking up her residency training as a Dermatology doctor at the Chinese General Hospital and Medical Center.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 6,
                             IdUser = new Guid("f76c3b89-8fcd-4e5f-abc1-39c13fb8a97d"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1973),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(272),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -924,12 +927,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c992"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979325/gyr3max086lrfcy8ej7u.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1974),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(273),
                             Description = "Dr. Henry Walker is a graduate of the University of the Philippines College of Medicine. He completed his residency training in Pediatrics at the Philippine General Hospital. He is a diplomate of the Philippine Pediatric Society and a fellow of the Philippine Society of Pediatric Gastroenterology, Hepatology, and Nutrition. He is currently a consultant at the Makati Medical Center and the Asian Hospital and Medical Center. He is also a faculty member of the Ateneo School of Medicine and Public Health. He is a member of the Philippine Medical Association, the Philippine Pediatric Society, and the American Academy of Pediatrics. He is also a member of the Philippine Society of Pediatric Gastroenterology, Hepatology, and Nutrition and the Philippine Society of Newborn Medicine.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 4,
                             IdUser = new Guid("cf9b2f8e-59c9-4f09-8fa1-d624fd0d5bcb"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1978),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(277),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -945,12 +948,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c993"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979241/gmdzkgdzwsdzvhawwn9a.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1979),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(278),
                             Description = "Dr. Mia Robinson graduated from the University of Sto. Tomas with a Doctor of Medicine degree. For her undergraduate studies, she pursued a BS in Psychology at the same university. She is currently a diplomate of the Philippine Heart Association and a fellow of the Philippine College of Physicians.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 10,
                             IdUser = new Guid("4a9dc58e-282a-4f92-9b0d-bb1a707c3f7b"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1983),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(285),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -966,12 +969,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c994"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979279/d5cf4lohbymvfftgopmo.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1984),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(285),
                             Description = "Dr. James Clark, M.D., is a graduate of De La Salle Medical & Health Sciences Institute with a Doctor of Medicine degree. He completed his residency training in General Surgery at De La Salle University Medical Center. During his residency training, he wrote an award-winning case report and research. He also served as the department`s Chief Resident. Dr. Clark is now a General Surgeon and the doctor behind the “Surgery On-The-Go” Facebook page.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 2,
                             IdUser = new Guid("d6a4c3e8-9111-4bc2-b0b9-e84b4dfb5d9e"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1988),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(289),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -987,12 +990,12 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c995"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979325/gyr3max086lrfcy8ej7u.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1988),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(290),
                             Description = "Dr. Ava Thompson has always been fascinated by advancements in cardiovascular technology. After graduating from the University of the Philippines Manila, she spent her internship at the Philippine General Hospital, where she was recognized as the most outstanding intern in cardiology and outstanding intern in internal medicine. She then moved to four years of residency training in one of the Philippines` biggest hospitals, the Makati Medical Center. After residency, she served as Chief Resident of Cardiology for a year before heading to Davao Doctors Hospital. She is currently a member of the Philippine Medical Association, a fellow of the Philippine College of Physicians, and a diplomate of the Philippine Heart Association.",
                             DurationPerAppointment = 60,
                             IdSpecialty = 10,
                             IdUser = new Guid("1f2b4a9d-793e-4c89-9fdf-3d1e684d816f"),
-                            IsVerifiedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1994),
+                            IsVerifiedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(295),
                             IsVerifiedInfoCertificate = true,
                             IsVerifiedInfoTrainingProcess = true,
                             IsVerifiedInfoWorkingProcess = true,
@@ -1008,7 +1011,7 @@ namespace BE_Healthcare.Migrations
                         {
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c996"),
                             BusinessLicense = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979325/gyr3max086lrfcy8ej7u.webp",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1995),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(295),
                             IdSpecialty = 10,
                             IdUser = new Guid("1ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             IsVerifiedInfoCertificate = false,
@@ -1067,7 +1070,7 @@ namespace BE_Healthcare.Migrations
                         {
                             IdMedicalRecord = 1,
                             Content = "The patient's face is seriously inflamed, so he should drink water regularly. Avoid eating red meat because it contains inflammatory factors",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2528),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(845),
                             Date = new DateTime(2024, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Height = 170,
                             IdAppointment = 2,
@@ -1075,45 +1078,6 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("9117c626-c3d0-4d14-b345-d70d85268623"),
                             Temperature = 36.700000000000003,
                             Weight = 67.200000000000003
-                        },
-                        new
-                        {
-                            IdMedicalRecord = 2,
-                            Content = "The patient's face is seriously inflamed, so he should drink water regularly. Avoid eating red meat because it contains inflammatory factors",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2535),
-                            Date = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Height = 171,
-                            IdAppointment = 3,
-                            IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
-                            IdUser = new Guid("5ba4b5ec-1ad8-4676-8871-122749af64e4"),
-                            Temperature = 36.5,
-                            Weight = 69.0
-                        },
-                        new
-                        {
-                            IdMedicalRecord = 3,
-                            Content = "The patient's face is seriously inflamed, so he should drink water regularly. Avoid eating red meat because it contains inflammatory factors",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2538),
-                            Date = new DateTime(2024, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Height = 170,
-                            IdAppointment = 4,
-                            IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
-                            IdUser = new Guid("5ba4b5ec-1ad8-4676-8871-122749af64e4"),
-                            Temperature = 36.700000000000003,
-                            Weight = 67.200000000000003
-                        },
-                        new
-                        {
-                            IdMedicalRecord = 4,
-                            Content = "The patient's face is seriously inflamed, so he should drink water regularly. Avoid eating red meat because it contains inflammatory factors",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2541),
-                            Date = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Height = 173,
-                            IdAppointment = 5,
-                            IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
-                            IdUser = new Guid("3ba4b5ec-1ad8-4676-8871-122749af64e4"),
-                            Temperature = 37.5,
-                            Weight = 71.0
                         });
                 });
 
@@ -1141,112 +1105,112 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdSpecialty = 1,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(675),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8877),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718981095/yzdx4mxo3nsso9fflv4l.webp",
                             Name = "Internal Medicine"
                         },
                         new
                         {
                             IdSpecialty = 2,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(689),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8892),
                             Image = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718981242/codte5bzrbjlmhdboe18.webp",
                             Name = "General Surgery"
                         },
                         new
                         {
                             IdSpecialty = 3,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(690),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8893),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/san-phu-khoa.png",
                             Name = "Obstetrics and Gynecology"
                         },
                         new
                         {
                             IdSpecialty = 4,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(691),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8895),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/nhi-khoa.png",
                             Name = "Pediatrics"
                         },
                         new
                         {
                             IdSpecialty = 5,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(692),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8896),
                             Image = "https://res.cloudinary.com/dbtam9pnc/image/upload/v1713413379/Doctor/gigu9hqbvlrdth4y77pv.webp",
                             Name = "Emergency Medicine"
                         },
                         new
                         {
                             IdSpecialty = 6,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(693),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8897),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/da-lieu.png",
                             Name = "Dermatology"
                         },
                         new
                         {
                             IdSpecialty = 7,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(694),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8898),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/nha-khoa.png",
                             Name = "Dentistry"
                         },
                         new
                         {
                             IdSpecialty = 8,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(695),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8899),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/2022/03/1648190355_623d6393ac9b40.00770044.jpg",
                             Name = "Plastic Surgery"
                         },
                         new
                         {
                             IdSpecialty = 10,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(696),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8901),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/tim-mach.png",
                             Name = "Cardiology"
                         },
                         new
                         {
                             IdSpecialty = 11,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(697),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8902),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/khoa-phoi.png",
                             Name = "Pulmonology"
                         },
                         new
                         {
                             IdSpecialty = 12,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(698),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8903),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/2022/03/1648192254_623d6afed218d0.32746408.jpg",
                             Name = "Gastroenterology"
                         },
                         new
                         {
                             IdSpecialty = 13,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(699),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8904),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/huyet-hoc.png",
                             Name = "Hematology"
                         },
                         new
                         {
                             IdSpecialty = 14,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(700),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8905),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/specialties/khoa-noi-tiet.png",
                             Name = "Endocrinology"
                         },
                         new
                         {
                             IdSpecialty = 15,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(701),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8906),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/2022/03/1648192124_623d6a7cca01f2.62072083.jpg",
                             Name = "Public Health"
                         },
                         new
                         {
                             IdSpecialty = 17,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(702),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8907),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/2022/09/1663834655_632c1a1f872a42.63080420.jpg",
                             Name = "Psychiatry"
                         },
                         new
                         {
                             IdSpecialty = 18,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(702),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(8908),
                             Image = "https://cdn-healthcare.hellohealthgroup.com/2022/03/1648189960_623d6208833488.26923360.jpg",
                             Name = "Traditional Medicine"
                         });
@@ -1289,7 +1253,7 @@ namespace BE_Healthcare.Migrations
                         {
                             IdRating = 1,
                             Comment = "The quality of examination service is very good.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2483),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(798),
                             IdAppointment = 3,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             IdUser = new Guid("85f97fe1-83e4-4dcc-91ca-367cb29f148e"),
@@ -1298,8 +1262,8 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdRating = 2,
-                            Comment = "The medical staff is very attentive and caring.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2489),
+                            Comment = "The doctor is very enthusiastic.",
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(805),
                             IdAppointment = 4,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             IdUser = new Guid("bfa4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1309,7 +1273,7 @@ namespace BE_Healthcare.Migrations
                         {
                             IdRating = 3,
                             Comment = "Good service.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2492),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(808),
                             IdAppointment = 5,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c986"),
                             IdUser = new Guid("bfa4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1318,8 +1282,8 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdRating = 4,
-                            Comment = "The waiting time is not too long, very satisfied with the service.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2495),
+                            Comment = "Good service.",
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(810),
                             IdAppointment = 98,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             IdUser = new Guid("1ba4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1329,7 +1293,7 @@ namespace BE_Healthcare.Migrations
                         {
                             IdRating = 5,
                             Comment = "Good service.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2498),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(813),
                             IdAppointment = 98,
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             IdUser = new Guid("2ba4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1338,8 +1302,8 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdRating = 6,
-                            Comment = "The prices are reasonable, matching the quality of the service.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2500),
+                            Comment = "Good service.",
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(817),
                             IdAppointment = 98,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             IdUser = new Guid("3ba4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1348,8 +1312,8 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdRating = 7,
-                            Comment = "The clinic is clean, and the equipment is modern.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2503),
+                            Comment = "The doctor is very enthusiastic.",
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(819),
                             IdAppointment = 4,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             IdUser = new Guid("5ba4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1358,8 +1322,8 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdRating = 8,
-                            Comment = "Good service.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2505),
+                            Comment = "The doctor is very enthusiastic.",
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(822),
                             IdAppointment = 4,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             IdUser = new Guid("6ba4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1368,8 +1332,8 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdRating = 9,
-                            Comment = "Treatment service is very good.",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2508),
+                            Comment = "The doctor is very enthusiastic.",
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(825),
                             IdAppointment = 4,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             IdUser = new Guid("7ba4b5ec-1ad8-4676-8871-122749af64e4"),
@@ -1528,7 +1492,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 1,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2205),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(512),
                             EndYear = 1989,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Specialist Doctor Graduation",
@@ -1539,7 +1503,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 2,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2213),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(522),
                             EndYear = 1990,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Major = "Intern",
@@ -1550,7 +1514,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 3,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2216),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(525),
                             EndYear = 1989,
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             Major = "Specialist Doctor Graduation",
@@ -1561,7 +1525,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 4,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2219),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(528),
                             EndYear = 1990,
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             Major = "Intern",
@@ -1572,7 +1536,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 5,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2221),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(530),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             Major = "Specialist Doctor Graduation",
@@ -1583,7 +1547,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 6,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2224),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(533),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             Major = "Intern",
@@ -1594,7 +1558,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 7,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2226),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(536),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             Major = "Specialist Doctor Graduation",
@@ -1605,7 +1569,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 8,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2229),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(539),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             Major = "Intern",
@@ -1616,7 +1580,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 9,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2231),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(541),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             Major = "Specialist Doctor Graduation",
@@ -1627,7 +1591,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 10,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2234),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(544),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             Major = "Intern",
@@ -1638,7 +1602,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 11,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2237),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(547),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c986"),
                             Major = "Specialist Doctor Graduation",
@@ -1649,7 +1613,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 12,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2239),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(550),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c986"),
                             Major = "Intern",
@@ -1660,7 +1624,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 13,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2243),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(553),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c987"),
                             Major = "Specialist Doctor Graduation",
@@ -1671,7 +1635,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 14,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2246),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(556),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c987"),
                             Major = "Intern",
@@ -1682,7 +1646,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 15,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2249),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(559),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c988"),
                             Major = "Specialist Doctor Graduation",
@@ -1693,7 +1657,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 16,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2252),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(562),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c988"),
                             Major = "Intern",
@@ -1704,7 +1668,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 17,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2254),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(564),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c989"),
                             Major = "Specialist Doctor Graduation",
@@ -1715,7 +1679,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 18,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2257),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(567),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c989"),
                             Major = "Intern",
@@ -1726,7 +1690,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 19,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2259),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(569),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c990"),
                             Major = "Specialist Doctor Graduation",
@@ -1737,7 +1701,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 20,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2262),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(572),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c990"),
                             Major = "Intern",
@@ -1748,7 +1712,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 21,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2264),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(575),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c991"),
                             Major = "Specialist Doctor Graduation",
@@ -1759,7 +1723,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 22,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2266),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(577),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c991"),
                             Major = "Intern",
@@ -1770,7 +1734,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 23,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2269),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(580),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c992"),
                             Major = "Specialist Doctor Graduation",
@@ -1781,7 +1745,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 24,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2271),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(583),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c992"),
                             Major = "Intern",
@@ -1792,7 +1756,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 25,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2274),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(585),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c993"),
                             Major = "Specialist Doctor Graduation",
@@ -1803,7 +1767,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 26,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2276),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(588),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c993"),
                             Major = "Intern",
@@ -1814,7 +1778,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 27,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2279),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(591),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c994"),
                             Major = "Specialist Doctor Graduation",
@@ -1825,7 +1789,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 28,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2281),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(594),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c994"),
                             Major = "Intern",
@@ -1836,7 +1800,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 29,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2283),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(597),
                             EndYear = 1989,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c995"),
                             Major = "Specialist Doctor Graduation",
@@ -1847,7 +1811,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdTrainingProcess = 30,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2286),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(600),
                             EndYear = 1990,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c995"),
                             Major = "Intern",
@@ -1942,7 +1906,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("9117c626-c3d0-4d14-b345-d70d85268623"),
                             Address = "124 Bui Giang, Hoa An, Cam Le, Da Nang",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979661/zslqmoxwlm5n6vjnbd6k.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1302),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9553),
                             DOB = new DateTime(2002, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "nguyenquocthanh268@gmail.com",
                             Gender = true,
@@ -1950,10 +1914,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Nguyen Quoc Thanh",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1409),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9663),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905030133",
                             idRole = 1
                         },
@@ -1962,7 +1926,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("85f97fe1-83e4-4dcc-91ca-367cb29f148e"),
                             Address = "Tuy Loan, Hoa Vang, Cam Le, Da Nang",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1718979443/jvjdj7mso2fzqlhsqtgt.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1411),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9666),
                             DOB = new DateTime(2002, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "buivanhuy@gmail.com",
                             Gender = true,
@@ -1970,10 +1934,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Huy Bui",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1428),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9685),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905415721",
                             idRole = 1
                         },
@@ -1981,7 +1945,7 @@ namespace BE_Healthcare.Migrations
                         {
                             IdUser = new Guid("bfa4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "Ngu Hanh Son, Da Nang",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1429),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9686),
                             DOB = new DateTime(2002, 10, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "anhoang@gmail.com",
                             Gender = false,
@@ -1989,10 +1953,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Vo A Hoang",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1443),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9702),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0921843174",
                             idRole = 1
                         },
@@ -2001,7 +1965,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("1ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "45 Elm Street, Springfield, IL",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719069524/v8hu3qi9f8soqsagswtn.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1445),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9703),
                             DOB = new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "john.doe@gmail.com",
                             Gender = true,
@@ -2009,10 +1973,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "John Doe",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1458),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9718),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905001234",
                             idRole = 1
                         },
@@ -2021,7 +1985,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("2ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "123 Maple Avenue, Anytown, TX",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719069584/n1gpp4jdduagdkvdwkfq.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1459),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9719),
                             DOB = new DateTime(1985, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jane.smith@gmail.com",
                             Gender = false,
@@ -2029,10 +1993,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Jane Smith",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1492),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9734),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905012345",
                             idRole = 1
                         },
@@ -2041,7 +2005,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("3ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "789 Oak Lane, Chicago, IL",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719069658/uxi5cbd5ohtwtefwu2un.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1515),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9735),
                             DOB = new DateTime(1975, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "michael.jordan@gmail.com",
                             Gender = true,
@@ -2049,10 +2013,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Michael Jordan",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1531),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9750),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905023456",
                             idRole = 1
                         },
@@ -2061,7 +2025,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("4ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "456 Pine Street, Los Angeles, CA",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719069721/gtzyqa4injuat46wbtsb.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1533),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9751),
                             DOB = new DateTime(1995, 7, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "emily.davis@gmail.com",
                             Gender = false,
@@ -2069,10 +2033,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Emily Davis",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1547),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9785),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905034567",
                             idRole = 1
                         },
@@ -2081,7 +2045,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("5ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "321 Cedar Drive, Boston, MA",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070149/ez0opee2spindl6qiypt.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1548),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9810),
                             DOB = new DateTime(1980, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "robert.brown@gmail.com",
                             Gender = true,
@@ -2089,10 +2053,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Robert Brown",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1562),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9828),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905045678",
                             idRole = 1
                         },
@@ -2101,7 +2065,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("6ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "654 Birch Avenue, Seattle, WA",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070219/mfyvzdpu2tfyovqv6zk9.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1563),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9829),
                             DOB = new DateTime(1992, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "lisa.wilson@gmail.com",
                             Gender = false,
@@ -2109,10 +2073,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Lisa Wilson",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1578),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9845),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905056789",
                             idRole = 1
                         },
@@ -2121,7 +2085,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("7ba4b5ec-1ad8-4676-8871-122749af64e4"),
                             Address = "987 Willow Lane, Miami, FL",
                             Avatar = "https://res.cloudinary.com/dzdfqqdxs/image/upload/v1719070316/o1pmjoj2vu1jycmmb6ny.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1579),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9846),
                             DOB = new DateTime(1988, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "david.clark@example.com",
                             Gender = true,
@@ -2129,10 +2093,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "David Clark",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1594),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9861),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905067890",
                             idRole = 1
                         },
@@ -2141,7 +2105,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("6d2fc8cc-cbfa-401d-aef5-2d1588751d32"),
                             Address = "19 Nguyen Tuong Pho Street, Hoa Minh, Lien Chieu, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1680511237/2fb7ee0f-dfee-4579-a119-95bccd9bdea6/fa9d5fa9-2c93-428b-aee0-03f4ce064bd9.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1595),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9862),
                             DOB = new DateTime(1972, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "john.smith@gmail.com",
                             Gender = true,
@@ -2149,10 +2113,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. John Smith",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1609),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9878),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0900127848",
                             idRole = 2,
                             latitude = "16.063627",
@@ -2163,7 +2127,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("9f12c430-de83-4910-92ac-704bffefaab2"),
                             Address = "517 Ton Duc Thang Street, Hoa Khanh Nam, Lien Chieu, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1680511603/df59eb21-3a29-4c7a-b762-d9bff4e4da9a/759f1e45-7879-41f2-a270-fd5f55c9fed5.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1610),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9879),
                             DOB = new DateTime(1961, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "emily.johnson@gmail.com",
                             Gender = true,
@@ -2171,10 +2135,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Emily Johnson",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1625),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9895),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0941448374",
                             idRole = 2,
                             latitude = "16.06452980000006",
@@ -2185,7 +2149,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb451"),
                             Address = "276 Dong Da Street, Thanh Binh, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1680512033/48485db2-ab6e-4f98-93e1-504965cec010/3b9d9971-40bc-40de-bd43-7e1bb35c83dd.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1626),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9896),
                             DOB = new DateTime(1963, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "michael.brown@gmail.com",
                             Gender = true,
@@ -2193,10 +2157,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Michael Brown",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1640),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9912),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0934778332",
                             idRole = 2,
                             latitude = "16.0765671",
@@ -2207,7 +2171,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb452"),
                             Address = "33 Cao Thang Street, Thanh Binh, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1525960428/98dfc23b-c970-4342-b57d-08c386c43e5d/572fe2a8-64e1-4087-a018-3866079e6ff5.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1641),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9913),
                             DOB = new DateTime(1975, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "sarah.davis@gmail.com",
                             Gender = false,
@@ -2215,10 +2179,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Prof. Dr. Sarah Davis",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1655),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9931),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0929064778",
                             idRole = 2,
                             latitude = "16.07616593590908",
@@ -2229,7 +2193,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb453"),
                             Address = "96 Trieu Nu Vuong Street, Hai Chau 2, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1680511470/c4fa22c5-790e-4f3f-8511-5b114670ed85/54e56361-e48d-43f7-8d3b-adbe1a59a36e.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1656),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9931),
                             DOB = new DateTime(1967, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "david.wilson@gmail.com",
                             Gender = true,
@@ -2237,10 +2201,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Prof. Dr. David Wilson",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1670),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9947),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0965597404",
                             idRole = 2,
                             latitude = "16.064064461000044",
@@ -2251,7 +2215,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb454"),
                             Address = "2 Le Thanh Nghi Street, Hoa Cuong, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1618488149/d889bf94-d4c8-4a62-a1dc-35735256b1ce/8006a4f9-e47a-454f-bcba-25e60e504dde.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1672),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9948),
                             DOB = new DateTime(1968, 9, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "laura.martinez@gmail.com",
                             Gender = false,
@@ -2259,10 +2223,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Prof. Dr. Laura Martinez",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1686),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9964),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0961733270",
                             idRole = 2,
                             latitude = "16.0445465",
@@ -2273,7 +2237,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb455"),
                             Address = "64 Tran Cao Van Street, Tam Thuan, Thanh Khe, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/h_180,w_180,f_auto,c_thumb,g_face,z_0.7/v1610565267/c7b0c5f0-24e3-4f50-ae58-60893bf2a37a/6dd99135-5b0f-4d27-8508-1a1c23530e9b.png",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1687),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9965),
                             DOB = new DateTime(1963, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "robert.taylor@gmail.com",
                             Gender = true,
@@ -2281,10 +2245,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Assoc. Prof. Dr. Robert Taylor",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1702),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9980),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0906893161",
                             idRole = 2,
                             latitude = "16.072938523909848",
@@ -2295,7 +2259,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("efaaf180-4211-45d1-9b08-f085f19cb456"),
                             Address = "82 Quang Trung Street, Thach Thang, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1525960875/07700e7c-2f24-453f-be7e-0437edc6c3a2/ccee4ba3-2b9a-4f51-991d-8b9d76c5ac65.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1703),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9981),
                             DOB = new DateTime(1962, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jessica.moore@gmail.com",
                             Gender = false,
@@ -2303,10 +2267,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Assoc. Prof. Dr. Jessica Moore",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1717),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 172, DateTimeKind.Utc).AddTicks(9996),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0923267870",
                             idRole = 2,
                             latitude = "16.074633395000035",
@@ -2317,7 +2281,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("e4a0f9d1-f914-4d85-bfe1-1dc5c4507a6f"),
                             Address = "142 Trieu Nu Vuong Street, Hai Chau 2, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1589829513/2f72c6b5-f53c-4473-bea5-47e7a5e60f83/309cba8b-3d9e-41aa-af75-0e8c6c4d28d3.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1718),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 172, DateTimeKind.Local).AddTicks(9997),
                             DOB = new DateTime(1964, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "alice.morgan@gmail.com",
                             Gender = false,
@@ -2325,10 +2289,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Alice Morgan",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1733),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(12),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0905863245",
                             idRole = 2,
                             latitude = "16.062915375000046",
@@ -2339,7 +2303,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("b2d5a7d6-dab1-489a-8db5-2c9483a7d948"),
                             Address = "111 Thanh Thuy Street, Thanh Binh, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1713341344/4857e326-b98c-45fa-8841-d99d1e9350f8/2e1df710-9cb1-4022-8a05-2631ee108f55.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1734),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(13),
                             DOB = new DateTime(1969, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "oliver.white@gmail.com",
                             Gender = true,
@@ -2347,10 +2311,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Oliver White",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1748),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(29),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0932476895",
                             idRole = 2,
                             latitude = "16.08356567900006",
@@ -2361,7 +2325,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("f76c3b89-8fcd-4e5f-abc1-39c13fb8a97d"),
                             Address = "95 Hai Phong Street, Thach Thang, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1597687679/ba815298-2ce2-456c-9710-822d7750f4de/02a1a5b5-b8b9-4648-8ed8-6996662d0724.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1749),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(30),
                             DOB = new DateTime(1965, 8, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "sophie.harris@gmail.com",
                             Gender = false,
@@ -2369,10 +2333,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Sophie Harris",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1764),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(45),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0928631974",
                             idRole = 2,
                             latitude = "16.071919252000043",
@@ -2383,7 +2347,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("cf9b2f8e-59c9-4f09-8fa1-d624fd0d5bcb"),
                             Address = "21 Thai Van Lung Street, Hoa Xuan, Cam Le, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1525960591/8afad210-bc4f-4af0-9eb4-0ff5032c96a2/5d255b73-661f-4674-98e9-d0e24c83ba6d.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1766),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(46),
                             DOB = new DateTime(1962, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "henry.walker@gmail.com",
                             Gender = true,
@@ -2391,10 +2355,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Henry Walker",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1780),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(62),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0945381720",
                             idRole = 2,
                             latitude = "16.02039805800007",
@@ -2405,7 +2369,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("4a9dc58e-282a-4f92-9b0d-bb1a707c3f7b"),
                             Address = "280 Nguyen Huu Tho Street, Khue Trung Ward, Cam Le District, Da Nang City",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1540363288/412b2fae-1c1e-4923-952b-358d971977df/13f5a650-d939-45b5-a621-344f1144b004.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1782),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(63),
                             DOB = new DateTime(1963, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "mia.robinson@gmail.com",
                             Gender = true,
@@ -2413,10 +2377,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Mia Robinson",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1797),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(78),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0936842197",
                             idRole = 2,
                             latitude = "16.0374192",
@@ -2427,7 +2391,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("d6a4c3e8-9111-4bc2-b0b9-e84b4dfb5d9e"),
                             Address = "2 Le Thanh Nghi Street, Hoa Cuong, Hai Chau, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1525963679/17b30593-83ec-47b5-b08f-744a3f019e81/e4b189ea-1bbb-40f1-b488-dc6e433d4b1d.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1812),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(79),
                             DOB = new DateTime(1966, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "james.clark@gmail.com",
                             Gender = true,
@@ -2435,10 +2399,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. James Clark",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1828),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(95),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0941205864",
                             idRole = 2,
                             latitude = "16.0445465",
@@ -2449,7 +2413,7 @@ namespace BE_Healthcare.Migrations
                             IdUser = new Guid("1f2b4a9d-793e-4c89-9fdf-3d1e684d816f"),
                             Address = "1081 Ngo Quyen Street, An Hai Bac, Son Tra, Da Nang",
                             Avatar = "https://res.cloudinary.com/doctena/image/upload/c_thumb,f_auto,g_face,h_100,w_100,z_0.7/v1542460196/fab102d3-a80c-44cf-93fe-d2f03d104dfb/339ba259-2169-4ab8-b7c5-7c9c656ca099.jpg",
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1829),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(96),
                             DOB = new DateTime(1968, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ava.thompson@gmail.com",
                             Gender = true,
@@ -2457,10 +2421,10 @@ namespace BE_Healthcare.Migrations
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Dr. Ava Thompson",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1844),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(114),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             PhoneNumber = "0931467082",
                             idRole = 2,
                             latitude = "16.0598485",
@@ -2469,16 +2433,16 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdUser = new Guid("efaaf143-4211-45d1-9b08-f085f19caa56"),
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(1845),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(132),
                             Email = "admin@gmail.com",
                             IsAdminDisabled = false,
                             IsLocked = false,
                             IsVerified = true,
                             Name = "Admin",
-                            OTPCreatedAt = new DateTime(2024, 6, 24, 17, 41, 38, 359, DateTimeKind.Utc).AddTicks(1858),
+                            OTPCreatedAt = new DateTime(2024, 6, 23, 19, 10, 59, 173, DateTimeKind.Utc).AddTicks(148),
                             OTPVerification = "123456",
-                            PasswordHash = new byte[] { 181, 220, 65, 98, 1, 208, 170, 19, 216, 4, 217, 129, 125, 17, 96, 250, 5, 45, 192, 47, 5, 68, 230, 111, 68, 28, 19, 182, 127, 224, 158, 254 },
-                            PasswordSalt = new byte[] { 236, 48, 105, 45, 222, 252, 202, 156, 78, 58, 94, 220, 87, 82, 67, 25, 9, 207, 251, 117, 3, 88, 42, 50, 4, 55, 255, 218, 76, 227, 46, 177, 35, 13, 193, 2, 222, 40, 143, 108, 163, 159, 7, 195, 190, 57, 29, 46, 117, 2, 50, 45, 29, 72, 103, 37, 136, 71, 51, 197, 187, 183, 152, 53 },
+                            PasswordHash = new byte[] { 98, 90, 194, 110, 106, 173, 64, 116, 190, 78, 22, 50, 132, 62, 240, 67, 204, 207, 44, 219, 6, 11, 228, 149, 28, 126, 23, 124, 43, 84, 107, 225 },
+                            PasswordSalt = new byte[] { 53, 179, 132, 76, 101, 96, 192, 209, 24, 198, 91, 67, 117, 137, 15, 182, 118, 5, 127, 177, 68, 174, 20, 27, 36, 0, 163, 233, 182, 2, 91, 38, 33, 112, 204, 223, 18, 213, 132, 194, 5, 17, 96, 62, 102, 122, 226, 184, 76, 218, 123, 138, 144, 52, 63, 206, 198, 157, 181, 16, 224, 178, 74, 37 },
                             idRole = 3
                         });
                 });
@@ -2525,7 +2489,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 1,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2319),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(629),
                             EndYear = 2014,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Senior lecturer",
@@ -2536,7 +2500,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 2,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2348),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(635),
                             EndYear = 2018,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Deputy Head of the Department of Internal Medicine, Faculty of Medicine.",
@@ -2547,7 +2511,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 3,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2352),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(638),
                             EndYear = 2021,
                             IdDoctor = new Guid("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                             Position = "Chairman of the Medical Advisory Board, Attending Physician",
@@ -2558,7 +2522,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 4,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2355),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(640),
                             EndYear = 2014,
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             Position = "Senior lecturer",
@@ -2569,7 +2533,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 5,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2357),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(643),
                             EndYear = 2018,
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             Position = "Deputy Head of the Department of Internal Medicine, Faculty of Medicine.",
@@ -2580,7 +2544,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 6,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2359),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(646),
                             EndYear = 2021,
                             IdDoctor = new Guid("954d0f01-a006-443a-957d-3d1165b79ee7"),
                             Position = "Chairman of the Medical Advisory Board, Attending Physician",
@@ -2591,7 +2555,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 7,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2362),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(648),
                             EndYear = 2014,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             Position = "Senior lecturer",
@@ -2602,7 +2566,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 8,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2365),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(651),
                             EndYear = 2018,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             Position = "Deputy Head of the Department of Internal Medicine, Faculty of Medicine.",
@@ -2613,7 +2577,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 9,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2368),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(681),
                             EndYear = 2021,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                             Position = "Chairman of the Medical Advisory Board, Attending Physician",
@@ -2624,7 +2588,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 10,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2370),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(684),
                             EndYear = 2014,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             Position = "Senior lecturer",
@@ -2635,7 +2599,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 11,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2373),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(687),
                             EndYear = 2018,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             Position = "Deputy Head of the Department of Internal Medicine, Faculty of Medicine.",
@@ -2646,7 +2610,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 12,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2375),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(690),
                             EndYear = 2021,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c984"),
                             Position = "Chairman of the Medical Advisory Board, Attending Physician",
@@ -2657,7 +2621,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 13,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2378),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(692),
                             EndYear = 2014,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             Position = "Senior lecturer",
@@ -2668,7 +2632,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 14,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2380),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(695),
                             EndYear = 2018,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             Position = "Deputy Head of the Department of Internal Medicine, Faculty of Medicine.",
@@ -2679,7 +2643,7 @@ namespace BE_Healthcare.Migrations
                         new
                         {
                             IdWorkingProcess = 15,
-                            CreatedAt = new DateTime(2024, 6, 25, 0, 41, 38, 359, DateTimeKind.Local).AddTicks(2382),
+                            CreatedAt = new DateTime(2024, 6, 24, 2, 10, 59, 173, DateTimeKind.Local).AddTicks(697),
                             EndYear = 2021,
                             IdDoctor = new Guid("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                             Position = "Chairman of the Medical Advisory Board, Attending Physician",

@@ -1963,7 +1963,7 @@ namespace BE_Healthcare.Data
                 {
                     IdRating = 2,
                     RatingScore = 4,
-                    Comment = "The doctor is very enthusiastic.",
+                    Comment = "The medical staff is very attentive and caring.",
                     IdUser = Guid.Parse("bfa4b5ec-1ad8-4676-8871-122749af64e4"),
                     IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                     IdAppointment = 4
@@ -1983,7 +1983,7 @@ namespace BE_Healthcare.Data
                 {
                     IdRating = 4,
                     RatingScore = 4,
-                    Comment = "Good service.",
+                    Comment = "The waiting time is not too long, very satisfied with the service.",
                     IdUser = Guid.Parse("1ba4b5ec-1ad8-4676-8871-122749af64e4"),
                     IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
                     IdAppointment = 98
@@ -2001,7 +2001,7 @@ namespace BE_Healthcare.Data
                 {
                     IdRating = 6,
                     RatingScore = 5,
-                    Comment = "Good service.",
+                    Comment = "The prices are reasonable, matching the quality of the service.",
                     IdUser = Guid.Parse("3ba4b5ec-1ad8-4676-8871-122749af64e4"),
                     IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c983"),
                     IdAppointment = 98
@@ -2013,7 +2013,7 @@ namespace BE_Healthcare.Data
                 {
                     IdRating = 7,
                     RatingScore = 4,
-                    Comment = "The doctor is very enthusiastic.",
+                    Comment = "The clinic is clean, and the equipment is modern.",
                     IdUser = Guid.Parse("5ba4b5ec-1ad8-4676-8871-122749af64e4"),
                     IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                     IdAppointment = 4
@@ -2022,7 +2022,7 @@ namespace BE_Healthcare.Data
                 {
                     IdRating = 8,
                     RatingScore = 3,
-                    Comment = "The doctor is very enthusiastic.",
+                    Comment = "Good service.",
                     IdUser = Guid.Parse("6ba4b5ec-1ad8-4676-8871-122749af64e4"),
                     IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                     IdAppointment = 4
@@ -2031,7 +2031,7 @@ namespace BE_Healthcare.Data
                 {
                     IdRating = 9,
                     RatingScore = 5,
-                    Comment = "The doctor is very enthusiastic.",
+                    Comment = "Treatment service is very good.",
                     IdUser = Guid.Parse("7ba4b5ec-1ad8-4676-8871-122749af64e4"),
                     IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c985"),
                     IdAppointment = 4
@@ -2039,6 +2039,72 @@ namespace BE_Healthcare.Data
                 );
 
             #endregion
+
+            #region Medical Record
+            modelBuilder.Entity<MedicalRecord>().HasData(
+                new MedicalRecord
+                {
+                    IdMedicalRecord = 1,
+                    IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c985"),
+                    IdUser = Guid.Parse("9117c626-c3d0-4d14-b345-d70d85268623"),
+                    IdAppointment = 2,
+                    Date = new DateTime(2024, 6, 16),
+                    Height = 170,
+                    Weight = 67.2,
+                    Temperature = 36.7,
+                    Content = "The patient's face is seriously inflamed, so " +
+                    "he should drink water regularly. Avoid eating red meat " +
+                    "because it contains inflammatory factors"
+                },
+
+                new MedicalRecord
+                {
+                    IdMedicalRecord = 2,
+                    IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c984"),
+                    IdUser = Guid.Parse("5ba4b5ec-1ad8-4676-8871-122749af64e4"),
+                    IdAppointment = 3,
+                    Date = new DateTime(2024, 6, 01),
+                    Height = 171,
+                    Weight = 69,
+                    Temperature = 36.5,
+                    Content = "The patient's face is seriously inflamed, so " +
+                    "he should drink water regularly. Avoid eating red meat " +
+                    "because it contains inflammatory factors"
+                },
+                new MedicalRecord
+                {
+                    IdMedicalRecord = 3,
+                    IdDoctor = Guid.Parse("2536a049-6c0d-45fc-a0d6-ea107731c985"),
+                    IdUser = Guid.Parse("5ba4b5ec-1ad8-4676-8871-122749af64e4"),
+                    IdAppointment = 4,
+                    Date = new DateTime(2024, 6, 16),
+                    Height = 170,
+                    Weight = 67.2,
+                    Temperature = 36.7,
+                    Content = "The patient's face is seriously inflamed, so " +
+                    "he should drink water regularly. Avoid eating red meat " +
+                    "because it contains inflammatory factors"
+                },
+
+
+                new MedicalRecord
+                {
+                    IdMedicalRecord = 4,
+                    IdDoctor = Guid.Parse("6c2e4c40-ad25-40fa-ad40-4c620f09d9b2"),
+                    IdUser = Guid.Parse("3ba4b5ec-1ad8-4676-8871-122749af64e4"),
+                    IdAppointment = 5,
+                    Date = new DateTime(2024, 6, 01),
+                    Height = 173,
+                    Weight = 71,
+                    Temperature = 37.5,
+                    Content = "The patient's face is seriously inflamed, so " +
+                    "he should drink water regularly. Avoid eating red meat " +
+                    "because it contains inflammatory factors"
+                }
+
+                );
+            #endregion
+
         }
     }
 }
