@@ -160,7 +160,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<MyDbContext>();
+        context.Database.Migrate();
+        // You can also seed the database here if needed
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("An error occurred while migrating the database:");
+        Console.WriteLine(ex.Message);
+        throw;
+    }
+}
 app.UseHttpsRedirection();
 
 
