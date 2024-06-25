@@ -72,7 +72,7 @@ namespace BE_Healthcare.Services
                 }
                 if (criteria.exp != null)
                 {
-                    list = list.Where(d => d.YearExperience == criteria.exp);
+                    list = list.Where(d => d.YearExperience >= criteria.exp);
                 }
                 if (criteria.from != null)
                 {
