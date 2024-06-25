@@ -152,7 +152,22 @@ app.UseCors(builder => builder
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials());
-
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<MyDbContext>();
+        context.Database.Migrate();
+        // You can also seed the database here if needed
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("An error occurred while migrating the database:");
+        Console.WriteLine(ex.Message);
+        throw;
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

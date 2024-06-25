@@ -161,7 +161,7 @@
         public static string MESSAGE_NOTFILLOUT_FORM = "The user has not filled out the form!";
         public static string MESSAGE_GETFILLEDREGISTRATIONFORM_SUCCESSFUL = "Get filled registration form successful!";
 
-        public static string PATH_CREDENTIALS = @"F:\PBL7\healthcare-2d0e4-firebase-adminsdk-20q4k-d55b92ccba.json";
+        public static string PATH_CREDENTIALS = @"Constant//healthcare-2d0e4-firebase-adminsdk-20q4k-d55b92ccba.json";
 
     }
 }
